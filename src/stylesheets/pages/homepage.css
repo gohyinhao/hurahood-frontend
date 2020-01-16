@@ -1,0 +1,21 @@
+.homepage__container {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    height: 20%;
+    width: 50%;
+    text-align: center;
+    border: 0.25rem solid var(--border-gold);
+}
+
+.homepage__container__subheading {
+    font-family: var(--main-font);
+    font-size: 1rem;
+}
+
+.homepage__container__header {
+    font-family: var(--header-font);
+    font-size: 3.25rem;
+    margin-top: 2.9rem;
+    margin-bottom: 0;
+}

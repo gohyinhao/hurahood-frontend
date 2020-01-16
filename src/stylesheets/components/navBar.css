@@ -1,0 +1,12 @@
+.nav-bar {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    font-family: var(--main-font);
+}
+
+.nav-bar__element {
+    float: right;
+    margin: 0.5rem 1rem;
+}
