@@ -1,0 +1,35 @@
+.carousel-slide {
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    color: $color-grey-light-3;
+    transition: all 1s ease-in-out;
+    z-index: 2;
+
+    &.carousel-slide--active {
+        opacity: 1;
+        z-index: 10;
+    }
+
+    &__wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__header {
+        text-transform: uppercase;
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    &__subtitle {
+        font-size: 1.6rem;
+        text-align: center;
+    }
+}

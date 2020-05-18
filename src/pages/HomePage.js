@@ -1,5 +1,10 @@
 import React from 'react';
+import Carousel from '../components/Carousel/Carousel';
 
-const HomePage = () => <>Home Page</>;
+const HomePage = () => (
+    <>
+        <Carousel />
+    </>
+);
 
 export default HomePage;

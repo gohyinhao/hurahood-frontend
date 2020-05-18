@@ -1,0 +1,15 @@
+.carousel {
+    grid-column-start: 1;
+    grid-column-end: 13;
+
+    height: 25rem;
+    position: relative;
+
+    &__dot-slider {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 15;
+    }
+}
