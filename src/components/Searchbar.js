@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SearchIcon from '../assets/images/search.svg';
 
 class Searchbar extends Component {
     state = {
@@ -14,7 +15,7 @@ class Searchbar extends Component {
         return (
             <form className="searchbar" onSubmit={this.props.onSubmit}>
                 <button className="searchbar__button">
-                    <img src="public/images/search.svg" className="searchbar__icon" />
+                    <img src={SearchIcon} className="searchbar__icon" />
                 </button>
                 <input
                     type="text"

@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         publicPath: '/',
-        path: path.join(__dirname, 'public', 'build'),
+        path: path.join(__dirname, 'build'),
         filename: 'bundle.js',
     },
     module: {
@@ -30,6 +30,10 @@ module.exports = {
             {
                 test: /\.(html)$/,
                 loader: 'html-loader',
+            },
+            {
+                test: /\.(png|jpe?g|gif|eot|woff|ttf|svg)$/,
+                use: ['file-loader'],
             },
         ],
     },
