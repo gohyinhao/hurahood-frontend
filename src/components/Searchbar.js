@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import SearchIcon from '../assets/images/search.svg';
 
 class Searchbar extends Component {
@@ -30,6 +31,13 @@ class Searchbar extends Component {
     }
 }
 
-// TODO: set default props. must have onSubmit
+Searchbar.propTypes = {
+    className: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired,
+};
+
+Searchbar.defaultProps = {
+    className: '',
+};
 
 export default Searchbar;
