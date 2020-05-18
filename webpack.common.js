@@ -40,6 +40,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
+            favicon: 'src/assets/images/hurahood_logo_no_background.png',
         }),
     ],
 };
