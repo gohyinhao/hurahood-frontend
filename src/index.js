@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AppRouter from './routers/AppRouter';
 import './styles/main.scss';
 
-const app = <div>Hurahood</div>;
-
-ReactDOM.render(app, document.querySelector('#app'));
+ReactDOM.render(<AppRouter />, document.querySelector('#app'));

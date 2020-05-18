@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    border-bottom: 1px solid $color-grey-light-2;
+
+    &__title {
+        text-transform: uppercase;
+        letter-spacing: 0.4rem;
+        font-weight: 300;
+        padding: 0 2rem;
+    }
+
+    &__icons {
+        display: flex;
+        justify-content: flex-end;
+        height: 100%;
+    }
+
+    &__icon-link {
+        display: flex;
+        align-items: center;
+        padding: 0 0.7rem;
+
+        &:hover {
+            background-color: $color-grey-light-2;
+        }
+    }
+
+    &__icon {
+        width: 3rem;
+        height: 3rem;
+    }
+}
