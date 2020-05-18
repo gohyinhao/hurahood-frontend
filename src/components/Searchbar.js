@@ -13,7 +13,7 @@ class Searchbar extends Component {
 
     render() {
         return (
-            <form className="searchbar" onSubmit={this.props.onSubmit}>
+            <form className={`searchbar ${this.props.className}`} onSubmit={this.props.onSubmit}>
                 <button className="searchbar__button">
                     <img src={SearchIcon} className="searchbar__icon" />
                 </button>

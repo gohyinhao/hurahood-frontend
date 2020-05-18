@@ -1,0 +1,20 @@
+// MEDIA QUERY MANAGER
+/*
+320px to 414px:     Phone Portrait
+568px to 812px      Phone Landscape
+768px to 834px:     Tablet Portrait
+1024px to 1112px:   Tablet Landscape
+1200px+:            Laptop and Desktop displays
+
+ORDER TO ADD QUERIES:
+base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+@mixin responsive($breakpoint) {
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 50em) {
+            @content;
+        } // 800px
+    }
+}

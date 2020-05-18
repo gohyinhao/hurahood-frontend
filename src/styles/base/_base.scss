@@ -7,11 +7,15 @@
 }
 
 html {
-    font-size: 62.5%;
+    font-size: 62.5%; // 1rem = 10px
+
+    @include responsive(tab-port) {
+        font-size: 50%; // 1rem = 8px
+    }
 }
 
 body {
     box-sizing: border-box;
-    max-width: 100rem;
+    max-width: 1000px;
     margin: 0 auto;
 }

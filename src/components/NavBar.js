@@ -32,7 +32,7 @@ const NavBar = () => {
     return (
         <header className="navbar">
             <h1 className="navbar__title">hurahood</h1>
-            <Searchbar />
+            <Searchbar className="navbar__search" />
             <nav className="navbar__icons">
                 {icons.map(({ iconName, icon }) => (
                     <Icon

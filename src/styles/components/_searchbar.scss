@@ -3,8 +3,6 @@
     align-items: center;
     justify-content: center;
 
-    min-width: 35rem;
-
     &__button {
         display: flex;
         align-items: center;
@@ -23,15 +21,13 @@
         font-family: inherit;
         font-weight: inherit;
         color: inherit;
-        width: 80%;
+        width: 100%;
         padding: 0.5rem 1rem;
         border: none;
         border-bottom: 1px solid $color-primary;
-        transition: all 0.2s;
 
         &:focus {
             outline: none;
-            width: 100%;
         }
 
         &::placeholder {
