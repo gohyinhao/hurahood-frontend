@@ -1,0 +1,20 @@
+.carousel-thumbnail {
+    align-self: stretch;
+    min-width: 20rem;
+    position: relative;
+
+    &:not(:last-child) {
+        margin-right: 2rem;
+    }
+
+    &__title {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 1.6rem;
+        color: $color-grey-dark-1;
+        text-shadow: 1px 1px 2px #fff;
+        background-color: rgba($color-tertiary, 0.2);
+    }
+}

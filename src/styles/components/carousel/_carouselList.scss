@@ -1,0 +1,45 @@
+.carousel-list {
+    grid-column-start: 1;
+    grid-column-end: 13;
+
+    display: flex;
+    align-items: center;
+    height: 12rem;
+    margin: 3rem 0;
+    padding: 0 4rem;
+    position: relative;
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        scroll-behavior: smooth;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__caret {
+        position: absolute;
+        height: 6rem;
+        width: 6rem;
+        filter: $color-secondary-filter;
+        cursor: pointer;
+
+        &--left {
+            left: -1.5rem;
+        }
+
+        &--right {
+            right: -1.5rem;
+        }
+
+        &:hover {
+            filter: $color-secondary-light-filter;
+        }
+
+        &.carousel-list__caret--disabled {
+            cursor: not-allowed;
+            filter: $color-secondary-light-filter;
+        }
+    }
+}

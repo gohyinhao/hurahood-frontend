@@ -13,7 +13,9 @@ const DotSlider = ({ activeIndex, className, onClick, numOfDots }) => {
                 const classNames =
                     'dot-slider__dot' + (activeIndex === index ? ' dot-slider__dot--active' : '');
 
-                return <span className={classNames} onClick={onClick.bind(null, index)} />;
+                return (
+                    <span key={index} className={classNames} onClick={onClick.bind(null, index)} />
+                );
             })}
         </div>
     );

@@ -1,6 +1,10 @@
 // COLORS
 $color-primary: #191919;
+
+$color-secondary-light: #858585;
 $color-secondary: #707070;
+$color-secondary-dark: #595959;
+
 $color-tertiary: #c69963;
 
 $color-grey-light-1: #faf9f9;
@@ -11,6 +15,12 @@ $color-grey-light-4: #ccc;
 $color-grey-dark-1: #333;
 $color-grey-dark-2: #777;
 $color-grey-dark-3: #999;
+
+// FILTERS
+$color-secondary-light-filter: invert(56%) sepia(0%) saturate(12%) hue-rotate(134deg)
+    brightness(93%) contrast(94%);
+$color-secondary-filter: invert(45%) sepia(4%) saturate(21%) hue-rotate(318deg) brightness(95%)
+    contrast(85%);
 
 // FONTS
 $font-primary: 'Lato', sans-serif;
