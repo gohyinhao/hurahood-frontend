@@ -1,0 +1,24 @@
+.rating {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem 0;
+
+    &__stars {
+        display: flex;
+        align-items: center;
+    }
+
+    &__value {
+        color: $color-grey-dark-2;
+        font-size: 1.7rem;
+        font-weight: 300;
+        margin: 0 1rem;
+        text-shadow: 1px 1px 1px $color-grey-light-3;
+    }
+
+    &__num-of-ratings {
+        font-size: 1.4rem;
+    }
+}

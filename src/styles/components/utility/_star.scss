@@ -1,0 +1,14 @@
+.star {
+    display: inline-block;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    &--empty {
+        visibility: hidden;
+    }
+
+    &--half,
+    &--full {
+        filter: $color-orange-filter;
+    }
+}
