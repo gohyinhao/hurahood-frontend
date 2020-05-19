@@ -1,0 +1,29 @@
+.footer {
+    display: flex;
+    border-top: 1px solid $color-secondary;
+    font-size: 1.3rem;
+
+    &__column {
+        display: flex;
+        flex-direction: column;
+        margin: 0 2rem;
+    }
+
+    &__title {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+    &__link {
+        &:link,
+        &:visited {
+            color: $color-primary;
+            text-decoration: none;
+        }
+    }
+
+    &__copyright {
+        align-self: flex-end;
+        color: $color-grey-dark-3;
+    }
+}

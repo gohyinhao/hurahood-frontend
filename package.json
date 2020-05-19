@@ -5,6 +5,7 @@
   "main": "./src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "dev:server": "npm run build && npm start",
     "dev": "webpack-dev-server --config webpack.dev.js --open",
     "build": "webpack --config webpack.prod.js"
   },
