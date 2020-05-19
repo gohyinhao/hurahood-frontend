@@ -5,12 +5,6 @@ import Rating from '../../components/Rating';
 const ProductItem = ({ brand, className, image, location, numOfRatings, rating, service }) => {
     const classNames = 'product-item' + (className ? ` ${className}` : '');
 
-    // const styles = {
-    //     backgroundImage: `url(${image})`,
-    //     backgroundSize: 'cover',
-    //     backgroundPosition: 'center',
-    // };
-
     return (
         <div className={classNames}>
             <div className="product-item__image-wrapper">

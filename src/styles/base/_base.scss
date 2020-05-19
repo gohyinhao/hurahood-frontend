@@ -20,3 +20,21 @@ body {
     margin: 0 auto;
     cursor: default;
 }
+
+::-webkit-scrollbar {
+    width: 0.6rem;
+}
+
+::-webkit-scrollbar-track {
+    background: $color-grey-light-3;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $color-tertiary;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: darken($color-tertiary, 10%);
+}

@@ -4,6 +4,8 @@ import Carousel from '../components/carousel/Carousel';
 import CarouselList from '../components/carousel/CarouselList';
 import List from '../components/List';
 import ProductItem from '../components/product/ProductItem';
+import ListItem from '../components/ListItem';
+import ScrollableList from '../components/ScrollableList';
 import HairdresserImage from '../assets/images/hairdresser.jpg';
 import HairdresserImage2 from '../assets/images/hairdresser-2.jpg';
 
@@ -81,6 +83,23 @@ const trendingItems = [
     },
 ];
 
+const bulletinItems = [
+    {
+        title: '[Title of article]',
+        content:
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima aspernatur incidunt repellendus cupid',
+    },
+    {
+        title: 'Addition of new service!',
+        content: 'Hurahood will be introducing eye brow threading atop the mountain peaks',
+    },
+    {
+        title: 'testing really long content',
+        content:
+            'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error, reiciendis quae voluptatum explicabo dolorem earum facere porro consectetur reprehenderit accusamus necessitatibus fugiat cupiditate aut voluptates quaerat id harum architecto? Neque?',
+    },
+];
+
 const HomePage = () => (
     <>
         <Carousel />
@@ -107,6 +126,11 @@ const HomePage = () => (
         <div className="homepage__services">
             <h2>Featured Services</h2>
         </div>
+        <ScrollableList className="homepage__bulletin" title="Bulletin">
+            {bulletinItems.map(({ title, content }, index) => (
+                <ListItem key={index} title={title} content={content} />
+            ))}
+        </ScrollableList>
     </>
 );
 

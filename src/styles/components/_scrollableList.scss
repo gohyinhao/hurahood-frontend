@@ -1,0 +1,18 @@
+.scrollable-list {
+    border-bottom: 1px solid $color-secondary-light;
+
+    &__title {
+        background: #000;
+        color: $color-grey-light-3;
+        font-size: 2rem;
+        font-weight: 500;
+        text-align: center;
+        height: 12%;
+    }
+
+    &__body {
+        height: 88%;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+}

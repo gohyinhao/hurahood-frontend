@@ -33,4 +33,12 @@
         grid-column-start: 1;
         grid-column-end: 7;
     }
+
+    &__bulletin {
+        grid-column-start: 7;
+        grid-column-end: 13;
+        margin-left: 2rem;
+        margin-bottom: 2rem;
+        height: 30rem;
+    }
 }
