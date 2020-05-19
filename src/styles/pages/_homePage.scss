@@ -41,4 +41,27 @@
         margin-bottom: 2rem;
         height: 30rem;
     }
+
+    &__message-wrapper {
+        grid-column-start: 1;
+        grid-column-end: 13;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 1rem 0 3rem 0;
+    }
+
+    &__message {
+        font-size: $font-m;
+    }
+
+    &__form {
+        display: flex;
+        width: 50rem;
+    }
+
+    &__text-input {
+        margin: 0 1rem;
+    }
 }

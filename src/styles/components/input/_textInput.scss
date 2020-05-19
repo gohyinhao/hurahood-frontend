@@ -1,0 +1,20 @@
+.text-input {
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-bottom: 1px solid $color-primary;
+    font-size: $font-s;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: $color-grey-dark-3;
+        text-align: center;
+        font-size: $font-s;
+    }
+}
