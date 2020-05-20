@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Rating from '../../components/Rating';
 
-const ProductItem = ({ brand, className, image, location, numOfRatings, rating, service }) => {
+const ProductItem = ({ brand, className, image, location, numOfRatings, rating, category }) => {
     const classNames = 'product-item' + (className ? ` ${className}` : '');
 
     return (
@@ -12,7 +12,7 @@ const ProductItem = ({ brand, className, image, location, numOfRatings, rating, 
             </div>
             <div className="product-item__description">
                 <h3 className="product-item__brand">{brand}</h3>
-                <h4 className="product-item__service">{service}</h4>
+                <h4 className="product-item__category">{category}</h4>
                 {<p className="product-item__location">{location ? location : 'Unavailable'}</p>}
                 <Rating rating={rating} numOfRatings={numOfRatings} />
             </div>
@@ -22,12 +22,12 @@ const ProductItem = ({ brand, className, image, location, numOfRatings, rating, 
 
 ProductItem.propTypes = {
     brand: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
     className: PropTypes.string,
     image: PropTypes.string.isRequired,
     location: PropTypes.string,
     numOfRatings: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
-    service: PropTypes.string.isRequired,
 };
 
 ProductItem.defaultProps = {

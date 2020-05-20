@@ -27,9 +27,15 @@ $color-secondary-filter: invert(45%) sepia(4%) saturate(21%) hue-rotate(318deg) 
 $color-orange-filter: invert(70%) sepia(24%) saturate(5060%) hue-rotate(360deg) brightness(103%)
     contrast(103%);
 
+$color-red-filter: invert(21%) sepia(62%) saturate(6482%) hue-rotate(354deg) brightness(103%)
+    contrast(126%);
+
 // FONTS
 $font-primary: 'Lato', sans-serif;
 
 // FONT-SIZES
+$font-xs: 1.4rem;
 $font-s: 1.5rem;
 $font-m: 1.6rem;
+$font-l: 1.8rem;
+$font-xl: 2rem;

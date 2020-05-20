@@ -16,7 +16,7 @@ import HairdresserImage2 from '../assets/images/hairdresser-2.jpg';
 const trendingItems = [
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage2,
         location: 'ABC Road',
         rating: 0.5,
@@ -24,7 +24,7 @@ const trendingItems = [
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage2,
         location: 'ABC Road',
         rating: 1.2,
@@ -32,7 +32,7 @@ const trendingItems = [
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage2,
         location: '6 Petir Rd',
         rating: 2.3,
@@ -40,7 +40,7 @@ const trendingItems = [
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage,
         location: 'ABC Road',
         rating: 3.55,
@@ -48,7 +48,7 @@ const trendingItems = [
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage,
         location: 'ABC Road',
         rating: 4.89,
@@ -56,14 +56,14 @@ const trendingItems = [
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage,
         rating: 5.0,
         numOfRatings: 10,
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage2,
         location: 'ABC Road',
         rating: 4.23,
@@ -71,7 +71,7 @@ const trendingItems = [
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage2,
         location: '17 Cheong Chin Nam Rd',
         rating: 4.26,
@@ -79,7 +79,7 @@ const trendingItems = [
     },
     {
         brand: 'ABC Haircut',
-        service: 'Haircut',
+        category: 'Haircut',
         image: HairdresserImage2,
         location: 'ABC Road',
         rating: 4.49,
@@ -132,7 +132,7 @@ class HomePage extends Component {
                             location={item.location}
                             numOfRatings={item.numOfRatings}
                             rating={item.rating}
-                            service={item.service}
+                            category={item.category}
                         />
                     ))}
                 </List>

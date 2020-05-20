@@ -8,7 +8,7 @@ const List = ({ className, children }) => {
 
 List.propTypes = {
     className: PropTypes.string,
-    children: PropTypes.any.isRequired,
+    children: PropTypes.node.isRequired,
 };
 
 List.defaultProps = {

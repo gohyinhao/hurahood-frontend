@@ -1,0 +1,37 @@
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: $font-m;
+    user-select: none;
+
+    & input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    &__checkmark {
+        cursor: pointer;
+        height: 1.8rem;
+        width: 1.8rem;
+        border: 1px solid $color-secondary;
+        margin-right: 1rem;
+        transition: all 0.1s;
+    }
+
+    &:hover .checkbox__checkmark {
+        background-color: $color-grey-light-4;
+    }
+
+    & > input:checked + .checkbox__checkmark::before {
+        content: '\2713';
+        color: $color-secondary-dark;
+        position: absolute;
+        left: 0.4rem;
+        top: 0.1rem;
+    }
+}

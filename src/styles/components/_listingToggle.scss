@@ -1,0 +1,10 @@
+.listing-toggle {
+    display: flex;
+    align-items: center;
+    font-size: $font-m;
+
+    &__select {
+        font-size: $font-m;
+        margin-left: 0.5rem;
+    }
+}
