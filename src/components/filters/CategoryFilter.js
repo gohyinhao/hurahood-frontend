@@ -5,25 +5,13 @@ import Checkbox from '../input/Checkbox';
 const categories = ['Facial', 'Massage', 'Manicure', 'Hair Treatment', 'Hair Cut'];
 
 class CategoryFilter extends Component {
-    state = {
-        categories,
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState !== this.state) {
-            this.props.onChange(this.state.categories);
-        }
-    }
-
     onCheckboxChange = (isChecked, category) => {
+        const { categories, onChange } = this.props;
+
         if (isChecked) {
-            this.setState((prevState) => ({
-                categories: [category].concat(prevState.categories),
-            }));
+            onChange([category].concat(categories));
         } else {
-            this.setState((prevState) => ({
-                categories: prevState.categories.filter((item) => item !== category),
-            }));
+            onChange(categories.filter((item) => item !== category));
         }
     };
 
@@ -40,7 +28,7 @@ class CategoryFilter extends Component {
                             key={category}
                             onChange={this.onCheckboxChange}
                             text={category}
-                            isChecked={this.state.categories.includes(category)}
+                            isChecked={this.props.categories.includes(category)}
                         />
                     ))}
                 </div>
@@ -50,6 +38,7 @@ class CategoryFilter extends Component {
 }
 
 CategoryFilter.propTypes = {
+    categories: PropTypes.arrayOf(PropTypes.string).isRequired,
     className: PropTypes.string,
     onChange: PropTypes.func.isRequired,
 };

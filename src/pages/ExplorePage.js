@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import queryString from 'query-string';
 import Carousel from '../components/carousel/Carousel';
 import ListingToggle from '../components/ListingToggle';
 import CategoryFilter from '../components/filters/CategoryFilter';
@@ -6,6 +7,8 @@ import List from '../components/List';
 import ProductThumbnail from '../components/product/ProductThumbnail';
 import Paginator from '../components/Paginator';
 import { filterProducts, limitProducts } from '../utils/products';
+import { capitalizeCategory } from '../utils/categories';
+import { isString } from '../utils/string';
 import HairdresserImage from '../assets/images/hairdresser.jpg';
 import HairdresserImage2 from '../assets/images/hairdresser-2.jpg';
 
@@ -137,6 +140,22 @@ class ExplorePage extends Component {
     };
 
     componentDidMount() {
+        const query = queryString.parse(this.props.location.search, { arrayFormat: 'comma' });
+        const categories = [];
+
+        if (isString(query.categories)) {
+            categories.push(capitalizeCategory(query.categories));
+        } else {
+            query.categories.forEach((category) => {
+                categories.push(capitalizeCategory(category));
+            });
+        }
+        this.setState(() => ({
+            filters: {
+                categories,
+            },
+        }));
+
         this.filterAndLimitProducts();
     }
 
@@ -146,7 +165,6 @@ class ExplorePage extends Component {
         }
 
         if (prevState.paging !== this.state.paging) {
-            console.log('error');
             this.setState(() => ({
                 products: limitProducts(this.state.filteredProducts, this.state.paging),
             }));
@@ -201,6 +219,7 @@ class ExplorePage extends Component {
                 <div className="explore-page__border util-secondary-border"></div>
                 <div className="explore-page__filters">
                     <CategoryFilter
+                        categories={this.state.filters.categories}
                         className="util-light-grey-border"
                         onChange={this.onCategoryFilterChange}
                     />

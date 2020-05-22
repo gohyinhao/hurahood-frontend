@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-//TODO: convert this to a link
-
-const CarouselThumbnail = ({ image, title }) => {
+const CarouselThumbnail = ({ image, path, title }) => {
     const styles = {
         backgroundImage: `url(${image})`,
         backgroundSize: 'cover',
@@ -11,15 +10,20 @@ const CarouselThumbnail = ({ image, title }) => {
     };
 
     return (
-        <div className="carousel-thumbnail" style={styles}>
+        <Link to={path} className="carousel-thumbnail" style={styles}>
             <span className="carousel-thumbnail__title">{title}</span>
-        </div>
+        </Link>
     );
 };
 
 CarouselThumbnail.propTypes = {
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    path: PropTypes.string,
+};
+
+CarouselThumbnail.defaultProps = {
+    path: '#',
 };
 
 export default CarouselThumbnail;

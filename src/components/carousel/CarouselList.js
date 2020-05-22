@@ -12,34 +12,42 @@ const thumbnails = [
     {
         title: 'Facial',
         image: FacialImage,
+        path: '/explore?categories=facial',
     },
     {
         title: 'Massage',
         image: MassageImage,
+        path: '/explore?categories=massage',
     },
     {
         title: 'Manicure',
         image: ManicureImage,
+        path: '/explore?categories=manicure',
     },
     {
         title: 'Hair Treatment',
         image: HairTreatmentImage,
+        path: '/explore?categories=hair-treatment',
     },
     {
         title: 'Hair Cut',
         image: HairCutImage,
+        path: '/explore?categories=hair-cut',
     },
     {
         title: 'Facial',
         image: FacialImage,
+        path: '/explore?categories=facial',
     },
     {
         title: 'Massage',
         image: MassageImage,
+        path: '/explore?categories=massage',
     },
     {
         title: 'Manicure',
         image: ManicureImage,
+        path: '/explore?categories=manicure',
     },
 ];
 
@@ -86,8 +94,8 @@ class CarouselList extends Component {
             <div className="carousel-list">
                 <img onClick={this.onPrevious} src={LeftCaret} className={leftCaretClassName} />
                 <div className="carousel-list__wrapper" ref={this.carousel}>
-                    {thumbnails.map(({ image, title }, index) => (
-                        <CarouselThumbnail key={index} image={image} title={title} />
+                    {thumbnails.map(({ image, path, title }, index) => (
+                        <CarouselThumbnail key={index} image={image} title={title} path={path} />
                     ))}
                 </div>
                 <img onClick={this.onNext} src={RightCaret} className={rightCaretClassName} />
