@@ -6,8 +6,13 @@
     height: min-content;
     border-bottom: 1px solid $color-grey-light-2;
 
-    &__title {
+    &__title,
+    &__title:link,
+    &__title:visited {
+        font-size: $font-xl;
+        text-decoration: none;
         text-transform: uppercase;
+        color: inherit;
         letter-spacing: 0.4rem;
         font-weight: 300;
         padding-left: 2rem;

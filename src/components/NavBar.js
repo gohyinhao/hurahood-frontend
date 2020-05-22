@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import Icon from './Icon';
 import CalendarIcon from '../assets/fontawesome/regular/calendar-alt.svg';
@@ -31,7 +32,9 @@ const icons = [
 const NavBar = () => {
     return (
         <header className="navbar">
-            <h1 className="navbar__title">hurahood</h1>
+            <Link to="/" className="navbar__title">
+                hurahood
+            </Link>
             <Searchbar className="navbar__search" />
             <nav className="navbar__icons">
                 {icons.map(({ iconName, icon }) => (
