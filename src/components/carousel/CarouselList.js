@@ -1,55 +1,9 @@
 import React, { Component } from 'react';
-import CarouselThumbnail from './CarouselThumbnail';
-import FacialImage from '../../assets/images/facial.jpg';
-import MassageImage from '../../assets/images/massage.jpg';
-import ManicureImage from '../../assets/images/manicure.jpg';
-import HairTreatmentImage from '../../assets/images/hair-treatment.png';
-import HairCutImage from '../../assets/images/hair-cut.jpg';
-import LeftCaret from '../../assets/fontawesome/solid/caret-left.svg';
-import RightCaret from '../../assets/fontawesome/solid/caret-right.svg';
-
-const thumbnails = [
-    {
-        title: 'Facial',
-        image: FacialImage,
-        path: '/explore?categories=facial',
-    },
-    {
-        title: 'Massage',
-        image: MassageImage,
-        path: '/explore?categories=massage',
-    },
-    {
-        title: 'Manicure',
-        image: ManicureImage,
-        path: '/explore?categories=manicure',
-    },
-    {
-        title: 'Hair Treatment',
-        image: HairTreatmentImage,
-        path: '/explore?categories=hair-treatment',
-    },
-    {
-        title: 'Hair Cut',
-        image: HairCutImage,
-        path: '/explore?categories=hair-cut',
-    },
-    {
-        title: 'Facial',
-        image: FacialImage,
-        path: '/explore?categories=facial',
-    },
-    {
-        title: 'Massage',
-        image: MassageImage,
-        path: '/explore?categories=massage',
-    },
-    {
-        title: 'Manicure',
-        image: ManicureImage,
-        path: '/explore?categories=manicure',
-    },
-];
+import PropTypes from 'prop-types';
+import LeftCaret from '../../assets/fontawesome/solid/angle-left.svg';
+import RightCaret from '../../assets/fontawesome/solid/angle-right.svg';
+import ThickLeftCaret from '../../assets/fontawesome/solid/caret-left.svg';
+import ThickRightCaret from '../../assets/fontawesome/solid/caret-right.svg';
 
 class CarouselList extends Component {
     state = {
@@ -62,6 +16,13 @@ class CarouselList extends Component {
 
     carousel = React.createRef();
 
+    componentDidMount() {
+        if (this.props.initialScrollPosition !== 0) {
+            this.carousel.current.scrollLeft = initialScrollPosition;
+            this.updateCaretState(initialScrollPosition);
+        }
+    }
+
     updateCaretState = (scrollLeft) => {
         const { offsetWidth, scrollWidth } = this.carousel.current;
 
@@ -69,39 +30,108 @@ class CarouselList extends Component {
             isLeftCaretDisabled: scrollLeft <= 0 ? true : false,
             isRightCaretDisabled: scrollLeft + offsetWidth >= scrollWidth ? true : false,
         }));
+
+        if (this.props.onScroll) {
+            this.props.onScroll(scrollLeft);
+        }
     };
 
     onNext = () => {
-        this.carousel.current.scrollLeft += 200;
-        this.updateCaretState(this.carousel.current.scrollLeft + 200);
+        const scrollAdjustment =
+            this.carousel.current.scrollLeft <= 0
+                ? this.props.firstScrollValue
+                : this.props.scrollValue;
+        this.carousel.current.scrollLeft += scrollAdjustment;
+        this.updateCaretState(this.carousel.current.scrollLeft + scrollAdjustment);
     };
 
     onPrevious = () => {
-        this.carousel.current.scrollLeft -= 200;
-        this.updateCaretState(this.carousel.current.scrollLeft - 200);
+        const { offsetWidth, scrollWidth } = this.carousel.current;
+        const scrollAdjustment =
+            this.carousel.current.scrollLeft + offsetWidth >= scrollWidth
+                ? this.props.lastScrollValue
+                : this.props.scrollValue;
+        this.carousel.current.scrollLeft -= scrollAdjustment;
+        this.updateCaretState(this.carousel.current.scrollLeft - scrollAdjustment);
     };
 
     render() {
-        const leftCaretClassName =
-            'carousel-list__caret carousel-list__caret--left' +
-            (this.state.isLeftCaretDisabled ? ' carousel-list__caret--disabled' : '');
+        const {
+            caretStyle,
+            className,
+            children,
+            imageWrapperClassName,
+            useInvisibleCarets,
+        } = this.props;
 
-        const rightCaretClassName =
-            'carousel-list__caret carousel-list__caret--right' +
+        const classNames =
+            'carousel-list ' +
+            (useInvisibleCarets ? '' : 'carousel-list--padding ') +
+            (className ? className : '');
+        const wrapperClassNames =
+            'carousel-list__wrapper ' + (imageWrapperClassName ? imageWrapperClassName : '');
+        const leftCaretClassNames =
+            'carousel-list__caret' +
+            (this.state.isLeftCaretDisabled ? ' carousel-list__caret--disabled' : '');
+        const rightCaretClassNames =
+            'carousel-list__caret' +
             (this.state.isRightCaretDisabled ? ' carousel-list__caret--disabled' : '');
+        const leftCaretWrapperClassNames =
+            'carousel-list__caret-wrapper carousel-list__caret-wrapper--left ' +
+            (useInvisibleCarets ? 'carousel-list__caret-wrapper--invisible ' : '') +
+            (caretStyle === 'none' ? 'carousel-list__caret-wrapper--none' : '');
+        const rightCaretWrapperClassNames =
+            'carousel-list__caret-wrapper carousel-list__caret-wrapper--right ' +
+            (useInvisibleCarets ? 'carousel-list__caret-wrapper--invisible ' : '') +
+            (caretStyle === 'none' ? 'carousel-list__caret-wrapper--none' : '');
 
         return (
-            <div className="carousel-list">
-                <img onClick={this.onPrevious} src={LeftCaret} className={leftCaretClassName} />
-                <div className="carousel-list__wrapper" ref={this.carousel}>
-                    {thumbnails.map(({ image, path, title }, index) => (
-                        <CarouselThumbnail key={index} image={image} title={title} path={path} />
-                    ))}
+            <div className={classNames}>
+                <div className={leftCaretWrapperClassNames}>
+                    <img
+                        onClick={this.onPrevious}
+                        src={caretStyle === 'thick' ? ThickLeftCaret : LeftCaret}
+                        className={leftCaretClassNames}
+                    />
                 </div>
-                <img onClick={this.onNext} src={RightCaret} className={rightCaretClassName} />
+                <div className={wrapperClassNames} ref={this.carousel}>
+                    {children}
+                </div>
+                <div className={rightCaretWrapperClassNames}>
+                    <img
+                        onClick={this.onNext}
+                        src={caretStyle === 'thick' ? ThickRightCaret : RightCaret}
+                        className={rightCaretClassNames}
+                    />
+                </div>
             </div>
         );
     }
 }
+
+CarouselList.propTypes = {
+    caretStyle: PropTypes.oneOf(['normal', 'thick', 'none']),
+    className: PropTypes.string,
+    children: PropTypes.node.isRequired,
+    firstScrollValue: PropTypes.number,
+    imageWrapperClassName: PropTypes.string,
+    initialScrollPosition: PropTypes.number,
+    lastScrollValue: PropTypes.number,
+    onScroll: PropTypes.func,
+    scrollValue: PropTypes.number,
+    useInvisibleCarets: PropTypes.bool,
+};
+
+CarouselList.defaultProps = {
+    caretStyle: 'normal',
+    className: '',
+    firstScrollValue: 200,
+    imageWrapperClassName: '',
+    initialScrollPosition: 0,
+    lastScrollValue: 200,
+    onScroll: undefined,
+    scrollValue: 200,
+    useInvisibleCarets: false,
+};
 
 export default CarouselList;

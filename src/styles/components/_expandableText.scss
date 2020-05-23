@@ -1,0 +1,14 @@
+.expandable-text {
+    display: flex;
+    flex-direction: column;
+
+    &__toggle {
+        align-self: flex-end;
+        font-size: $font-xxs;
+        cursor: pointer;
+
+        &:hover {
+            text-shadow: $light-black-text-shadow;
+        }
+    }
+}

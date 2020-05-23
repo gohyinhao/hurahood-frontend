@@ -4,10 +4,11 @@
 
     display: flex;
     align-items: center;
-    height: 12rem;
-    margin: 3rem 0;
-    padding: 0 4rem;
     position: relative;
+
+    &--padding {
+        padding: 0 4rem;
+    }
 
     &__wrapper {
         display: flex;
@@ -18,12 +19,12 @@
         height: 100%;
     }
 
-    &__caret {
+    &__caret-wrapper {
         position: absolute;
-        height: 6rem;
-        width: 6rem;
-        filter: $color-secondary-filter;
-        cursor: pointer;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        z-index: 10;
 
         &--left {
             left: -1.5rem;
@@ -32,6 +33,27 @@
         &--right {
             right: -1.5rem;
         }
+
+        &--invisible {
+            opacity: 0;
+            transition: all 0.2s;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &--none {
+            display: none;
+        }
+    }
+
+    &__caret {
+        height: 6rem;
+        width: 6rem;
+        filter: $color-secondary-filter;
+        cursor: pointer;
+        z-index: 10;
 
         &:hover {
             filter: $color-secondary-light-filter;

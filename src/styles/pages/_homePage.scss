@@ -1,4 +1,9 @@
 .homepage {
+    &__carousel-list {
+        margin: 3rem 0;
+        height: 12rem;
+    }
+
     &__list {
         grid-column-start: 1;
         grid-column-end: 13;

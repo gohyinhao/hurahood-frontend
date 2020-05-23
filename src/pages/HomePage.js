@@ -12,6 +12,55 @@ import Button from '../components/Button';
 import TextInput from '../components/input/TextInput';
 import HairdresserImage from '../assets/images/hairdresser.jpg';
 import HairdresserImage2 from '../assets/images/hairdresser-2.jpg';
+import CarouselThumbnail from '../components/carousel/CarouselThumbnail';
+import FacialImage from '../assets/images/facial.jpg';
+import MassageImage from '../assets/images/massage.jpg';
+import ManicureImage from '../assets/images/manicure.jpg';
+import HairTreatmentImage from '../assets/images/hair-treatment.png';
+import HairCutImage from '../assets/images/hair-cut.jpg';
+
+const thumbnails = [
+    {
+        title: 'Facial',
+        image: FacialImage,
+        path: '/explore?categories=facial',
+    },
+    {
+        title: 'Massage',
+        image: MassageImage,
+        path: '/explore?categories=massage',
+    },
+    {
+        title: 'Manicure',
+        image: ManicureImage,
+        path: '/explore?categories=manicure',
+    },
+    {
+        title: 'Hair Treatment',
+        image: HairTreatmentImage,
+        path: '/explore?categories=hair-treatment',
+    },
+    {
+        title: 'Hair Cut',
+        image: HairCutImage,
+        path: '/explore?categories=hair-cut',
+    },
+    {
+        title: 'Facial',
+        image: FacialImage,
+        path: '/explore?categories=facial',
+    },
+    {
+        title: 'Massage',
+        image: MassageImage,
+        path: '/explore?categories=massage',
+    },
+    {
+        title: 'Manicure',
+        image: ManicureImage,
+        path: '/explore?categories=manicure',
+    },
+];
 
 const trendingItems = [
     {
@@ -121,7 +170,15 @@ class HomePage extends Component {
         return (
             <>
                 <Carousel />
-                <CarouselList />
+                <CarouselList
+                    caretStyle="thick"
+                    scrollValue={220}
+                    className="homepage__carousel-list"
+                >
+                    {thumbnails.map(({ image, path, title }, index) => (
+                        <CarouselThumbnail key={index} image={image} title={title} path={path} />
+                    ))}
+                </CarouselList>
                 <h2>Trending</h2>
                 <List className="homepage__list">
                     {trendingItems.map((item, index) => (
@@ -162,7 +219,12 @@ class HomePage extends Component {
                             type="email"
                             value={this.state.messageText}
                         />
-                        <Button onClick={this.onSubmit} text="Sign up" />
+                        <Button
+                            onClick={this.onSubmit}
+                            text="Sign up"
+                            textColor="white"
+                            backgroundColor="black"
+                        />
                     </Form>
                 </Message>
             </>

@@ -29,7 +29,7 @@ const generateStarsArray = (rating) => {
     return array;
 };
 
-const Rating = ({ className, numOfRatings, rating }) => {
+const Rating = ({ className, numOfRatings, rating, showRatingValue }) => {
     const classNames = 'rating' + (className ? ` ${className}` : '');
 
     const array = generateStarsArray(rating);
@@ -37,7 +37,7 @@ const Rating = ({ className, numOfRatings, rating }) => {
     return (
         <div className={classNames}>
             <div className="rating__stars">
-                <span className="rating__value">{rating}</span>
+                {showRatingValue && <span className="rating__value">{rating}</span>}
                 {array.map((type, index) => (
                     <Star key={index} type={type} />
                 ))}
@@ -51,10 +51,12 @@ Rating.propTypes = {
     className: PropTypes.string,
     numOfRatings: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
+    showRatingValue: PropTypes.bool,
 };
 
 Rating.defaultProps = {
     className: '',
+    showRatingValue: false,
 };
 
 export default Rating;

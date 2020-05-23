@@ -14,7 +14,7 @@ const ProductItem = ({ brand, className, image, location, numOfRatings, rating, 
                 <h3 className="product-item__brand">{brand}</h3>
                 <h4 className="product-item__category">{category}</h4>
                 {<p className="product-item__location">{location ? location : 'Unavailable'}</p>}
-                <Rating rating={rating} numOfRatings={numOfRatings} />
+                <Rating showRatingValue rating={rating} numOfRatings={numOfRatings} />
             </div>
         </div>
     );

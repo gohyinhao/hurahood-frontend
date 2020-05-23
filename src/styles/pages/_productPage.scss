@@ -1,0 +1,33 @@
+.product-page {
+    &__display {
+        grid-column-start: 1;
+        grid-column-end: 13;
+        margin-top: 8rem;
+    }
+
+    &__border {
+        grid-column-start: 1;
+        grid-column-end: 13;
+        margin: 1rem 0;
+    }
+
+    &__gallery {
+        justify-content: center;
+        height: max-content;
+    }
+
+    &__image-wrapper {
+        justify-content: center;
+    }
+
+    &__image {
+        width: 6.4rem;
+        height: 5.5rem;
+        margin: 0 0.5rem;
+        padding: 0.5rem;
+
+        &--active {
+            border: 2px solid $color-primary;
+        }
+    }
+}

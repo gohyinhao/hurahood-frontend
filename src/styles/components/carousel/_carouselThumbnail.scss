@@ -1,7 +1,10 @@
 .carousel-thumbnail {
     align-self: stretch;
-    min-width: 20rem;
     position: relative;
+
+    &--medium {
+        min-width: 20rem;
+    }
 
     &:not(:last-child) {
         margin-right: 2rem;

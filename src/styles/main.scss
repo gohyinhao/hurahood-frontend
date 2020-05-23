@@ -13,6 +13,7 @@
 @import 'components/carousel/carouselThumbnail';
 @import 'components/button';
 @import 'components/dotSlider';
+@import 'components/expandableText';
 @import 'components/filters/categoryFilter';
 @import 'components/footer';
 @import 'components/form';
@@ -24,7 +25,9 @@
 @import 'components/message';
 @import 'components/navbar';
 @import 'components/paginator';
+@import 'components/product/productDisplay';
 @import 'components/product/productItem';
+@import 'components/product/productRating';
 @import 'components/product/productThumbnail';
 @import 'components/rating';
 @import 'components/scrollableList';
@@ -35,3 +38,4 @@
 
 @import 'pages/explorePage';
 @import 'pages/homePage';
+@import 'pages/productPage';

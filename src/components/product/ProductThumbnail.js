@@ -98,7 +98,7 @@ const ProductThumbnail = ({
                 <span className="product-thumbnail__price">
                     {calculatePriceTag(lowestPrice, highestPrice)}
                 </span>
-                <Rating rating={rating} numOfRatings={numOfRatings} />
+                <Rating rating={rating} numOfRatings={numOfRatings} showRatingValue />
             </div>
         </div>
     );
