@@ -17,9 +17,16 @@ class CarouselList extends Component {
     carousel = React.createRef();
 
     componentDidMount() {
-        if (this.props.initialScrollPosition !== 0) {
-            this.carousel.current.scrollLeft = initialScrollPosition;
-            this.updateCaretState(initialScrollPosition);
+        if (this.props.scrollPosition !== 0) {
+            this.carousel.current.scrollLeft = this.props.scrollPosition;
+            this.updateCaretState(this.props.scrollPosition);
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.scrollPosition !== this.props.scrollPosition) {
+            this.carousel.current.scrollLeft = this.props.scrollPosition;
+            this.updateCaretState(this.props.scrollPosition);
         }
     }
 
@@ -115,9 +122,9 @@ CarouselList.propTypes = {
     children: PropTypes.node.isRequired,
     firstScrollValue: PropTypes.number,
     imageWrapperClassName: PropTypes.string,
-    initialScrollPosition: PropTypes.number,
     lastScrollValue: PropTypes.number,
     onScroll: PropTypes.func,
+    scrollPosition: PropTypes.number,
     scrollValue: PropTypes.number,
     useInvisibleCarets: PropTypes.bool,
 };
@@ -127,9 +134,9 @@ CarouselList.defaultProps = {
     className: '',
     firstScrollValue: 200,
     imageWrapperClassName: '',
-    initialScrollPosition: 0,
     lastScrollValue: 200,
     onScroll: undefined,
+    scrollPosition: 0,
     scrollValue: 200,
     useInvisibleCarets: false,
 };

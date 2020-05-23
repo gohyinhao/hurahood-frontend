@@ -72,7 +72,14 @@ class ProductPage extends Component {
                             (index === this.state.activeImageIndex
                                 ? ' product-page__image--active'
                                 : '');
-                        return <img key={index} src={image} className={imgClassNames} />;
+                        return (
+                            <img
+                                key={index}
+                                src={image}
+                                onClick={() => this.onImageChange(index)}
+                                className={imgClassNames}
+                            />
+                        );
                     })}
                 </CarouselList>
                 <div className="product-page__border util-secondary-border"></div>

@@ -10,6 +10,7 @@ import MapMarkerIcon from '../../assets/fontawesome/solid/map-marker-alt.svg';
 import ChatIcon from '../../assets/fontawesome/regular/comment-alt.svg';
 
 const ProductDisplay = ({
+    activeImageIndex,
     brand,
     className,
     companyLogo,
@@ -25,6 +26,16 @@ const ProductDisplay = ({
     const firstScrollValue = 150;
     const scrollValue = 190;
     const lastScrollValue = 150;
+
+    const calcScrollPosition = () => {
+        if (activeImageIndex === 0) {
+            return 0;
+        } else if (activeImageIndex === 1) {
+            return firstScrollValue;
+        } else {
+            return firstScrollValue + (activeImageIndex - 1) * scrollValue;
+        }
+    };
 
     const onScroll = (scrollPosition) => {
         let imageIndex;
@@ -92,6 +103,7 @@ const ProductDisplay = ({
                 lastScrollValue={lastScrollValue}
                 className="product-display__image-gallery"
                 onScroll={onScroll}
+                scrollPosition={calcScrollPosition()}
             >
                 {images.map((image, index) => (
                     <img key={index} src={image} className="product-display__image" />
