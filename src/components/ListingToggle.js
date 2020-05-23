@@ -5,7 +5,7 @@ const ListingToggle = ({ className, onChange, value }) => {
     const classNames = 'listing-toggle ' + (className ? className : '');
     return (
         <div className={classNames}>
-            Number of listings shown:{' '}
+            Number of listings shown:
             <select
                 className="listing-toggle__select"
                 onChange={(e) => onChange(e.target.value)}

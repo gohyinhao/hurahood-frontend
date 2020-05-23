@@ -1,0 +1,48 @@
+.service-display {
+    font-size: $font-xs;
+
+    &__select-wrapper {
+        margin: 1rem;
+    }
+    &__select {
+        border: none;
+        font-size: $font-m;
+        border-bottom: 1px solid $color-primary;
+        cursor: pointer;
+    }
+
+    &__price {
+        margin-left: 3rem;
+        font-size: $font-l;
+    }
+
+    &__description {
+        text-align: justify;
+        margin: 0 0 1rem 1rem;
+    }
+
+    &__info-wrapper {
+        margin-left: 1rem;
+    }
+
+    &__info-header {
+        font-weight: 600;
+        cursor: pointer;
+
+        &:not(:last-child) {
+            margin-right: 1.5rem;
+        }
+
+        &:hover {
+            text-shadow: $light-black-text-shadow;
+        }
+
+        &--active {
+            border-bottom: 1px solid $color-primary;
+        }
+    }
+
+    &__info {
+        text-align: justify;
+    }
+}
