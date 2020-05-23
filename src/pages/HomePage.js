@@ -70,6 +70,7 @@ const trendingItems = [
         location: 'ABC Road',
         rating: 0.5,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -78,6 +79,7 @@ const trendingItems = [
         location: 'ABC Road',
         rating: 1.2,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -86,6 +88,7 @@ const trendingItems = [
         location: '6 Petir Rd',
         rating: 2.3,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -94,6 +97,7 @@ const trendingItems = [
         location: 'ABC Road',
         rating: 3.55,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -101,6 +105,7 @@ const trendingItems = [
         image: HairdresserImage,
         location: 'ABC Road',
         rating: 4.89,
+        id: '1',
         numOfRatings: 10,
     },
     {
@@ -109,6 +114,7 @@ const trendingItems = [
         image: HairdresserImage,
         rating: 5.0,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -117,6 +123,7 @@ const trendingItems = [
         location: 'ABC Road',
         rating: 4.23,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -125,6 +132,7 @@ const trendingItems = [
         location: '17 Cheong Chin Nam Rd',
         rating: 4.26,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -133,6 +141,7 @@ const trendingItems = [
         location: 'ABC Road',
         rating: 4.49,
         numOfRatings: 10,
+        id: '1',
     },
 ];
 
@@ -182,19 +191,20 @@ class HomePage extends Component {
                 <h2>Trending</h2>
                 <List className="homepage__list">
                     {trendingItems.map((item, index) => (
-                        <ProductItem
-                            key={index}
-                            brand={item.brand}
-                            image={item.image}
-                            location={item.location}
-                            numOfRatings={item.numOfRatings}
-                            rating={item.rating}
-                            category={item.category}
-                        />
+                        <Link to={`product/${item.id}`} key={index} className="homepage__list-item">
+                            <ProductItem
+                                brand={item.brand}
+                                image={item.image}
+                                location={item.location}
+                                numOfRatings={item.numOfRatings}
+                                rating={item.rating}
+                                category={item.category}
+                            />
+                        </Link>
                     ))}
                 </List>
                 <div className="homepage__list-link-wrapper">
-                    <Link to="#" className="homepage__list-link">
+                    <Link to="/explore" className="homepage__list-link">
                         See more
                     </Link>
                 </div>

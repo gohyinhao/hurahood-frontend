@@ -18,3 +18,12 @@ base + typography > general layout + grid > page layout > components
         } // 800px
     }
 }
+
+@mixin removeLinkStyles {
+    &,
+    &:link,
+    &:visited {
+        color: inherit;
+        text-decoration: none;
+    }
+}

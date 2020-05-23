@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import Carousel from '../components/carousel/Carousel';
 import ListingToggle from '../components/ListingToggle';
@@ -22,6 +23,7 @@ const productList = [
         lowestPrice: 15,
         rating: 0.51,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -32,6 +34,7 @@ const productList = [
         lowestPrice: 15,
         rating: 1.21,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -42,6 +45,7 @@ const productList = [
         lowestPrice: 5,
         rating: 1.51,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -52,6 +56,7 @@ const productList = [
         lowestPrice: 15,
         rating: 2.91,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -62,6 +67,7 @@ const productList = [
         lowestPrice: 25,
         rating: 3.41,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -72,6 +78,7 @@ const productList = [
         lowestPrice: 15,
         rating: 3.99,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -82,6 +89,7 @@ const productList = [
         lowestPrice: 15,
         rating: 4.01,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -92,6 +100,7 @@ const productList = [
         lowestPrice: 15,
         rating: 4.49,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -102,6 +111,7 @@ const productList = [
         lowestPrice: 15,
         rating: 4.56,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -112,6 +122,7 @@ const productList = [
         lowestPrice: 15,
         rating: 2.01,
         numOfRatings: 10,
+        id: '1',
     },
     {
         brand: 'ABC Haircut',
@@ -122,6 +133,7 @@ const productList = [
         lowestPrice: 299,
         rating: 5,
         numOfRatings: 10,
+        id: '1',
     },
 ];
 
@@ -143,19 +155,20 @@ class ExplorePage extends Component {
         const query = queryString.parse(this.props.location.search, { arrayFormat: 'comma' });
         const categories = [];
 
-        if (isString(query.categories)) {
-            categories.push(capitalizeCategory(query.categories));
-        } else {
-            query.categories.forEach((category) => {
-                categories.push(capitalizeCategory(category));
-            });
+        if (query.categories) {
+            if (isString(query.categories)) {
+                categories.push(capitalizeCategory(query.categories));
+            } else {
+                query.categories.forEach((category) => {
+                    categories.push(capitalizeCategory(category));
+                });
+            }
+            this.setState(() => ({
+                filters: {
+                    categories,
+                },
+            }));
         }
-        this.setState(() => ({
-            filters: {
-                categories,
-            },
-        }));
-
         this.filterAndLimitProducts();
     }
 
@@ -226,18 +239,22 @@ class ExplorePage extends Component {
                 </div>
                 <List className="explore-page__list">
                     {this.state.products.map((product, index) => (
-                        <ProductThumbnail
+                        <Link
                             key={index}
-                            brand={product.brand}
-                            category={product.category}
+                            to={`/product/${product.id}`}
                             className="explore-page__product-thumbnail"
-                            highestPrice={product.highestPrice}
-                            image={product.image}
-                            isFavourited={product.isFavourited}
-                            lowestPrice={product.lowestPrice}
-                            numOfRatings={product.numOfRatings}
-                            rating={product.rating}
-                        />
+                        >
+                            <ProductThumbnail
+                                brand={product.brand}
+                                category={product.category}
+                                highestPrice={product.highestPrice}
+                                image={product.image}
+                                isFavourited={product.isFavourited}
+                                lowestPrice={product.lowestPrice}
+                                numOfRatings={product.numOfRatings}
+                                rating={product.rating}
+                            />
+                        </Link>
                     ))}
                 </List>
                 <Paginator
