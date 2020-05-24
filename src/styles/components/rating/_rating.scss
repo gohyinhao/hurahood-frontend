@@ -8,6 +8,12 @@
         align-items: center;
     }
 
+    &__star {
+        &:not(:last-child) {
+            margin-right: 0.3rem;
+        }
+    }
+
     &__value {
         color: $color-grey-dark-2;
         font-size: $font-l;

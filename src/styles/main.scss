@@ -29,7 +29,10 @@
 @import 'components/product/productItem';
 @import 'components/product/productRating';
 @import 'components/product/productThumbnail';
-@import 'components/rating';
+@import 'components/rating/rating';
+@import 'components/rating/ratingBar';
+@import 'components/rating/ratingDisplay';
+@import 'components/rating/ratingDistribution';
 @import 'components/scrollableList';
 @import 'components/searchbar';
 @import 'components/serviceDisplay';

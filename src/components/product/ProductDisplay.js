@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Rating from '../Rating';
+import Rating from '../rating/Rating';
 import Button from '../Button';
 import CarouselList from '../carousel/CarouselList';
 import ExpandableText from '../ExpandableText';
@@ -63,6 +63,7 @@ const ProductDisplay = ({
                 className="product-display__rating"
                 numOfRatings={numOfRatings}
                 rating={rating}
+                showNumOfRatings
             />
             <div className="product-display__location">
                 <img src={MapMarkerIcon} className="product-display__location-icon" />

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ProductDisplay from '../components/product/ProductDisplay';
 import CarouselList from '../components/carousel/CarouselList';
 import ServiceDisplay from '../components/ServiceDisplay';
+import RatingDisplay from '../components/rating/RatingDisplay';
+import RatingDistribution from '../components/rating/RatingDistribution';
 import CompanyLogo from '../assets/images/company-logo.png';
 import MassageImage from '../assets/images/massage.jpg';
 import MassageImage2 from '../assets/images/massage-2.jpg';
@@ -17,8 +19,17 @@ class ProductPage extends Component {
             images: [MassageImage, MassageImage2, MassageImage3, MassageImage],
             isFavourited: true,
             location: '21 Circular Road',
-            rating: 4.56,
-            numOfRatings: 10,
+            rating: {
+                value: 4.08,
+                numOfRatings: 12,
+                ratingsBreakdown: {
+                    oneStar: 0,
+                    twoStar: 2,
+                    threeStar: 1,
+                    fourStar: 3,
+                    fiveStar: 6,
+                },
+            },
             services: [
                 {
                     name: 'Aromatherapy Massage',
@@ -67,7 +78,6 @@ class ProductPage extends Component {
             isFavourited,
             location,
             rating,
-            numOfRatings,
         } = this.state.product;
 
         return (
@@ -82,8 +92,8 @@ class ProductPage extends Component {
                     isFavourited={isFavourited}
                     location={location}
                     onImageChange={this.onImageChange}
-                    rating={rating}
-                    numOfRatings={numOfRatings}
+                    rating={rating.value}
+                    numOfRatings={rating.numOfRatings}
                 />
                 <div className="product-page__border util-secondary-border"></div>
                 <CarouselList
@@ -112,6 +122,18 @@ class ProductPage extends Component {
                     className="product-page__services"
                     services={this.state.product.services}
                 />
+                <h2 className="product-page__ratings-header">Ratings & Reviews</h2>
+                <div className="product-page__ratings">
+                    <RatingDisplay
+                        className="product-page__rating-display"
+                        rating={rating.value}
+                        numOfRatings={rating.numOfRatings}
+                    />
+                    <RatingDistribution
+                        className="product-page__rating-distribution"
+                        ratings={rating.ratingsBreakdown}
+                    />
+                </div>
             </>
         );
     }

@@ -1,0 +1,16 @@
+.rating-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__value {
+        font-size: 6rem;
+        line-height: 1.2;
+        font-weight: 600;
+        color: $color-tertiary;
+    }
+
+    &__reviews {
+        font-size: $font-xxs;
+    }
+}

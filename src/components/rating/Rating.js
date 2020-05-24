@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Star from './utility/Star';
+import Star from '../utility/Star';
 
 const generateStarsArray = (rating) => {
     const array = [];
@@ -29,7 +29,7 @@ const generateStarsArray = (rating) => {
     return array;
 };
 
-const Rating = ({ className, numOfRatings, rating, showRatingValue }) => {
+const Rating = ({ className, numOfRatings, rating, showNumOfRatings, showRatingValue }) => {
     const classNames = 'rating' + (className ? ` ${className}` : '');
 
     const array = generateStarsArray(rating);
@@ -39,9 +39,11 @@ const Rating = ({ className, numOfRatings, rating, showRatingValue }) => {
             <div className="rating__stars">
                 {showRatingValue && <span className="rating__value">{rating}</span>}
                 {array.map((type, index) => (
-                    <Star key={index} type={type} />
+                    <Star key={index} className="rating__star" type={type} />
                 ))}
-                <span className="rating__num-of-ratings">({numOfRatings})</span>
+                {showNumOfRatings && (
+                    <span className="rating__num-of-ratings">({numOfRatings})</span>
+                )}
             </div>
         </div>
     );
@@ -49,13 +51,16 @@ const Rating = ({ className, numOfRatings, rating, showRatingValue }) => {
 
 Rating.propTypes = {
     className: PropTypes.string,
-    numOfRatings: PropTypes.number.isRequired,
+    numOfRatings: PropTypes.number,
     rating: PropTypes.number.isRequired,
+    showNumOfRatings: PropTypes.bool,
     showRatingValue: PropTypes.bool,
 };
 
 Rating.defaultProps = {
     className: '',
+    numOfRatings: 0,
+    showNumOfRatings: false,
     showRatingValue: false,
 };
 

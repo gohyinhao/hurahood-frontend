@@ -37,4 +37,28 @@
         grid-column-end: 13;
         margin: 4rem 0;
     }
+
+    &__ratings-header {
+        grid-column-start: 1;
+        grid-column-end: 13;
+    }
+
+    &__ratings {
+        grid-column-start: 1;
+        grid-column-end: 13;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+
+    &__rating-display {
+        margin: 0 2rem;
+    }
+
+    &__rating-distribution {
+        margin: 0 10rem;
+        width: 65%;
+    }
 }

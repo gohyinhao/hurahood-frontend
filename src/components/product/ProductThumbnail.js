@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Rating from '../../components/Rating';
+import Rating from '../../components/rating/Rating';
 import HeartImage from '../../assets/fontawesome/regular/heart.svg';
 import FilledHeartImage from '../../assets/fontawesome/solid/heart.svg';
 
@@ -98,7 +98,12 @@ const ProductThumbnail = ({
                 <span className="product-thumbnail__price">
                     {calculatePriceTag(lowestPrice, highestPrice)}
                 </span>
-                <Rating rating={rating} numOfRatings={numOfRatings} showRatingValue />
+                <Rating
+                    rating={rating}
+                    numOfRatings={numOfRatings}
+                    showNumOfRatings
+                    showRatingValue
+                />
             </div>
         </div>
     );

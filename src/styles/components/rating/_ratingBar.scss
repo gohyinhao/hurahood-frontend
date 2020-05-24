@@ -1,0 +1,17 @@
+.rating-bar {
+    display: flex;
+    align-items: center;
+
+    &__bar {
+        flex-grow: 1;
+        height: 1.5rem;
+        border-radius: 20px;
+        border: 1px solid $color-grey-dark-3;
+        margin: 0 1rem;
+    }
+
+    &__count {
+        font-size: $font-xs;
+        margin: 0 1rem;
+    }
+}
