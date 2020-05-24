@@ -4,10 +4,13 @@ import CarouselList from '../components/carousel/CarouselList';
 import ServiceDisplay from '../components/ServiceDisplay';
 import RatingDisplay from '../components/rating/RatingDisplay';
 import RatingDistribution from '../components/rating/RatingDistribution';
+import Review from '../components/Review';
 import CompanyLogo from '../assets/images/company-logo.png';
 import MassageImage from '../assets/images/massage.jpg';
 import MassageImage2 from '../assets/images/massage-2.jpg';
 import MassageImage3 from '../assets/images/massage-3.jpg';
+import ProfilePic1 from '../assets/images/profile-pic-1.jpg';
+import ProfilePic2 from '../assets/images/profile-pic-2.jpg';
 
 class ProductPage extends Component {
     state = {
@@ -56,6 +59,42 @@ class ProductPage extends Component {
             ],
         },
         activeImageIndex: 0,
+        reviewFilters: {
+            text: '',
+        },
+        reviews: [
+            {
+                rating: 5,
+                text:
+                    'ultrices erat. Donec tellus nunc, posuere nec tempus vel, finibus vitae risus. Nulla volutpat ex in mattis vestibulum. Curabitur gravida ipsum a magna suscipit, non maximus nibh convallis. Quisque mattis felis id velit lacinia viverra. Ut id mattis metus. Quisque nibh est, congue et ex et, dignissim placerat sapien. Pellentesque venenatis ornare nisi, ut elementum est pellentesque in. Nam maximus, est vel scelerisque pretium, purus nisl egestas enim, in ',
+                timestamp: 1590210633000,
+                user: {
+                    profilePic: ProfilePic1,
+                    name: 'Margaret Boom',
+                },
+            },
+            {
+                rating: 4,
+                text:
+                    'cidunt, sed maximus nisi consectetur. Nunc tempus varius est sed auctor. Integer urna eros, porttitor in maximus ac, faucibus ac velit. Nulla ut tempus urna. In lorem sapien, dictum con Proin volutpat finibus auctor. Phasellus gravida eros sed tellus mattis pulvinar. Morbi molestie justo molestie risus rutrum, et mollis lectus gravida. In vel tincidunt justo, a ornare ante. Sed non pulvinar mi, sit amet elementum est. Pellentesque tristique pretium erat in ultricies. Duis mattis leo sit amet congue rutrum. Cras libero nunc, efficitur in est id, facilisis pharetra enim. Suspendisse sit amet eros placerat, lacinia turpis nec, hendrerit felis.',
+                timestamp: 1589519433000,
+                user: {
+                    profilePic: ProfilePic2,
+                    name: 'John Blabber',
+                },
+            },
+            {
+                rating: 3,
+                text:
+                    'Mauris imperdiet imperdiet lacus, et condimentum libero laoreet quis. Mauris vehicula varius risus, eu tristique risus placerat vel. Pellentesque sodales consequat quam ut scelerisque. Mauris condimentum semper sem non efficitur. Aenean posuere nisl non dapibus rhoncus. Proin volutpat finibus auctor. Phasellus gravida eros sed tellus mattis pulvinar. Morbi molestie justo molestie risus rutrum, et mollis lectus gravida. In vel tincidunt justo, a ornare ante. Sed non pulvinar mi, sit amet elementum est. Pellentesque tristique pretium erat in ultricies. Duis mattis leo sit amet congue rutrum. Cras libero nunc, efficitur in est id, facilisis pharetra enim. Suspendisse sit amet eros placerat, lacinia turpis nec, hendrerit felis.',
+                timestamp: 1586927433000,
+                images: [],
+                user: {
+                    profilePic: ProfilePic2,
+                    name: 'John Blabber 2',
+                },
+            },
+        ],
     };
 
     componentDidMount() {
@@ -134,9 +173,20 @@ class ProductPage extends Component {
                         ratings={rating.ratingsBreakdown}
                     />
                 </div>
+                <div className="product-page__review-filters">
+                    Placeholder for sorting and filtering
+                </div>
+                <div className="product-page__reviews">
+                    {this.state.reviews.map((review, index) => (
+                        <Review className="product-page__review" key={index} {...review} />
+                    ))}
+                </div>
             </>
         );
     }
 }
+
+// TODO: add text filter for reviews and possibly other filters and sort
+// TODO: add images to reviews
 
 export default ProductPage;

@@ -61,4 +61,22 @@
         margin: 0 10rem;
         width: 65%;
     }
+
+    &__review-filters {
+        grid-column-start: 1;
+        grid-column-end: 13;
+        margin-bottom: 1rem;
+    }
+
+    &__reviews {
+        grid-column-start: 1;
+        grid-column-end: 13;
+        margin-left: 1rem;
+    }
+
+    &__review {
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
 }

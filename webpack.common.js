@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -42,5 +43,7 @@ module.exports = {
             template: 'src/index.html',
             favicon: 'src/assets/images/hurahood_logo_no_background.png',
         }),
+        // To strip all locales except “en”
+        new MomentLocalesPlugin(),
     ],
 };
