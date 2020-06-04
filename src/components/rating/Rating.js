@@ -21,26 +21,31 @@ const generateStarsArray = (rating) => {
         }
     }
 
-    while (count < 5) {
-        array.push('empty');
-        count++;
-    }
-
     return array;
 };
 
-const Rating = ({ className, numOfRatings, rating, showNumOfRatings, showRatingValue }) => {
-    const classNames = 'rating' + (className ? ` ${className}` : '');
+const Rating = ({
+    className,
+    numOfRatings,
+    rating,
+    showNumOfRatings,
+    showRatingValue,
+    starAlignment,
+}) => {
+    const classNames = 'rating ' + (className ? className : '');
+    const starWrapperClassNames = `rating__star-wrapper rating__star-wrapper--${starAlignment}`;
 
     const array = generateStarsArray(rating);
 
     return (
         <div className={classNames}>
-            <div className="rating__stars">
+            <div className="rating__wrapper">
                 {showRatingValue && <span className="rating__value">{rating}</span>}
-                {array.map((type, index) => (
-                    <Star key={index} className="rating__star" type={type} />
-                ))}
+                <div className={starWrapperClassNames}>
+                    {array.map((type, index) => (
+                        <Star key={index} className="rating__star" type={type} />
+                    ))}
+                </div>
                 {showNumOfRatings && (
                     <span className="rating__num-of-ratings">({numOfRatings})</span>
                 )}
@@ -55,6 +60,7 @@ Rating.propTypes = {
     rating: PropTypes.number.isRequired,
     showNumOfRatings: PropTypes.bool,
     showRatingValue: PropTypes.bool,
+    starAlignment: PropTypes.oneOf(['left', 'center', 'right']),
 };
 
 Rating.defaultProps = {
@@ -62,6 +68,7 @@ Rating.defaultProps = {
     numOfRatings: 0,
     showNumOfRatings: false,
     showRatingValue: false,
+    starAlignment: 'left',
 };
 
 export default Rating;

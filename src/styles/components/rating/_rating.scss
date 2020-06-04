@@ -1,17 +1,8 @@
 .rating {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &__stars {
+    &__wrapper {
         display: flex;
         align-items: center;
-    }
-
-    &__star {
-        &:not(:last-child) {
-            margin-right: 0.3rem;
-        }
+        justify-content: center;
     }
 
     &__value {
@@ -20,6 +11,30 @@
         font-weight: 300;
         margin: 0 1rem;
         text-shadow: 1px 1px 1px $color-grey-light-3;
+    }
+
+    &__star-wrapper {
+        display: flex;
+        align-items: center;
+        width: 8.7rem;
+
+        &--left {
+            justify-content: flex-start;
+        }
+
+        &--center {
+            justify-content: center;
+        }
+
+        &--right {
+            justify-content: flex-end;
+        }
+    }
+
+    &__star {
+        &:not(:last-child) {
+            margin-right: 0.3rem;
+        }
     }
 
     &__num-of-ratings {
