@@ -25,7 +25,7 @@ class ProductPage extends Component {
             rating: {
                 value: 4.08,
                 numOfRatings: 12,
-                ratingsBreakdown: {
+                breakdown: {
                     oneStar: 0,
                     twoStar: 2,
                     threeStar: 1,
@@ -57,44 +57,44 @@ class ProductPage extends Component {
                     ],
                 },
             ],
+            reviews: [
+                {
+                    rating: 5,
+                    text:
+                        'ultrices erat. Donec tellus nunc, posuere nec tempus vel, finibus vitae risus. Nulla volutpat ex in mattis vestibulum. Curabitur gravida ipsum a magna suscipit, non maximus nibh convallis. Quisque mattis felis id velit lacinia viverra. Ut id mattis metus. Quisque nibh est, congue et ex et, dignissim placerat sapien. Pellentesque venenatis ornare nisi, ut elementum est pellentesque in. Nam maximus, est vel scelerisque pretium, purus nisl egestas enim, in ',
+                    timestamp: 1590210633000,
+                    user: {
+                        avatar: ProfilePic1,
+                        name: 'Margaret Boom',
+                    },
+                },
+                {
+                    rating: 4,
+                    text:
+                        'cidunt, sed maximus nisi consectetur. Nunc tempus varius est sed auctor. Integer urna eros, porttitor in maximus ac, faucibus ac velit. Nulla ut tempus urna. In lorem sapien, dictum con Proin volutpat finibus auctor. Phasellus gravida eros sed tellus mattis pulvinar. Morbi molestie justo molestie risus rutrum, et mollis lectus gravida. In vel tincidunt justo, a ornare ante. Sed non pulvinar mi, sit amet elementum est. Pellentesque tristique pretium erat in ultricies. Duis mattis leo sit amet congue rutrum. Cras libero nunc, efficitur in est id, facilisis pharetra enim. Suspendisse sit amet eros placerat, lacinia turpis nec, hendrerit felis.',
+                    timestamp: 1589519433000,
+                    user: {
+                        avatar: ProfilePic2,
+                        name: 'John Blabber',
+                    },
+                },
+                {
+                    rating: 3,
+                    text:
+                        'Mauris imperdiet imperdiet lacus, et condimentum libero laoreet quis. Mauris vehicula varius risus, eu tristique risus placerat vel. Pellentesque sodales consequat quam ut scelerisque. Mauris condimentum semper sem non efficitur. Aenean posuere nisl non dapibus rhoncus. Proin volutpat finibus auctor. Phasellus gravida eros sed tellus mattis pulvinar. Morbi molestie justo molestie risus rutrum, et mollis lectus gravida. In vel tincidunt justo, a ornare ante. Sed non pulvinar mi, sit amet elementum est. Pellentesque tristique pretium erat in ultricies. Duis mattis leo sit amet congue rutrum. Cras libero nunc, efficitur in est id, facilisis pharetra enim. Suspendisse sit amet eros placerat, lacinia turpis nec, hendrerit felis.',
+                    timestamp: 1586927433000,
+                    images: [],
+                    user: {
+                        avatar: ProfilePic2,
+                        name: 'John Blabber 2',
+                    },
+                },
+            ],
         },
         activeImageIndex: 0,
         reviewFilters: {
             text: '',
         },
-        reviews: [
-            {
-                rating: 5,
-                text:
-                    'ultrices erat. Donec tellus nunc, posuere nec tempus vel, finibus vitae risus. Nulla volutpat ex in mattis vestibulum. Curabitur gravida ipsum a magna suscipit, non maximus nibh convallis. Quisque mattis felis id velit lacinia viverra. Ut id mattis metus. Quisque nibh est, congue et ex et, dignissim placerat sapien. Pellentesque venenatis ornare nisi, ut elementum est pellentesque in. Nam maximus, est vel scelerisque pretium, purus nisl egestas enim, in ',
-                timestamp: 1590210633000,
-                user: {
-                    profilePic: ProfilePic1,
-                    name: 'Margaret Boom',
-                },
-            },
-            {
-                rating: 4,
-                text:
-                    'cidunt, sed maximus nisi consectetur. Nunc tempus varius est sed auctor. Integer urna eros, porttitor in maximus ac, faucibus ac velit. Nulla ut tempus urna. In lorem sapien, dictum con Proin volutpat finibus auctor. Phasellus gravida eros sed tellus mattis pulvinar. Morbi molestie justo molestie risus rutrum, et mollis lectus gravida. In vel tincidunt justo, a ornare ante. Sed non pulvinar mi, sit amet elementum est. Pellentesque tristique pretium erat in ultricies. Duis mattis leo sit amet congue rutrum. Cras libero nunc, efficitur in est id, facilisis pharetra enim. Suspendisse sit amet eros placerat, lacinia turpis nec, hendrerit felis.',
-                timestamp: 1589519433000,
-                user: {
-                    profilePic: ProfilePic2,
-                    name: 'John Blabber',
-                },
-            },
-            {
-                rating: 3,
-                text:
-                    'Mauris imperdiet imperdiet lacus, et condimentum libero laoreet quis. Mauris vehicula varius risus, eu tristique risus placerat vel. Pellentesque sodales consequat quam ut scelerisque. Mauris condimentum semper sem non efficitur. Aenean posuere nisl non dapibus rhoncus. Proin volutpat finibus auctor. Phasellus gravida eros sed tellus mattis pulvinar. Morbi molestie justo molestie risus rutrum, et mollis lectus gravida. In vel tincidunt justo, a ornare ante. Sed non pulvinar mi, sit amet elementum est. Pellentesque tristique pretium erat in ultricies. Duis mattis leo sit amet congue rutrum. Cras libero nunc, efficitur in est id, facilisis pharetra enim. Suspendisse sit amet eros placerat, lacinia turpis nec, hendrerit felis.',
-                timestamp: 1586927433000,
-                images: [],
-                user: {
-                    profilePic: ProfilePic2,
-                    name: 'John Blabber 2',
-                },
-            },
-        ],
     };
 
     componentDidMount() {
@@ -170,14 +170,14 @@ class ProductPage extends Component {
                     />
                     <RatingDistribution
                         className="product-page__rating-distribution"
-                        ratings={rating.ratingsBreakdown}
+                        ratings={rating.breakdown}
                     />
                 </div>
                 <div className="product-page__review-filters">
                     Placeholder for sorting and filtering
                 </div>
                 <div className="product-page__reviews">
-                    {this.state.reviews.map((review, index) => (
+                    {this.state.product.reviews.map((review, index) => (
                         <Review className="product-page__review" key={index} {...review} />
                     ))}
                 </div>

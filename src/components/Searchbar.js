@@ -15,9 +15,6 @@ class Searchbar extends Component {
     render() {
         return (
             <form className={`searchbar ${this.props.className}`} onSubmit={this.props.onSubmit}>
-                <button className="searchbar__button">
-                    <img src={SearchIcon} className="searchbar__icon" />
-                </button>
                 <input
                     type="text"
                     placeholder="Search for service or salon name"
@@ -26,6 +23,9 @@ class Searchbar extends Component {
                     onChange={this.onChange}
                     autoComplete="on"
                 />
+                <button className="searchbar__button">
+                    <img src={SearchIcon} className="searchbar__icon" />
+                </button>
             </form>
         );
     }

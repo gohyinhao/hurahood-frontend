@@ -6,13 +6,13 @@ import Rating from './rating/Rating';
 
 // TODO: add images to reviews
 
-const Review = ({ className, rating, text, timestamp, user: { profilePic, name } }) => {
+const Review = ({ className, rating, text, timestamp, user: { avatar, name } }) => {
     const classNames = 'review ' + (className ? className : '');
 
     return (
         <div className={classNames}>
             <div className="review__info-wrapper">
-                <img className="review__profile-pic" src={profilePic} alt="Profile Picture" />
+                <img className="review__profile-pic" src={avatar} alt="Profile Picture" />
                 <div className="review__user-name">{name}</div>
                 <div className="review__rating-wrapper">
                     <Rating rating={rating} />
@@ -32,7 +32,7 @@ Review.propTypes = {
     text: PropTypes.string.isRequired,
     timestamp: PropTypes.number.isRequired,
     user: PropTypes.shape({
-        profilePic: PropTypes.string.isRequired,
+        avatar: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
     }).isRequired,
 };
