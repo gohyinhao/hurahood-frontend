@@ -5,11 +5,11 @@ import Rating from './Rating';
 const RatingBar = ({ className, numOfRatings, rating, percentage }) => {
     const classNames = 'rating-bar ' + (className ? className : '');
     const barStyles = {
-        background: `linear-gradient(to right, #ffa500 0%, #ffa500 ${percentage}%, #fff ${percentage}%, #fff 100%)`,
+        background: `linear-gradient(to right, #ffa500 0%, #ffa500 ${percentage}%, #f0eeee ${percentage}%, #f0eeee 100%)`,
     };
     return (
         <div className={classNames}>
-            <Rating rating={rating} />
+            <Rating rating={rating} starAlignment="right" />
             <div className="rating-bar__bar" style={barStyles} />
             <span className="rating-bar__count">{numOfRatings}</span>
         </div>
