@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Carousel from '../components/carousel/Carousel';
 import CarouselList from '../components/carousel/CarouselList';
@@ -10,8 +11,6 @@ import Message from '../components/Message';
 import Form from '../components/Form';
 import Button from '../components/Button';
 import TextInput from '../components/input/TextInput';
-import HairdresserImage from '../assets/images/hairdresser.jpg';
-import HairdresserImage2 from '../assets/images/hairdresser-2.jpg';
 import CarouselThumbnail from '../components/carousel/CarouselThumbnail';
 import FacialImage from '../assets/images/facial.jpg';
 import MassageImage from '../assets/images/massage.jpg';
@@ -23,125 +22,42 @@ const thumbnails = [
     {
         title: 'Facial',
         image: FacialImage,
-        path: '/explore?categories=facial',
+        path: '/explore?categories[]=facial',
     },
     {
         title: 'Massage',
         image: MassageImage,
-        path: '/explore?categories=massage',
+        path: '/explore?categories[]=massage',
     },
     {
         title: 'Manicure',
         image: ManicureImage,
-        path: '/explore?categories=manicure',
+        path: '/explore?categories[]=manicure',
     },
     {
         title: 'Hair Treatment',
         image: HairTreatmentImage,
-        path: '/explore?categories=hair-treatment',
+        path: '/explore?categories[]=hair-treatment',
     },
     {
         title: 'Hair Cut',
         image: HairCutImage,
-        path: '/explore?categories=hair-cut',
+        path: '/explore?categories[]=hair-cut',
     },
     {
         title: 'Facial',
         image: FacialImage,
-        path: '/explore?categories=facial',
+        path: '/explore?categories[]=facial',
     },
     {
         title: 'Massage',
         image: MassageImage,
-        path: '/explore?categories=massage',
+        path: '/explore?categories[]=massage',
     },
     {
         title: 'Manicure',
         image: ManicureImage,
-        path: '/explore?categories=manicure',
-    },
-];
-
-const trendingItems = [
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage2,
-        location: 'ABC Road',
-        rating: 0.5,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage2,
-        location: 'ABC Road',
-        rating: 1.2,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage2,
-        location: '6 Petir Rd',
-        rating: 2.3,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage,
-        location: 'ABC Road',
-        rating: 3.55,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage,
-        location: 'ABC Road',
-        rating: 4.89,
-        id: '1',
-        numOfRatings: 10,
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage,
-        rating: 5.0,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage2,
-        location: 'ABC Road',
-        rating: 4.23,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage2,
-        location: '17 Cheong Chin Nam Rd',
-        rating: 4.26,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Haircut',
-        image: HairdresserImage2,
-        location: 'ABC Road',
-        rating: 4.49,
-        numOfRatings: 10,
-        id: '1',
+        path: '/explore?categories[]=manicure',
     },
 ];
 
@@ -190,7 +106,7 @@ class HomePage extends Component {
                 </CarouselList>
                 <h2>Trending</h2>
                 <List className="homepage__list">
-                    {trendingItems.map((item, index) => (
+                    {this.props.trendingProducts.map((item, index) => (
                         <Link to={`product/${item.id}`} key={index} className="homepage__list-item">
                             <ProductItem
                                 brand={item.brand}
@@ -242,4 +158,8 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+const mapStateToProps = (state) => ({
+    trendingProducts: state.products.trendingList,
+});
+
+export default connect(mapStateToProps)(HomePage);

@@ -64,6 +64,7 @@ const ProductDisplay = ({
                 numOfRatings={numOfRatings}
                 rating={rating}
                 showNumOfRatings
+                showRatingValue
             />
             <div className="product-display__location">
                 <img src={MapMarkerIcon} className="product-display__location-icon" />
@@ -98,6 +99,7 @@ const ProductDisplay = ({
             />
             <ExpandableText className="product-display__description" text={description} />
             <CarouselList
+                caretStyle="thick"
                 useInvisibleCarets
                 firstScrollValue={firstScrollValue}
                 scrollValue={scrollValue}

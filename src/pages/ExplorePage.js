@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import Carousel from '../components/carousel/Carousel';
@@ -10,132 +11,6 @@ import Paginator from '../components/Paginator';
 import { filterProducts, limitProducts } from '../utils/products';
 import { capitalizeCategory } from '../utils/categories';
 import { isString } from '../utils/string';
-import HairdresserImage from '../assets/images/hairdresser.jpg';
-import HairdresserImage2 from '../assets/images/hairdresser-2.jpg';
-
-const productList = [
-    {
-        brand: 'ABC Haircut',
-        category: 'Hair Cut',
-        highestPrice: 15,
-        image: HairdresserImage,
-        isFavourited: true,
-        lowestPrice: 15,
-        rating: 0.51,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Facial',
-        highestPrice: 25,
-        image: HairdresserImage,
-        isFavourited: false,
-        lowestPrice: 15,
-        rating: 1.21,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Massage',
-        highestPrice: 115,
-        image: HairdresserImage,
-        isFavourited: true,
-        lowestPrice: 5,
-        rating: 1.51,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Manicure',
-        highestPrice: 115,
-        image: HairdresserImage,
-        isFavourited: true,
-        lowestPrice: 15,
-        rating: 2.91,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Hair Treatment',
-        highestPrice: 55,
-        image: HairdresserImage,
-        isFavourited: true,
-        lowestPrice: 25,
-        rating: 3.41,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Hair Cut',
-        highestPrice: 15,
-        image: HairdresserImage2,
-        isFavourited: true,
-        lowestPrice: 15,
-        rating: 3.99,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Hair Treatment',
-        highestPrice: 15,
-        image: HairdresserImage2,
-        isFavourited: true,
-        lowestPrice: 15,
-        rating: 4.01,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Massage',
-        highestPrice: 15,
-        image: HairdresserImage2,
-        isFavourited: true,
-        lowestPrice: 15,
-        rating: 4.49,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Manicure',
-        highestPrice: 25,
-        image: HairdresserImage2,
-        isFavourited: true,
-        lowestPrice: 15,
-        rating: 4.56,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Massage',
-        highestPrice: 15,
-        image: HairdresserImage,
-        isFavourited: true,
-        lowestPrice: 15,
-        rating: 2.01,
-        numOfRatings: 10,
-        id: '1',
-    },
-    {
-        brand: 'ABC Haircut',
-        category: 'Massage',
-        highestPrice: 511,
-        image: HairdresserImage,
-        isFavourited: true,
-        lowestPrice: 299,
-        rating: 5,
-        numOfRatings: 10,
-        id: '1',
-    },
-];
 
 class ExplorePage extends Component {
     state = {
@@ -145,14 +20,14 @@ class ExplorePage extends Component {
         paging: {
             currentPage: 1,
             listingsPerPage: '20',
-            totalListings: productList.length,
+            totalListings: this.props.productList.length,
         },
         filteredProducts: [],
         products: [],
     };
 
     componentDidMount() {
-        const query = queryString.parse(this.props.location.search, { arrayFormat: 'comma' });
+        const query = queryString.parse(this.props.location.search, { arrayFormat: 'bracket' });
         const categories = [];
 
         if (query.categories) {
@@ -185,7 +60,7 @@ class ExplorePage extends Component {
     }
 
     filterAndLimitProducts = () => {
-        const filteredProducts = filterProducts(productList, this.state.filters);
+        const filteredProducts = filterProducts(this.props.productList, this.state.filters);
 
         this.setState(() => ({
             filteredProducts,
@@ -270,4 +145,8 @@ class ExplorePage extends Component {
 
 ExplorePage.propTypes = {};
 
-export default ExplorePage;
+const mapStateToProps = (state) => ({
+    productList: state.products.productList,
+});
+
+export default connect(mapStateToProps)(ExplorePage);
