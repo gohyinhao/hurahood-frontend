@@ -1,83 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Rating from '../../components/rating/Rating';
-import HeartImage from '../../assets/fontawesome/regular/heart.svg';
-import FilledHeartImage from '../../assets/fontawesome/solid/heart.svg';
+import HeartImage from '../../assets/images/heart.svg';
+import FilledHeartImage from '../../assets/images/heart-filled.svg';
 
-// PRICE TIER LIST
-const SINGLE_DOLLAR_CAP = 20; // $
-const DOUBLE_DOLLAR_CAP = 50; // $$
-const TRIPLE_DOLLAR_CAP = 100; // $$$
-const QUAD_DOLLAR_CAP = 300; // $$$$
-
-const calculatePriceTag = (lowestPrice, highestPrice) => {
+const calculatePriceRange = (prices) => {
     let result = '';
+    let lowestPrice = Number.MAX_SAFE_INTEGER;
+    let highestPrice = Number.MIN_SAFE_INTEGER;
 
-    if (lowestPrice <= SINGLE_DOLLAR_CAP) {
-        result += '$';
-
-        if (highestPrice <= SINGLE_DOLLAR_CAP) {
-            // do nothing
-        } else if (highestPrice <= DOUBLE_DOLLAR_CAP) {
-            result += ' - $$';
-        } else if (highestPrice <= TRIPLE_DOLLAR_CAP) {
-            result += ' - $$$';
-        } else if (highestPrice <= QUAD_DOLLAR_CAP) {
-            result += ' - $$$$';
-        } else {
-            result += ' - $$$$$';
+    prices.forEach((price) => {
+        if (price < lowestPrice) {
+            lowestPrice = price;
         }
-    } else if (lowestPrice <= DOUBLE_DOLLAR_CAP) {
-        result += '$$';
 
-        if (highestPrice <= DOUBLE_DOLLAR_CAP) {
-            // do nothing
-        } else if (highestPrice <= TRIPLE_DOLLAR_CAP) {
-            result += ' - $$$';
-        } else if (highestPrice <= QUAD_DOLLAR_CAP) {
-            result += ' - $$$$';
-        } else {
-            result += ' - $$$$$';
+        if (price > highestPrice) {
+            highestPrice = price;
         }
-    } else if (lowestPrice <= TRIPLE_DOLLAR_CAP) {
-        result += '$$$';
+    });
 
-        if (highestPrice <= TRIPLE_DOLLAR_CAP) {
-            // do nothing
-        } else if (highestPrice <= QUAD_DOLLAR_CAP) {
-            result += ' - $$$$';
-        } else {
-            result += ' - $$$$$';
-        }
-    } else if (lowestPrice <= QUAD_DOLLAR_CAP) {
-        result += '$$$$';
-
-        if (highestPrice <= QUAD_DOLLAR_CAP) {
-            // do nothing
-        } else {
-            result += ' - $$$$$';
-        }
+    if (lowestPrice === highestPrice) {
+        result = `$${Math.round(lowestPrice / 100)}`;
     } else {
-        return '$$$$$';
+        result = `\$${Math.floor(lowestPrice / 100)} - \$${Math.ceil(highestPrice / 100)}}`;
     }
 
     return result;
 };
 
 const ProductThumbnail = ({
-    brand,
+    title,
     category,
     className,
-    highestPrice,
     image,
     isFavourited,
-    lowestPrice,
     numOfRatings,
+    prices,
     rating,
 }) => {
     const classNames = 'product-thumbnail ' + (className ? className : '');
-    const heartClassNames =
-        'product-thumbnail__heart ' + (isFavourited ? 'product-thumbnail__heart--filled' : '');
 
     return (
         <div className={classNames}>
@@ -86,18 +47,18 @@ const ProductThumbnail = ({
             </div>
             <div className="product-thumbnail__description">
                 <div className="product-thumbnail__main-info">
-                    <h3 className="product-thumbnail__brand">{brand}</h3>
+                    <h3 className="product-thumbnail__title">{title}</h3>
                     <h4 className="product-thumbnail__category">{category}</h4>
                 </div>
                 <img
                     src={isFavourited ? FilledHeartImage : HeartImage}
-                    className={heartClassNames}
+                    className="product-thumbnail__heart"
                 />
             </div>
             <div className="product-thumbnail__miscellaneous">
-                <span className="product-thumbnail__price">
-                    {calculatePriceTag(lowestPrice, highestPrice)}
-                </span>
+                {prices.length > 0 && (
+                    <span className="product-thumbnail__price">{calculatePriceRange(prices)}</span>
+                )}
                 <Rating
                     rating={rating}
                     numOfRatings={numOfRatings}
@@ -110,21 +71,21 @@ const ProductThumbnail = ({
 };
 
 ProductThumbnail.propTypes = {
-    brand: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     className: PropTypes.string,
-    highestPrice: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     isFavourited: PropTypes.bool.isRequired,
     location: PropTypes.string,
-    lowestPrice: PropTypes.number.isRequired,
     numOfRatings: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
+    prices: PropTypes.arrayOf(PropTypes.number),
+    rating: PropTypes.string.isRequired,
 };
 
 ProductThumbnail.defaultProps = {
     className: '',
     location: '',
+    prices: [],
 };
 
 export default ProductThumbnail;

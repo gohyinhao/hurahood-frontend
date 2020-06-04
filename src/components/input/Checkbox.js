@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Checkbox = ({ className, isChecked, onChange, text }) => {
+const Checkbox = ({ className, isChecked, onChange, text, value }) => {
     const classNames = 'checkbox ' + (className ? className : '');
 
     return (
@@ -9,7 +9,7 @@ const Checkbox = ({ className, isChecked, onChange, text }) => {
             <input
                 type="checkbox"
                 checked={isChecked}
-                onChange={(e) => onChange(e.target.checked, text)}
+                onChange={(e) => onChange(e.target.checked, value)}
             />
             <span className="checkbox__checkmark"></span>
             {text}
@@ -22,6 +22,7 @@ Checkbox.propTypes = {
     isChecked: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
 };
 
 Checkbox.defaultProps = {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from '../input/Checkbox';
+import { capitalizeCategory } from '../../utils/categories';
 
-const categories = ['Facial', 'Massage', 'Manicure', 'Hair Treatment', 'Hair Cut'];
+const categories = ['facial', 'massage', 'manicure', 'hair-treatment', 'hair-cut'];
 
 class CategoryFilter extends Component {
     onCheckboxChange = (isChecked, category) => {
@@ -27,8 +28,9 @@ class CategoryFilter extends Component {
                         <Checkbox
                             key={category}
                             onChange={this.onCheckboxChange}
-                            text={category}
+                            text={capitalizeCategory(category)}
                             isChecked={this.props.categories.includes(category)}
+                            value={category}
                         />
                     ))}
                 </div>

@@ -36,7 +36,7 @@
         margin: 0.5rem 1.5rem;
     }
 
-    &__brand {
+    &__title {
         font-size: $font-l;
         line-height: 1.6;
     }
@@ -50,12 +50,10 @@
     &__heart {
         height: 3rem;
         width: 3rem;
+        margin-top: 1rem;
         margin-right: 1.5rem;
         cursor: pointer;
-
-        &--filled {
-            filter: $color-red-filter;
-        }
+        align-self: flex-start;
     }
 
     // &__miscellaneous {

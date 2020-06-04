@@ -32,7 +32,7 @@ ProductItem.propTypes = {
     image: PropTypes.string.isRequired,
     location: PropTypes.string,
     numOfRatings: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
+    rating: PropTypes.string.isRequired,
 };
 
 ProductItem.defaultProps = {

@@ -57,7 +57,7 @@ const Rating = ({
 Rating.propTypes = {
     className: PropTypes.string,
     numOfRatings: PropTypes.number,
-    rating: PropTypes.number.isRequired,
+    rating: PropTypes.string.isRequired,
     showNumOfRatings: PropTypes.bool,
     showRatingValue: PropTypes.bool,
     starAlignment: PropTypes.oneOf(['left', 'center', 'right']),

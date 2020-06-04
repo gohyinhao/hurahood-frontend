@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import Carousel from '../components/carousel/Carousel';
@@ -8,19 +7,21 @@ import CategoryFilter from '../components/filters/CategoryFilter';
 import List from '../components/List';
 import ProductThumbnail from '../components/product/ProductThumbnail';
 import Paginator from '../components/Paginator';
-import { filterProducts, limitProducts } from '../utils/products';
+import { limitProducts } from '../utils/products';
 import { capitalizeCategory } from '../utils/categories';
 import { isString } from '../utils/string';
+import { fetchProducts } from '../utils/api/products';
+import DefaultProductImage from '../assets/images/product-default.svg';
 
 class ExplorePage extends Component {
     state = {
         filters: {
-            categories: ['Facial', 'Massage', 'Manicure', 'Hair Treatment', 'Hair Cut'],
+            categories: ['facial', 'massage', 'manicure', 'hair-treatment', 'hair-cut'],
         },
         paging: {
             currentPage: 1,
             listingsPerPage: '20',
-            totalListings: this.props.productList.length,
+            totalListings: 0,
         },
         filteredProducts: [],
         products: [],
@@ -32,10 +33,10 @@ class ExplorePage extends Component {
 
         if (query.categories) {
             if (isString(query.categories)) {
-                categories.push(capitalizeCategory(query.categories));
+                categories.push(query.categories);
             } else {
                 query.categories.forEach((category) => {
-                    categories.push(capitalizeCategory(category));
+                    categories.push(category);
                 });
             }
             this.setState(() => ({
@@ -44,12 +45,14 @@ class ExplorePage extends Component {
                 },
             }));
         }
-        this.filterAndLimitProducts();
+
+        this.requestProducts();
+        this.filterProductsByPage();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.filters !== this.state.filters) {
-            return this.filterAndLimitProducts();
+            this.requestProducts();
         }
 
         if (prevState.paging !== this.state.paging) {
@@ -59,12 +62,20 @@ class ExplorePage extends Component {
         }
     }
 
-    filterAndLimitProducts = () => {
-        const filteredProducts = filterProducts(this.props.productList, this.state.filters);
-
-        this.setState(() => ({
+    requestProducts = async () => {
+        const filteredProducts = await fetchProducts(this.state.filters);
+        this.setState((prevState) => ({
             filteredProducts,
-            products: limitProducts(filteredProducts, this.state.paging),
+            paging: {
+                ...prevState.paging,
+                totalListings: filteredProducts.length,
+            },
+        }));
+    };
+
+    filterProductsByPage = () => {
+        this.setState((prevState) => ({
+            products: limitProducts(prevState.filteredProducts, this.state.paging),
         }));
     };
 
@@ -113,24 +124,34 @@ class ExplorePage extends Component {
                     />
                 </div>
                 <List className="explore-page__list">
-                    {this.state.products.map((product, index) => (
-                        <Link
-                            key={index}
-                            to={`/product/${product.id}`}
-                            className="explore-page__product-thumbnail"
-                        >
-                            <ProductThumbnail
-                                brand={product.brand}
-                                category={product.category}
-                                highestPrice={product.highestPrice}
-                                image={product.image}
-                                isFavourited={product.isFavourited}
-                                lowestPrice={product.lowestPrice}
-                                numOfRatings={product.numOfRatings}
-                                rating={product.rating}
-                            />
-                        </Link>
-                    ))}
+                    {this.state.products.map((product, index) => {
+                        const prices = [];
+                        product.services.forEach((service) => {
+                            prices.push(service.price);
+                        });
+                        return (
+                            <Link
+                                key={index}
+                                to={`/product/${product.id}`}
+                                className="explore-page__product-thumbnail"
+                            >
+                                <ProductThumbnail
+                                    title={product.merchantName}
+                                    category={capitalizeCategory(product.category)}
+                                    image={
+                                        product.images.length === 0
+                                            ? DefaultProductImage
+                                            : product.images[0]
+                                    }
+                                    // TODO: map user to props. check user favourite list if this exists. for now set all as false
+                                    isFavourited={false}
+                                    prices={prices}
+                                    numOfRatings={product.rating.numOfRatings}
+                                    rating={product.rating.value}
+                                />
+                            </Link>
+                        );
+                    })}
                 </List>
                 <Paginator
                     className="explore-page__paginator"
@@ -145,8 +166,4 @@ class ExplorePage extends Component {
 
 ExplorePage.propTypes = {};
 
-const mapStateToProps = (state) => ({
-    productList: state.products.productList,
-});
-
-export default connect(mapStateToProps)(ExplorePage);
+export default ExplorePage;
