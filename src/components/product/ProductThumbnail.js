@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Rating from '../../components/rating/Rating';
 import HeartImage from '../../assets/images/heart.svg';
 import FilledHeartImage from '../../assets/images/heart-filled.svg';
+import DefaultProductImage from '../../assets/fontawesome/regular/image.svg';
 
 const calculatePriceRange = (prices) => {
     let result = '';
@@ -22,7 +23,7 @@ const calculatePriceRange = (prices) => {
     if (lowestPrice === highestPrice) {
         result = `$${Math.round(lowestPrice / 100)}`;
     } else {
-        result = `\$${Math.floor(lowestPrice / 100)} - \$${Math.ceil(highestPrice / 100)}}`;
+        result = `\$${Math.floor(lowestPrice / 100)} - \$${Math.ceil(highestPrice / 100)}`;
     }
 
     return result;
@@ -39,11 +40,17 @@ const ProductThumbnail = ({
     rating,
 }) => {
     const classNames = 'product-thumbnail ' + (className ? className : '');
+    const imageClassNames =
+        'product-thumbnail__image ' +
+        (image === DefaultProductImage ? 'product-thumbnail__image--default' : '');
 
     return (
         <div className={classNames}>
             <div className="product-thumbnail__image-wrapper">
-                <img src={image} alt="Product Image" className="product-thumbnail__image" />
+                <img src={image} alt="Product Image" className={imageClassNames} />
+                {image === DefaultProductImage && (
+                    <span className="product-thumbnail__image-caption">No Image Available</span>
+                )}
             </div>
             <div className="product-thumbnail__description">
                 <div className="product-thumbnail__main-info">
@@ -74,7 +81,7 @@ ProductThumbnail.propTypes = {
     title: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     className: PropTypes.string,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
     isFavourited: PropTypes.bool.isRequired,
     location: PropTypes.string,
     numOfRatings: PropTypes.number.isRequired,
@@ -84,6 +91,7 @@ ProductThumbnail.propTypes = {
 
 ProductThumbnail.defaultProps = {
     className: '',
+    image: DefaultProductImage,
     location: '',
     prices: [],
 };

@@ -8,9 +8,11 @@
 
     &__image-wrapper {
         display: flex;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
         overflow: hidden;
-        background-color: #000;
+        background-color: $color-grey-light-4;
         border: 0.5px solid $color-grey-light-4;
         height: 75%;
         width: 100%;
@@ -21,6 +23,17 @@
         width: 100%;
         background-size: cover;
         background-position: center;
+
+        &.product-thumbnail__image--default {
+            height: auto;
+            width: 50%;
+            filter: $color-grey-dark-4-filter;
+        }
+    }
+
+    &__image-caption {
+        font-size: $font-s;
+        color: $color-grey-dark-2;
     }
 
     &__description {

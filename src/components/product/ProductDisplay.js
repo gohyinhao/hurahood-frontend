@@ -127,7 +127,7 @@ ProductDisplay.propTypes = {
     location: PropTypes.string,
     onImageChange: PropTypes.func.isRequired,
     numOfRatings: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
+    rating: PropTypes.string.isRequired,
 };
 
 // TODO: link location to google maps

@@ -11,7 +11,6 @@ import { limitProducts } from '../utils/products';
 import { capitalizeCategory } from '../utils/categories';
 import { isString } from '../utils/string';
 import { fetchProducts } from '../utils/api/products';
-import DefaultProductImage from '../assets/images/product-default.svg';
 
 class ExplorePage extends Component {
     state = {
@@ -132,17 +131,13 @@ class ExplorePage extends Component {
                         return (
                             <Link
                                 key={index}
-                                to={`/product/${product.id}`}
+                                to={`/product/${product._id}`}
                                 className="explore-page__product-thumbnail"
                             >
                                 <ProductThumbnail
                                     title={product.merchantName}
                                     category={capitalizeCategory(product.category)}
-                                    image={
-                                        product.images.length === 0
-                                            ? DefaultProductImage
-                                            : product.images[0]
-                                    }
+                                    image={product.images[0] ? product.images[0].link : undefined}
                                     // TODO: map user to props. check user favourite list if this exists. for now set all as false
                                     isFavourited={false}
                                     prices={prices}

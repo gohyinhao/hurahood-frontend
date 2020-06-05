@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ProductDisplay from '../components/product/ProductDisplay';
 import CarouselList from '../components/carousel/CarouselList';
 import ServiceDisplay from '../components/ServiceDisplay';
@@ -23,7 +24,7 @@ class ProductPage extends Component {
             isFavourited: true,
             location: '21 Circular Road',
             rating: {
-                value: 4.08,
+                value: '4.1',
                 numOfRatings: 12,
                 breakdown: {
                     oneStar: 0,
@@ -188,5 +189,6 @@ class ProductPage extends Component {
 
 // TODO: add text filter for reviews and possibly other filters and sort
 // TODO: add images to reviews
+const mapStateToProps = (state) => ({});
 
-export default ProductPage;
+export default connect(mapStateToProps)(ProductPage);
