@@ -23,17 +23,6 @@
         width: 100%;
         background-size: cover;
         background-position: center;
-
-        &.product-thumbnail__image--default {
-            height: auto;
-            width: 50%;
-            filter: $color-grey-dark-4-filter;
-        }
-    }
-
-    &__image-caption {
-        font-size: $font-s;
-        color: $color-grey-dark-2;
     }
 
     &__description {

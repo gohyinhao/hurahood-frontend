@@ -15,12 +15,14 @@ const RatingDisplay = ({ className, rating, numOfRatings }) => {
 
 RatingDisplay.propTypes = {
     className: PropTypes.string,
-    numOfRatings: PropTypes.number.isRequired,
-    rating: PropTypes.number.isRequired,
+    numOfRatings: PropTypes.number,
+    rating: PropTypes.string,
 };
 
 RatingDisplay.defaultProps = {
     className: '',
+    numOfRatings: 0,
+    rating: '0',
 };
 
 export default RatingDisplay;

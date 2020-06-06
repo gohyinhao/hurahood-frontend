@@ -22,7 +22,7 @@ const RatingDistribution = ({
                     key={index}
                     rating={index + 1}
                     numOfRatings={numOfRating}
-                    percentage={Math.round((numOfRating / total) * 100)}
+                    percentage={total === 0 ? 0 : Math.round((numOfRating / total) * 100)}
                 />
             ))}
         </div>

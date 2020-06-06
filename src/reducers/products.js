@@ -2,7 +2,23 @@ import HairdresserImage from '../assets/images/hairdresser.jpg';
 import HairdresserImage2 from '../assets/images/hairdresser-2.jpg';
 
 const initialState = {
-    product: {},
+    product: {
+        address: {},
+        rating: {
+            breakdown: {
+                oneStar: 0,
+                twoStar: 0,
+                threeStar: 0,
+                fourStar: 0,
+                fiveStar: 0,
+            },
+            numOfRatings: 0,
+            value: '0',
+        },
+        services: [],
+        location: {},
+        images: [],
+    },
     trendingList: [
         {
             brand: 'ABC Haircut',
@@ -89,6 +105,11 @@ const initialState = {
 
 const productsReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'UPDATE_PRODUCT':
+            return {
+                ...state,
+                product: action.product,
+            };
         default:
             return state;
     }

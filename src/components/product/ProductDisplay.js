@@ -4,25 +4,35 @@ import Rating from '../rating/Rating';
 import Button from '../Button';
 import CarouselList from '../carousel/CarouselList';
 import ExpandableText from '../ExpandableText';
-import HeartIcon from '../../assets/fontawesome/regular/heart.svg';
-import FilledHeartIcon from '../../assets/fontawesome/solid/heart.svg';
+import DefaultImage from '../utility/DefaultImage';
+import { capitalizeWords } from '../../utils/string';
+import HeartIcon from '../../assets/images/heart.svg';
+import FilledHeartIcon from '../../assets/images/heart-filled.svg';
 import MapMarkerIcon from '../../assets/fontawesome/solid/map-marker-alt.svg';
 import ChatIcon from '../../assets/fontawesome/regular/comment-alt.svg';
+import InstagramIcon from '../../assets/social-media/instagram-filled.svg';
+import FacebookIcon from '../../assets/social-media/facebook-filled.svg';
+import TwitterIcon from '../../assets/social-media/twitter-filled.svg';
+import PinterestIcon from '../../assets/social-media/pinterest-filled.svg';
 
 const ProductDisplay = ({
     activeImageIndex,
-    brand,
+    merchant,
     className,
     companyLogo,
+    coordinates,
     description,
     images,
     isFavourited,
-    location,
+    address,
     onImageChange,
     numOfRatings,
     rating,
+    socialMedia,
 }) => {
     const classNames = 'product-display ' + (className ? className : '');
+    const imageClassNames =
+        'product-display__image ' + (images.length === 1 ? 'product-display__image--single' : '');
     const firstScrollValue = 150;
     const scrollValue = 190;
     const lastScrollValue = 150;
@@ -57,18 +67,91 @@ const ProductDisplay = ({
 
     return (
         <div className={classNames}>
-            <img src={companyLogo} className="product-display__logo" />
-            <h2 className="product-display__brand">{brand}</h2>
+            <div className="product-display__logo-wrapper">
+                <img src={companyLogo} className="product-display__logo" />
+            </div>
+            <h2 className="product-display__merchant">{merchant}</h2>
             <Rating
                 className="product-display__rating"
                 numOfRatings={numOfRatings}
                 rating={rating}
                 showNumOfRatings
                 showRatingValue
+                valueClassName="product-display__rating-value"
             />
-            <div className="product-display__location">
-                <img src={MapMarkerIcon} className="product-display__location-icon" />
-                <span className="product-display__location-text">{location}</span>
+            {coordinates ? (
+                <a
+                    className="product-display__location"
+                    target="_blank"
+                    href={`https://www.google.com/maps/search/?api=1&query=${coordinates[1]},${coordinates[0]}`}
+                >
+                    <img src={MapMarkerIcon} className="product-display__location-icon" />
+                    <span className="product-display__location-text">
+                        {capitalizeWords(address)}
+                    </span>
+                </a>
+            ) : (
+                <div className="product-display__location">
+                    <img src={MapMarkerIcon} className="product-display__location-icon" />
+                    <span className="product-display__location-text">
+                        {capitalizeWords(address)}
+                    </span>
+                </div>
+            )}
+
+            <div className="product-display__social-media">
+                {socialMedia.instagram && (
+                    <a
+                        href={socialMedia.instagram}
+                        target="_blank"
+                        className="product-display__social-media-link"
+                    >
+                        <img
+                            src={InstagramIcon}
+                            alt={`Link to ${merchant}'s Instagram page`}
+                            className="product-display__social-media-icon"
+                        />
+                    </a>
+                )}
+                {socialMedia.facebook && (
+                    <a
+                        href={socialMedia.facebook}
+                        target="_blank"
+                        className="product-display__social-media-link"
+                    >
+                        <img
+                            src={FacebookIcon}
+                            alt={`Link to ${merchant}'s Facebook page`}
+                            className="product-display__social-media-icon"
+                        />
+                    </a>
+                )}
+                {socialMedia.twitter && (
+                    <a
+                        href={socialMedia.twitter}
+                        target="_blank"
+                        className="product-display__social-media-link"
+                    >
+                        <img
+                            src={TwitterIcon}
+                            alt={`Link to ${merchant}'s Twitter page`}
+                            className="product-display__social-media-icon"
+                        />
+                    </a>
+                )}
+                {socialMedia.pinterest && (
+                    <a
+                        href={socialMedia.pinterest}
+                        target="_blank"
+                        className="product-display__social-media-link"
+                    >
+                        <img
+                            src={PinterestIcon}
+                            alt={`Link to ${merchant}'s Pinterest page`}
+                            className="product-display__social-media-icon"
+                        />
+                    </a>
+                )}
             </div>
             <div className="product-display__chat-button-wrapper">
                 <Button
@@ -80,14 +163,10 @@ const ProductDisplay = ({
                 />
             </div>
             <div className="product-display__heart-wrapper">
-                {isFavourited ? (
-                    <img
-                        src={FilledHeartIcon}
-                        className="product-display__heart product-display__heart--filled"
-                    />
-                ) : (
-                    <img src={HeartIcon} className="product-display__heart" />
-                )}
+                <img
+                    src={isFavourited ? FilledHeartIcon : HeartIcon}
+                    className="product-display__heart"
+                />
             </div>
             <Button
                 className="product-display__booking-button"
@@ -99,7 +178,7 @@ const ProductDisplay = ({
             />
             <ExpandableText className="product-display__description" text={description} />
             <CarouselList
-                caretStyle="thick"
+                caretStyle={images.length === 1 ? 'none' : 'thick'}
                 useInvisibleCarets
                 firstScrollValue={firstScrollValue}
                 scrollValue={scrollValue}
@@ -108,9 +187,13 @@ const ProductDisplay = ({
                 onScroll={onScroll}
                 scrollPosition={calcScrollPosition()}
             >
-                {images.map((image, index) => (
-                    <img key={index} src={image} className="product-display__image" />
-                ))}
+                {images.length === 0 ? (
+                    <DefaultImage className="product-display__image product-display__image--single" />
+                ) : (
+                    images.map((image, index) => (
+                        <img key={index} src={image.link} className={imageClassNames} />
+                    ))
+                )}
             </CarouselList>
         </div>
     );
@@ -118,16 +201,23 @@ const ProductDisplay = ({
 
 ProductDisplay.propTypes = {
     activeImageIndex: PropTypes.number.isRequired,
-    brand: PropTypes.string.isRequired,
+    address: PropTypes.string,
     className: PropTypes.string,
     companyLogo: PropTypes.string,
-    description: PropTypes.string.isRequired,
+    coordinates: PropTypes.arrayOf(PropTypes.number),
+    description: PropTypes.string,
     images: PropTypes.array,
     isFavourited: PropTypes.bool,
-    location: PropTypes.string,
+    merchant: PropTypes.string,
     onImageChange: PropTypes.func.isRequired,
-    numOfRatings: PropTypes.number.isRequired,
-    rating: PropTypes.string.isRequired,
+    numOfRatings: PropTypes.number,
+    rating: PropTypes.string,
+    socialMedia: PropTypes.shape({
+        facebook: PropTypes.string,
+        instagram: PropTypes.string,
+        pinterest: PropTypes.string,
+        twitter: PropTypes.string,
+    }),
 };
 
 // TODO: link location to google maps
@@ -135,11 +225,16 @@ ProductDisplay.propTypes = {
 // TODO: add onClick for buttons
 
 ProductDisplay.defaultProps = {
+    address: 'Unavailable',
     className: '',
     companyLogo: '',
+    description: '',
     isFavourited: false,
-    location: 'Unavailable',
     images: [],
+    merchant: 'Unavailable',
+    numOfRatings: 0,
+    rating: '0',
+    socialMedia: {},
 };
 
 export default ProductDisplay;

@@ -9,7 +9,7 @@ const RatingBar = ({ className, numOfRatings, rating, percentage }) => {
     };
     return (
         <div className={classNames}>
-            <Rating rating={rating} starAlignment="right" />
+            <Rating rating={rating.toString()} starAlignment="right" />
             <div className="rating-bar__bar" style={barStyles} />
             <span className="rating-bar__count">{numOfRatings}</span>
         </div>
