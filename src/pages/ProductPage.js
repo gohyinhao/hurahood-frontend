@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ProductDisplay from '../components/product/ProductDisplay';
 import CarouselList from '../components/carousel/CarouselList';
+import DefaultImage from '../components/utility/DefaultImage';
 import ServiceDisplay from '../components/ServiceDisplay';
 import RatingDisplay from '../components/rating/RatingDisplay';
 import RatingDistribution from '../components/rating/RatingDistribution';
@@ -103,21 +104,28 @@ class ProductPage extends Component {
                     className="product-page__gallery"
                     imageWrapperClassName="product-page__image-wrapper"
                 >
-                    {images.map((image, index) => {
-                        const imgClassNames =
-                            'product-page__image ' +
-                            (index === this.state.activeImageIndex
-                                ? ' product-page__image--active'
-                                : '');
-                        return (
-                            <img
-                                key={index}
-                                src={image.link}
-                                onClick={() => this.onImageChange(index)}
-                                className={imgClassNames}
-                            />
-                        );
-                    })}
+                    {images.length === 0 ? (
+                        <DefaultImage
+                            className="product-page__image product-page__image--active"
+                            displayText={false}
+                        />
+                    ) : (
+                        images.map((image, index) => {
+                            const imgClassNames =
+                                'product-page__image ' +
+                                (index === this.state.activeImageIndex
+                                    ? ' product-page__image--active'
+                                    : '');
+                            return (
+                                <img
+                                    key={index}
+                                    src={image.link}
+                                    onClick={() => this.onImageChange(index)}
+                                    className={imgClassNames}
+                                />
+                            );
+                        })
+                    )}
                 </CarouselList>
                 <div className="product-page__border util-secondary-border"></div>
                 {services.length > 0 && (

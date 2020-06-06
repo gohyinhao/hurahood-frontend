@@ -37,7 +37,7 @@ class ServiceDisplay extends Component {
                             </option>
                         ))}
                     </select>
-                    <span className="service-display__price">${price}</span>
+                    <span className="service-display__price">${(price / 100).toFixed(2)}</span>
                 </div>
                 <p className="service-display__description">{description}</p>
                 {info && (
