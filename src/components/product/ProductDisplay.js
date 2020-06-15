@@ -4,7 +4,6 @@ import Rating from '../rating/Rating';
 import Button from '../Button';
 import CarouselList from '../carousel/CarouselList';
 import ExpandableText from '../ExpandableText';
-import DefaultImage from '../utility/DefaultImage';
 import { capitalizeWords } from '../../utils/string';
 import HeartIcon from '../../assets/images/heart.svg';
 import FilledHeartIcon from '../../assets/images/heart-filled.svg';
@@ -14,6 +13,7 @@ import InstagramIcon from '../../assets/social-media/instagram-filled.svg';
 import FacebookIcon from '../../assets/social-media/facebook-filled.svg';
 import TwitterIcon from '../../assets/social-media/twitter-filled.svg';
 import PinterestIcon from '../../assets/social-media/pinterest-filled.svg';
+import DefaultImage from '../../assets/images/no-image-available.svg';
 
 const ProductDisplay = ({
     activeImageIndex,
@@ -178,7 +178,7 @@ const ProductDisplay = ({
             />
             <ExpandableText className="product-display__description" text={description} />
             <CarouselList
-                caretStyle={images.length === 1 ? 'none' : 'thick'}
+                caretStyle={images.length <= 1 ? 'none' : 'thick'}
                 useInvisibleCarets
                 firstScrollValue={firstScrollValue}
                 scrollValue={scrollValue}
@@ -188,7 +188,10 @@ const ProductDisplay = ({
                 scrollPosition={calcScrollPosition()}
             >
                 {images.length === 0 ? (
-                    <DefaultImage className="product-display__image product-display__image--single" />
+                    <img
+                        src={DefaultImage}
+                        className="product-display__image product-display__image--single"
+                    />
                 ) : (
                     images.map((image, index) => (
                         <img key={index} src={image.link} className={imageClassNames} />
@@ -220,7 +223,6 @@ ProductDisplay.propTypes = {
     }),
 };
 
-// TODO: link location to google maps
 // TODO: Add stock photo if company logo unavailable
 // TODO: add onClick for buttons
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ProductDisplay from '../components/product/ProductDisplay';
 import CarouselList from '../components/carousel/CarouselList';
-import DefaultImage from '../components/utility/DefaultImage';
 import ServiceDisplay from '../components/ServiceDisplay';
 import RatingDisplay from '../components/rating/RatingDisplay';
 import RatingDistribution from '../components/rating/RatingDistribution';
@@ -12,6 +11,7 @@ import { updateProduct } from '../actions/products';
 import CompanyLogo from '../assets/images/company-logo.png';
 import ProfilePic1 from '../assets/images/profile-pic-1.jpg';
 import ProfilePic2 from '../assets/images/profile-pic-2.jpg';
+import DefaultImage from '../assets/images/no-image-available.svg';
 
 class ProductPage extends Component {
     state = {
@@ -105,9 +105,9 @@ class ProductPage extends Component {
                     imageWrapperClassName="product-page__image-wrapper"
                 >
                     {images.length === 0 ? (
-                        <DefaultImage
+                        <img
+                            src={DefaultImage}
                             className="product-page__image product-page__image--active"
-                            displayText={false}
                         />
                     ) : (
                         images.map((image, index) => {

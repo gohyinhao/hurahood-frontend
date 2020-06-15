@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Rating from '../../components/rating/Rating';
-import DefaultImage from '../utility/DefaultImage';
 import HeartImage from '../../assets/images/heart.svg';
 import FilledHeartImage from '../../assets/images/heart-filled.svg';
+import DefaultImage from '../../assets/images/no-image-available.svg';
 
 const calculatePriceRange = (prices) => {
     let result = '';
@@ -44,11 +44,11 @@ const ProductThumbnail = ({
     return (
         <div className={classNames}>
             <div className="product-thumbnail__image-wrapper">
-                {image === undefined ? (
-                    <DefaultImage />
-                ) : (
-                    <img src={image} alt="Product Image" className="product-thumbnail__image" />
-                )}
+                <img
+                    src={image === undefined ? DefaultImage : image}
+                    alt="Product Image"
+                    className="product-thumbnail__image"
+                />
             </div>
             <div className="product-thumbnail__description">
                 <div className="product-thumbnail__main-info">

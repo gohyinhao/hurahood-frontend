@@ -28,7 +28,7 @@ const Review = ({ className, rating, text, timestamp, user: { avatar, name } }) 
 Review.propTypes = {
     className: PropTypes.string,
     images: PropTypes.arrayOf(PropTypes.string),
-    rating: PropTypes.number.isRequired,
+    rating: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     timestamp: PropTypes.number.isRequired,
     user: PropTypes.shape({
