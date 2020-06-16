@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Searchbar from './Searchbar';
 import Dropdown from './Dropdown';
 import Icon from './Icon';
+import Modal from './Modal';
+import UsersAPI from '../api/users';
+import UsersActions from '../actions/users';
+import Helper from '../utils/helper';
 import CalendarIcon from '../assets/fontawesome/regular/calendar-alt.svg';
 import ChatIcon from '../assets/fontawesome/regular/comment-alt.svg';
 import HeartIcon from '../assets/fontawesome/regular/heart.svg';
@@ -49,32 +54,78 @@ const profileItems = [
     },
 ];
 
-const NavBar = () => {
-    return (
-        <header className="navbar">
-            <Link to="/" className="navbar__title">
-                hurahood
-            </Link>
-            <Searchbar className="navbar__search" />
-            <nav className="navbar__icons">
-                {icons.map(({ iconName, icon }) => (
-                    <Icon
-                        key={iconName}
-                        link="#"
-                        linkClassName="navbar__icon-link"
-                        icon={icon}
-                        iconClassName={`navbar__icon navbar__icon--${iconName}`}
-                    />
-                ))}
-                <Dropdown
-                    areItemsLinks
-                    className="navbar__dropdown"
-                    leftIcon={UserIcon}
-                    items={profileItems}
-                />
-            </nav>
-        </header>
-    );
-};
+class NavBar extends Component {
+    state = {
+        showLoginForm: false,
+        showSignUpForm: false,
+    };
 
-export default NavBar;
+    async componentDidMount() {
+        try {
+            const user = await UsersAPI.fetchUser();
+            updateUser(user);
+        } catch (err) {
+            // do nothing
+        }
+    }
+
+    showLoginForm = () => {
+        this.setState({ showLoginForm: true, showSignUpForm: false });
+    };
+
+    onClose = () => {
+        this.setState({ showLoginForm: false, showSignUpForm: false });
+    };
+
+    render() {
+        return (
+            <header className="navbar">
+                <Link to="/" className="navbar__title">
+                    hurahood
+                </Link>
+                <Searchbar className="navbar__search" />
+                {Helper.isEmptyObject(this.props.user) ? (
+                    <span className="navbar__login" onClick={this.showLoginForm}>
+                        Login/Register
+                    </span>
+                ) : (
+                    <nav className="navbar__icons">
+                        {icons.map(({ iconName, icon }) => (
+                            <Icon
+                                key={iconName}
+                                link="#"
+                                linkClassName="navbar__icon-link"
+                                icon={icon}
+                                iconClassName={`navbar__icon navbar__icon--${iconName}`}
+                            />
+                        ))}
+                        <Dropdown
+                            areItemsLinks
+                            className="navbar__dropdown"
+                            leftIcon={UserIcon}
+                            items={profileItems}
+                        />
+                    </nav>
+                )}
+
+                <Modal showModal={this.state.showLoginForm} onClose={this.onClose}>
+                    Login Form LARGE TEXT LARGE TEXT LARGE TEXT LARGE TEXT LARGE TEXT
+                    <p>test</p>
+                </Modal>
+                <Modal showModal={this.state.showSignUpForm} onClose={this.onClose}>
+                    Sign Up Form
+                </Modal>
+            </header>
+        );
+    }
+}
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    updateUser: (user) => dispatch(UsersActions.updateUser(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

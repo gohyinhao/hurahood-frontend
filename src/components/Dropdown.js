@@ -49,7 +49,7 @@ class Dropdown extends Component {
 Dropdown.propTypes = {
     areItemsLinks: PropTypes.bool,
     className: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.string),
+    items: PropTypes.array,
     leftIcon: PropTypes.string,
     rightIcon: PropTypes.string,
     title: PropTypes.string,

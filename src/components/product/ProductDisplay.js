@@ -4,7 +4,7 @@ import Rating from '../rating/Rating';
 import Button from '../Button';
 import CarouselList from '../carousel/CarouselList';
 import ExpandableText from '../ExpandableText';
-import { capitalizeWords } from '../../utils/string';
+import { capitalizeWords } from '../../utils/helper';
 import HeartIcon from '../../assets/images/heart.svg';
 import FilledHeartIcon from '../../assets/images/heart-filled.svg';
 import MapMarkerIcon from '../../assets/fontawesome/solid/map-marker-alt.svg';

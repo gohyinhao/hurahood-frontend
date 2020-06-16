@@ -6,7 +6,7 @@ import ServiceDisplay from '../components/ServiceDisplay';
 import RatingDisplay from '../components/rating/RatingDisplay';
 import RatingDistribution from '../components/rating/RatingDistribution';
 import Review from '../components/Review';
-import { fetchProduct } from '../utils/api/products';
+import { fetchProduct } from '../api/products';
 import { updateProduct } from '../actions/products';
 import CompanyLogo from '../assets/images/company-logo.png';
 import ProfilePic1 from '../assets/images/profile-pic-1.jpg';

@@ -59,4 +59,14 @@
             background-color: $color-grey-light-2;
         }
     }
+
+    &__login {
+        font-size: $font-m;
+        margin: 0 1rem;
+        cursor: pointer;
+
+        &:hover {
+            border-bottom: 1px dotted $color-secondary;
+        }
+    }
 }

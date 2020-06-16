@@ -6,3 +6,9 @@ export const capitalizeWords = (str) => {
         (word) => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase(),
     );
 };
+
+export const isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+};
+
+export default { isString, capitalizeWords, isEmptyObject };

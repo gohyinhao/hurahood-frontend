@@ -9,8 +9,8 @@ import ProductThumbnail from '../components/product/ProductThumbnail';
 import Paginator from '../components/Paginator';
 import { limitProducts } from '../utils/products';
 import { capitalizeCategory } from '../utils/categories';
-import { isString } from '../utils/string';
-import { fetchProducts } from '../utils/api/products';
+import { isString } from '../utils/helper';
+import { fetchProducts } from '../api/products';
 
 class ExplorePage extends Component {
     state = {
