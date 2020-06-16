@@ -11,6 +11,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 3px;
     }
 
     &:hover {
@@ -23,6 +24,18 @@
         outline: none;
         transform: translateY(-0.1rem);
         box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
+    }
+
+    &:disabled {
+        background-color: $color-grey-dark-4;
+        color: $color-grey-dark-1;
+        border: none;
+        cursor: not-allowed;
+
+        &:hover {
+            transform: translateY(0);
+            box-shadow: none;
+        }
     }
 
     &--white {

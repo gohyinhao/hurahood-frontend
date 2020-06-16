@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const Button = ({
     className,
     backgroundColor,
+    disabled,
     iconBefore,
     iconBeforeClassName,
     iconAfter,
@@ -22,7 +23,7 @@ const Button = ({
         'button__icon button__icon--after ' + (iconAfterClassName ? iconAfterClassName : '');
 
     return (
-        <button className={classNames} onClick={onClick}>
+        <button className={classNames} onClick={onClick} disabled={disabled}>
             {iconBefore && <img className={iconBeforeClassNames} src={iconBefore} />}
             <span>{text}</span>
             {iconAfter && <img className={iconAfterClassNames} src={iconAfter} />}
@@ -33,6 +34,7 @@ const Button = ({
 Button.propTypes = {
     backgroundColor: PropTypes.oneOf(['white', 'black', 'facebook']),
     className: PropTypes.string,
+    disabled: PropTypes.bool,
     iconAfter: PropTypes.string,
     iconAfterClassName: PropTypes.string,
     iconBefore: PropTypes.string,
@@ -46,6 +48,7 @@ Button.propTypes = {
 Button.defaultProps = {
     backgroundColor: 'white',
     className: '',
+    disabled: false,
     iconAfter: '',
     iconAfterClassName: '',
     iconBefore: '',

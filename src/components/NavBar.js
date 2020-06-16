@@ -58,7 +58,7 @@ const profileItems = [
 class NavBar extends Component {
     state = {
         showLoginForm: false,
-        showSignUpForm: false,
+        showSignUpForm: true,
     };
 
     async componentDidMount() {
@@ -117,7 +117,7 @@ class NavBar extends Component {
                     <Forms.LoginForm showSignUpForm={this.showSignUpForm} />
                 </Modal>
                 <Modal showModal={this.state.showSignUpForm} onClose={this.onClose}>
-                    <Forms.SignUpForm />
+                    <Forms.SignUpForm showLoginForm={this.showLoginForm} />
                 </Modal>
             </header>
         );

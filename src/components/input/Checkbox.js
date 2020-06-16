@@ -22,12 +22,13 @@ Checkbox.propTypes = {
     isChecked: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
     className: '',
     isChecked: false,
+    value: '',
 };
 
 export default Checkbox;

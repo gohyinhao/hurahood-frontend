@@ -10,7 +10,7 @@
     }
 
     &__text {
-        margin-bottom: 1rem;
+        margin-top: 1rem;
 
         &::placeholder {
             text-align: left;
@@ -18,8 +18,7 @@
     }
 
     &__button {
-        margin: 1rem 0;
-        border-radius: 3px;
+        margin: 2rem 0 1rem 0;
     }
 
     &__forgot-pass,

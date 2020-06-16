@@ -1,0 +1,77 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 6rem;
+
+    &__logo {
+        height: 15rem;
+        width: auto;
+    }
+
+    &__form {
+        width: 45rem;
+    }
+
+    &__text {
+        margin-top: 1rem;
+
+        &::placeholder {
+            text-align: left;
+        }
+    }
+
+    &__error {
+        color: $color-red;
+        text-align: center;
+        font-style: italic;
+        font-size: $font-xxs;
+    }
+
+    &__checkbox {
+        margin-top: 1rem;
+    }
+
+    &__merchant-only-info {
+        margin-left: 2.7rem;
+        font-size: $font-xxxs;
+        line-height: 1;
+    }
+
+    &__link,
+    &__link:link,
+    &__link:visited {
+        text-decoration: underline;
+        color: $color-link-blue;
+    }
+
+    &__button {
+        margin: 1rem 0;
+    }
+
+    &__message {
+        margin-top: -0.5rem;
+        font-size: $font-xs;
+        line-height: 1.2;
+        color: $color-grey-dark-3;
+        text-align: center;
+    }
+
+    &__message-email {
+        color: $color-red;
+    }
+
+    &__login {
+        font-size: $font-m;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__tnc {
+        margin-top: 0.5rem;
+        font-size: $font-xxxs;
+    }
+}

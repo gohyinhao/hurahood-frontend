@@ -45,6 +45,7 @@ class LoginForm extends Component {
                         onClick={this.onFormSubmit}
                         text="Login"
                     />
+                    {/* {TODO: add error} */}
                 </form>
                 <Link to="#" className="login-form__forgot-pass">
                     Forgot password?
