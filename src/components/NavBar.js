@@ -8,6 +8,7 @@ import Modal from './Modal';
 import UsersAPI from '../api/users';
 import UsersActions from '../actions/users';
 import Helper from '../utils/helper';
+import Forms from '../forms';
 import CalendarIcon from '../assets/fontawesome/regular/calendar-alt.svg';
 import ChatIcon from '../assets/fontawesome/regular/comment-alt.svg';
 import HeartIcon from '../assets/fontawesome/regular/heart.svg';
@@ -73,6 +74,10 @@ class NavBar extends Component {
         this.setState({ showLoginForm: true, showSignUpForm: false });
     };
 
+    showSignUpForm = () => {
+        this.setState({ showLoginForm: false, showSignUpForm: true });
+    };
+
     onClose = () => {
         this.setState({ showLoginForm: false, showSignUpForm: false });
     };
@@ -109,11 +114,10 @@ class NavBar extends Component {
                 )}
 
                 <Modal showModal={this.state.showLoginForm} onClose={this.onClose}>
-                    Login Form LARGE TEXT LARGE TEXT LARGE TEXT LARGE TEXT LARGE TEXT
-                    <p>test</p>
+                    <Forms.LoginForm showSignUpForm={this.showSignUpForm} />
                 </Modal>
                 <Modal showModal={this.state.showSignUpForm} onClose={this.onClose}>
-                    Sign Up Form
+                    <Forms.SignUpForm />
                 </Modal>
             </header>
         );

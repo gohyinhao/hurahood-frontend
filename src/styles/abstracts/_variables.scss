@@ -19,6 +19,10 @@ $color-grey-dark-4: #aaa;
 
 $color-orange: #ffa500;
 
+$color-link-blue: #0000ee;
+
+$color-facebook: #3b5998;
+
 // FILTERS
 $color-secondary-light-filter: invert(56%) sepia(0%) saturate(12%) hue-rotate(134deg)
     brightness(93%) contrast(94%);
@@ -39,10 +43,14 @@ $color-orange-filter: invert(70%) sepia(24%) saturate(5060%) hue-rotate(360deg) 
 $color-red-filter: invert(21%) sepia(62%) saturate(6482%) hue-rotate(354deg) brightness(103%)
     contrast(126%);
 
+$color-white-filter: invert(100%) sepia(11%) saturate(7500%) hue-rotate(174deg) brightness(114%)
+    contrast(109%);
+
 // FONTS
 $font-primary: 'Lato', sans-serif;
 
 // FONT-SIZES
+$font-xxxs: 1.2rem;
 $font-xxs: 1.3rem;
 $font-xs: 1.4rem;
 $font-s: 1.5rem;
