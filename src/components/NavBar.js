@@ -115,7 +115,10 @@ class NavBar extends Component {
                 )}
 
                 <Modal showModal={this.state.showLoginForm} onClose={this.onClose}>
-                    <Forms.LoginForm showSignUpForm={this.showSignUpForm} />
+                    <Forms.LoginForm
+                        showSignUpForm={this.showSignUpForm}
+                        onSuccessfulLogin={this.onClose}
+                    />
                 </Modal>
                 <Modal showModal={this.state.showSignUpForm} onClose={this.onClose}>
                     <Forms.SignUpForm showLoginForm={this.showLoginForm} />

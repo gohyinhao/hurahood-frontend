@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import UserActions from '../actions/users';
+import UserAPI from '../api/users';
 import Input from '../components/input';
 import Button from '../components/Button';
 import CompanyLogo from '../assets/images/hurahood_logo_with_text.svg';
@@ -11,16 +14,26 @@ class LoginForm extends Component {
     state = {
         email: '',
         password: '',
+        error: '',
     };
 
-    onFormSubmit = (e) => {
+    onFormSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const user = await UserAPI.loginUser(this.state.email, this.state.password);
+            this.props.updateUser(user);
+            this.setState({ error: '' });
+            this.props.onSuccessfulLogin();
+        } catch (err) {
+            this.setState({ error: err.error });
+        }
     };
 
     onFacebookLogin = () => {};
     onGoogleLogin = () => {};
 
     render() {
+        const { error, email, password } = this.state;
         const { className, showSignUpForm } = this.props;
         const classNames = 'login-form ' + (className ? className : '');
 
@@ -31,13 +44,13 @@ class LoginForm extends Component {
                     <Input.TextInput
                         className="login-form__text"
                         placeholder="Email Address"
-                        value={this.state.email}
+                        value={email}
                         onChange={(email) => this.setState({ email })}
                     />
                     <Input.TextInput
                         className="login-form__text"
                         placeholder="Password"
-                        value={this.state.password}
+                        value={password}
                         onChange={(password) => this.setState({ password })}
                         type="password"
                     />
@@ -47,7 +60,7 @@ class LoginForm extends Component {
                         onClick={this.onFormSubmit}
                         text="Login"
                     />
-                    {/* {TODO: add error} */}
+                    {error && <p className="login-form__error">{error}</p>}
                 </form>
                 <Link to="#" className="login-form__forgot-pass">
                     Forgot password?
@@ -86,6 +99,7 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
     className: PropTypes.string,
+    onSuccessfulLogin: PropTypes.func.isRequired,
     showSignUpForm: PropTypes.func.isRequired,
 };
 
@@ -93,4 +107,8 @@ LoginForm.defaultProps = {
     className: '',
 };
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+    updateUser: (user) => dispatch(UserActions.updateUser(user)),
+});
+
+export default connect(undefined, mapDispatchToProps)(LoginForm);

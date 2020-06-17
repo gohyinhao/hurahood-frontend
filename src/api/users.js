@@ -15,4 +15,9 @@ export const signOutUser = async () => {
     return;
 };
 
-export default { fetchUser, signUpUser, signOutUser };
+export const loginUser = async (email, password) => {
+    const user = await postData('/users/login', { email, password });
+    return user;
+};
+
+export default { fetchUser, signUpUser, signOutUser, loginUser };
