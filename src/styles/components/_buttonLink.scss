@@ -1,0 +1,15 @@
+.button-link,
+.button-link:link,
+.button-link:visited {
+    display: inline-block;
+    border: 1px solid $color-primary;
+    padding: 0.3rem 2rem;
+    color: inherit;
+    text-decoration: none;
+    font-size: $font-xs;
+
+    &:hover {
+        background: $color-grey-dark-1;
+        color: $color-grey-light-1;
+    }
+}

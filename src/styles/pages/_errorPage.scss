@@ -1,0 +1,36 @@
+.error-page {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    display: flex;
+    align-items: flex-start;
+    margin: 10rem auto;
+
+    &__logo {
+        width: 20rem;
+        height: auto;
+        margin: 1.2rem 3rem;
+    }
+
+    &__text {
+        margin: 0 3rem;
+    }
+
+    &__header {
+        font-size: 11rem;
+        font-weight: 400;
+        line-height: 1;
+    }
+
+    &__secondary-header {
+        font-size: 2.5rem;
+        font-weight: 400;
+    }
+
+    &__subtitle {
+        font-size: $font-xs;
+    }
+
+    &__button {
+        margin-top: 2rem;
+    }
+}

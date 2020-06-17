@@ -11,7 +11,7 @@ class SignUpForm extends Component {
         password: '',
         confirmPassword: '',
         merchantOnly: false,
-        showEmailMessage: true,
+        showEmailMessage: false,
         errors: {
             email: '',
             password: '',

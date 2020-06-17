@@ -58,7 +58,7 @@ const profileItems = [
 class NavBar extends Component {
     state = {
         showLoginForm: false,
-        showSignUpForm: true,
+        showSignUpForm: false,
     };
 
     async componentDidMount() {
