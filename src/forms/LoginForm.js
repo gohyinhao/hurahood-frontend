@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import UserActions from '../actions/users';
 import UserAPI from '../api/users';
