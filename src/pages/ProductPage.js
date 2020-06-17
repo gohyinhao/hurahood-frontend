@@ -55,9 +55,13 @@ class ProductPage extends Component {
     };
 
     async componentDidMount() {
-        const id = this.props.match.params.id;
-        const product = await fetchProduct(id);
-        this.props.updateProduct(product);
+        try {
+            const id = this.props.match.params.id;
+            const product = await fetchProduct(id);
+            this.props.updateProduct(product);
+        } catch (err) {
+            this.props.history.push('/error');
+        }
 
         // TODO: fetch merchant and reviews also
     }

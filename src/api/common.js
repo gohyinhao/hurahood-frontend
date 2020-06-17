@@ -8,6 +8,10 @@ export const fetchData = async (path = '', params = {}) => {
         method: 'GET',
     });
 
+    if (!response.ok) {
+        throw await response.json();
+    }
+
     return response.json();
 };
 
@@ -20,6 +24,10 @@ export const postData = async (path = '', data = {}) => {
         },
         body: JSON.stringify(data),
     });
+
+    if (!response.ok) {
+        throw await response.json();
+    }
 
     return response.json();
 };
@@ -34,6 +42,10 @@ export const updateData = async (path = '', data = {}) => {
         body: JSON.stringify(data),
     });
 
+    if (!response.ok) {
+        throw await response.json();
+    }
+
     return response.json();
 };
 
@@ -42,6 +54,10 @@ export const deleteData = async (path = '') => {
     const response = await fetch(url, {
         method: 'DELETE',
     });
+
+    if (!response.ok) {
+        throw await response.json();
+    }
 
     return response.json();
 };
@@ -53,6 +69,10 @@ export const uploadFile = async (path = '', file) => {
         method: 'POST',
         body: formData,
     });
+
+    if (!response.ok) {
+        throw await response.json();
+    }
 
     return response.json();
 };

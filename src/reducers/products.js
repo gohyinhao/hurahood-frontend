@@ -16,7 +16,9 @@ const initialState = {
             value: '0',
         },
         services: [],
-        location: {},
+        location: {
+            coordinates: [],
+        },
         images: [],
     },
     trendingList: [
