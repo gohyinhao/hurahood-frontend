@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import validator from 'validator';
 import PropTypes from 'prop-types';
+import UserActions from '../actions/users';
+import UserAPI from '../api/users';
 import Input from '../components/input';
 import Button from '../components/Button';
 import CompanyLogo from '../assets/images/hurahood_logo_with_text.svg';
@@ -19,7 +22,23 @@ class SignUpForm extends Component {
         },
     };
 
-    onFormSubmit = () => {
+    onFormSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const newUser = await UserAPI.signUpUser({
+                email: this.state.email,
+                password: this.state.password,
+            });
+            this.props.updateUser(newUser);
+            this.setState({ showEmailMessage: true });
+        } catch (err) {
+            this.setState((prevState) => ({
+                errors: {
+                    ...prevState.errors,
+                    email: err.error,
+                },
+            }));
+        }
         // TODO: redirect to merchant dashboard if merchantonly
     };
 
@@ -221,4 +240,8 @@ SignUpForm.defaultProps = {
     className: '',
 };
 
-export default SignUpForm;
+const mapDispatchToProps = (dispatch) => ({
+    updateUser: (user) => dispatch(UserActions.updateUser(user)),
+});
+
+export default connect(undefined, mapDispatchToProps)(SignUpForm);

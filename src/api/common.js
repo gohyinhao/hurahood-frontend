@@ -6,6 +6,7 @@ export const fetchData = async (path = '', params = {}) => {
 
     const response = await fetch(url, {
         method: 'GET',
+        credentials: 'include',
     });
 
     if (!response.ok) {
@@ -22,6 +23,7 @@ export const postData = async (path = '', data = {}) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(data),
     });
 
@@ -40,6 +42,7 @@ export const updateData = async (path = '', data = {}) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+        credentials: 'include',
     });
 
     if (!response.ok) {
@@ -53,6 +56,7 @@ export const deleteData = async (path = '') => {
     const url = BACKEND_URL + path;
     const response = await fetch(url, {
         method: 'DELETE',
+        credentials: 'include',
     });
 
     if (!response.ok) {
@@ -67,6 +71,7 @@ export const uploadFile = async (path = '', file) => {
     const formData = new FormData().append('file', file);
     const response = await fetch(url, {
         method: 'POST',
+        credentials: 'include',
         body: formData,
     });
 

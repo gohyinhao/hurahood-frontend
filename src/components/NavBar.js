@@ -5,8 +5,8 @@ import Searchbar from './Searchbar';
 import Dropdown from './Dropdown';
 import Icon from './Icon';
 import Modal from './Modal';
-import UsersAPI from '../api/users';
-import UsersActions from '../actions/users';
+import UserAPI from '../api/users';
+import UserActions from '../actions/users';
 import Helper from '../utils/helper';
 import Forms from '../forms';
 import CalendarIcon from '../assets/fontawesome/regular/calendar-alt.svg';
@@ -63,10 +63,11 @@ class NavBar extends Component {
 
     async componentDidMount() {
         try {
-            const user = await UsersAPI.fetchUser();
-            updateUser(user);
+            const user = await UserAPI.fetchUser();
+            this.props.updateUser(user);
         } catch (err) {
             // do nothing
+            console.log(err);
         }
     }
 
@@ -129,7 +130,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    updateUser: (user) => dispatch(UsersActions.updateUser(user)),
+    updateUser: (user) => dispatch(UserActions.updateUser(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

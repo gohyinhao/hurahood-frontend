@@ -13,7 +13,9 @@ class LoginForm extends Component {
         password: '',
     };
 
-    onFormSubmit = () => {};
+    onFormSubmit = (e) => {
+        e.preventDefault();
+    };
 
     onFacebookLogin = () => {};
     onGoogleLogin = () => {};
