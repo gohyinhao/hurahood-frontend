@@ -1,0 +1,9 @@
+.signout-page {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    font-size: 3rem;
+    margin: 5rem 0;
+    margin-left: 36%;
+
+    @include ellipsisAnimation;
+}

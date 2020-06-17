@@ -32,34 +32,34 @@ const icons = [
     },
 ];
 
-const profileItems = [
-    {
-        link: '/explore',
-        text: 'Account',
-    },
-    {
-        link: '#',
-        text: 'History',
-    },
-    {
-        link: '#',
-        text: 'Contact Us',
-    },
-    {
-        link: '#',
-        text: 'Merchant',
-    },
-    {
-        link: '#',
-        text: 'Sign Out',
-    },
-];
-
 class NavBar extends Component {
     state = {
         showLoginForm: false,
         showSignUpForm: false,
     };
+
+    profileItems = [
+        {
+            link: '#',
+            text: `${this.props.firstName ? `${this.props.firstName}'s ` : ''}Account`,
+        },
+        {
+            link: '#',
+            text: 'History',
+        },
+        {
+            link: '#',
+            text: 'Contact Us',
+        },
+        {
+            link: '#',
+            text: 'Merchant',
+        },
+        {
+            link: '/auth/signout',
+            text: 'Sign Out',
+        },
+    ];
 
     async componentDidMount() {
         try {
@@ -109,7 +109,7 @@ class NavBar extends Component {
                             areItemsLinks
                             className="navbar__dropdown"
                             leftIcon={UserIcon}
-                            items={profileItems}
+                            items={this.profileItems}
                         />
                     </nav>
                 )}

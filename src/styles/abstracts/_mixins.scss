@@ -27,3 +27,14 @@ base + typography > general layout + grid > page layout > components
         text-decoration: none;
     }
 }
+
+@mixin ellipsisAnimation {
+    &:after {
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+        animation: ellipsis steps(4, end) 1500ms infinite;
+        content: '\2026';
+        width: 0px;
+    }
+}

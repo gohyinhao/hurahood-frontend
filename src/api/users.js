@@ -10,4 +10,9 @@ export const signUpUser = async (user) => {
     return newUser;
 };
 
-export default { fetchUser, signUpUser };
+export const signOutUser = async () => {
+    await postData('/users/logout');
+    return;
+};
+
+export default { fetchUser, signUpUser, signOutUser };
