@@ -9,6 +9,7 @@ const AppRouter = () => (
         <NavBar />
         <div className="grid">
             <Switch>
+                <Route exact path="/auth/email" component={Pages.Auth.EmailVerificationPage} />
                 <Route exact path="/auth/facebook" component={Pages.Auth.FacebookLoginPage} />
                 <Route exact path="/auth/google" component={Pages.Auth.GoogleLoginPage} />
                 <Route exact path="/auth/signout" component={Pages.Auth.SignOutPage} />

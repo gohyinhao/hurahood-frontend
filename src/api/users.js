@@ -30,6 +30,11 @@ export const loginFacebookUser = async (code, state) => {
     return user;
 };
 
+export const verifyEmail = async (token) => {
+    const user = await postData('/users/email/verify', { token });
+    return user;
+};
+
 export default {
     fetchUser,
     signUpUser,
@@ -37,4 +42,5 @@ export default {
     loginUser,
     loginGoogleUser,
     loginFacebookUser,
+    verifyEmail,
 };
