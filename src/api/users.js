@@ -20,4 +20,21 @@ export const loginUser = async (email, password) => {
     return user;
 };
 
-export default { fetchUser, signUpUser, signOutUser, loginUser };
+export const loginGoogleUser = async (code, state) => {
+    const user = await postData('/users/login/google', { code, state });
+    return user;
+};
+
+export const loginFacebookUser = async (code, state) => {
+    const user = await postData('/users/login/facebook', { code, state });
+    return user;
+};
+
+export default {
+    fetchUser,
+    signUpUser,
+    signOutUser,
+    loginUser,
+    loginGoogleUser,
+    loginFacebookUser,
+};
