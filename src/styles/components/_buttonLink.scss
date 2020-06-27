@@ -3,13 +3,82 @@
 .button-link:visited {
     display: inline-block;
     border: 1px solid $color-primary;
+    border-radius: 3px;
     padding: 0.3rem 2rem;
-    color: inherit;
     text-decoration: none;
     font-size: $font-xs;
+}
 
-    &:hover {
-        background: $color-grey-dark-1;
-        color: $color-grey-light-1;
+.button-link {
+    &:active {
+        color: inherit;
+    }
+
+    &--disabled {
+        background-color: $color-grey-dark-4;
+        color: $color-grey-dark-1;
+        border: none;
+        cursor: not-allowed;
+    }
+
+    &--white {
+        background-color: #fff;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    &--black {
+        background-color: #000;
+
+        &:hover {
+            color: #000;
+        }
+    }
+
+    &--facebook {
+        background-color: $color-facebook;
+
+        &:hover {
+            color: $color-facebook;
+        }
+    }
+
+    &--white-text {
+        color: #fff;
+
+        &:hover {
+            background-color: #fff;
+        }
+    }
+
+    &--black-text {
+        color: #000;
+
+        &:hover {
+            background-color: #000;
+        }
+    }
+
+    &--tertiary-text {
+        color: $color-tertiary;
+
+        &:hover {
+            background-color: $color-tertiary;
+        }
+    }
+
+    &__icon {
+        width: 2rem;
+        height: 2rem;
+
+        &--before {
+            margin-right: 0.5rem;
+        }
+
+        &--after {
+            margin-left: 0.5rem;
+        }
     }
 }

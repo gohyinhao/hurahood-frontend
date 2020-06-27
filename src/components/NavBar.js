@@ -67,7 +67,6 @@ class NavBar extends Component {
             this.props.updateUser(user);
         } catch (err) {
             // do nothing
-            console.log(err);
         }
     }
 

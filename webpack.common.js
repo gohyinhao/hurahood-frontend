@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js',
@@ -48,5 +49,12 @@ module.exports = {
         }),
         // To strip all locales except “en”
         new MomentLocalesPlugin(),
+        new webpack.DefinePlugin({
+            GOOGLE_AUTH_ID: JSON.stringify(
+                '716214309935-9vakhkqcktvl3rvsngr4v1bv96enoid4.apps.googleusercontent.com',
+            ),
+            FACEBOOK_AUTH_ID: JSON.stringify('259620321987908'),
+            AUTH_STATE_KEY: JSON.stringify('2AyK5fG1p31ODEeA0rcbP9GslZADn6Y7'),
+        }),
     ],
 };

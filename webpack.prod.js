@@ -7,11 +7,7 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             BACKEND_URL: JSON.stringify('http://api.hurahood.com'),
-            GOOGLE_AUTH_ID: JSON.stringify(
-                '716214309935-9vakhkqcktvl3rvsngr4v1bv96enoid4.apps.googleusercontent.com',
-            ),
-            FACEBOOK_AUTH_ID: JSON.stringify('259620321987908'),
-            AUTH_STATE_KEY: JSON.stringify('2AyK5fG1p31ODEeA0rcbP9GslZADn6Y7'),
+            FRONTEND_URL: JSON.stringify('http://hurahood-frontend.herokuapp.com'),
         }),
     ],
 });

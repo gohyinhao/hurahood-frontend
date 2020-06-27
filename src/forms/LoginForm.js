@@ -11,6 +11,31 @@ import CompanyLogo from '../assets/images/hurahood_logo_with_text.svg';
 import FacebookLogo from '../assets/fontawesome/brands/facebook-f.svg';
 import GoogleLogo from '../assets/fontawesome/brands/google.svg';
 
+const googleParams = queryString.stringify({
+    client_id: GOOGLE_AUTH_ID,
+    redirect_uri: `${FRONTEND_URL}/auth/google`,
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+    ].join(' '),
+    response_type: 'code',
+    access_type: 'online',
+    prompt: 'consent',
+    state: AUTH_STATE_KEY,
+});
+
+const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${googleParams}`;
+
+const facebookParams = queryString.stringify({
+    client_id: FACEBOOK_AUTH_ID,
+    redirect_uri: `${FRONTEND_URL}/auth/facebook`,
+    scope: ['email'].join(','),
+    response_type: 'code',
+    state: AUTH_STATE_KEY,
+});
+
+const facebookLoginUrl = `https://www.facebook.com/v7.0/dialog/oauth?${facebookParams}`;
+
 class LoginForm extends Component {
     state = {
         email: '',
@@ -30,8 +55,13 @@ class LoginForm extends Component {
         }
     };
 
-    onFacebookLogin = () => {};
-    onGoogleLogin = () => {};
+    onFacebookLogin = () => {
+        window.location.href = facebookLoginUrl;
+    };
+
+    onGoogleLogin = () => {
+        window.location.href = googleLoginUrl;
+    };
 
     render() {
         const { error, email, password } = this.state;
@@ -56,10 +86,12 @@ class LoginForm extends Component {
                         type="password"
                     />
                     <Button
+                        backgroundColor="black"
                         className="login-form__button"
                         size="full"
                         onClick={this.onFormSubmit}
                         text="Login"
+                        textColor="tertiary"
                     />
                     {error && <p className="login-form__error">{error}</p>}
                 </form>
