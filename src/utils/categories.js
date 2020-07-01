@@ -1,4 +1,4 @@
-const capitalizeCategory = (category) => {
+export const capitalizeCategory = (category) => {
     switch (category) {
         case 'facial':
             return 'Facial';
@@ -15,4 +15,4 @@ const capitalizeCategory = (category) => {
     }
 };
 
-export { capitalizeCategory };
+export default { capitalizeCategory };
