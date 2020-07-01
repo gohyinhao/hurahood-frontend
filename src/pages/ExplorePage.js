@@ -7,7 +7,7 @@ import Filters from '../components/filters';
 import List from '../components/List';
 import ProductThumbnail from '../components/product/ProductThumbnail';
 import Paginator from '../components/Paginator';
-import { limitProducts } from '../utils/products';
+import ProductHelper from '../utils/products';
 import { capitalizeCategory } from '../utils/categories';
 import { isString } from '../utils/helper';
 import { fetchProducts } from '../api/products';
@@ -22,10 +22,9 @@ class ExplorePage extends Component {
             listingsPerPage: '20',
         },
         filteredProducts: [],
-        products: [],
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         const query = queryString.parse(this.props.location.search, { arrayFormat: 'bracket' });
         const categories = [];
 
@@ -44,19 +43,12 @@ class ExplorePage extends Component {
             }));
         }
 
-        this.requestProducts();
-        this.filterProductsByPage();
+        await this.requestProducts();
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    async componentDidUpdate(prevProps, prevState) {
         if (prevState.filters !== this.state.filters) {
-            this.requestProducts();
-        }
-
-        if (prevState.paging !== this.state.paging) {
-            this.setState(() => ({
-                products: limitProducts(this.state.filteredProducts, this.state.paging),
-            }));
+            await this.requestProducts();
         }
     }
 
@@ -64,12 +56,6 @@ class ExplorePage extends Component {
         const filteredProducts = await fetchProducts(this.state.filters);
         this.setState((prevState) => ({
             filteredProducts,
-        }));
-    };
-
-    filterProductsByPage = () => {
-        this.setState((prevState) => ({
-            products: limitProducts(prevState.filteredProducts, this.state.paging),
         }));
     };
 
@@ -101,6 +87,11 @@ class ExplorePage extends Component {
     };
 
     render() {
+        const products = ProductHelper.limitProducts(
+            this.state.filteredProducts,
+            this.state.paging,
+        );
+
         return (
             <>
                 <Carousel />
@@ -118,7 +109,7 @@ class ExplorePage extends Component {
                     />
                 </div>
                 <List className="explore-page__list">
-                    {this.state.products.map((product, index) => {
+                    {products.map((product, index) => {
                         const prices = [];
                         product.services.forEach((service) => {
                             prices.push(service.price);
