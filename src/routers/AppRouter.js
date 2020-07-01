@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import MerchantRouter from './MerchantRouter';
 import Pages from '../pages';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -17,6 +18,11 @@ const AppRouter = () => (
                 <Route exact path="/" component={Pages.HomePage} />
                 <Route exact path="/explore" component={Pages.ExplorePage} />
                 <Route exact path="/product/:id" component={Pages.ProductPage} />
+
+                <Route path="/user/merchant">
+                    <MerchantRouter />
+                </Route>
+
                 <Route path="*" component={Pages.ErrorPage} />
             </Switch>
         </div>

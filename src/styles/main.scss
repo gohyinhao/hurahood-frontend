@@ -24,6 +24,7 @@
 @import 'components/list';
 @import 'components/listingToggle';
 @import 'components/listItem';
+@import 'components/merchantNav';
 @import 'components/message';
 @import 'components/modal';
 @import 'components/navbar';
@@ -49,6 +50,8 @@
 @import 'layout/grid';
 
 @import 'pages/auth/emailVerificationPage';
+
+@import 'pages/merchant/merchantDashboard';
 
 @import 'pages/errorPage';
 @import 'pages/explorePage';

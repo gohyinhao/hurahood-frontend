@@ -52,7 +52,7 @@ class NavBar extends Component {
             text: 'Contact Us',
         },
         {
-            link: '#',
+            link: '/user/merchant',
             text: 'Merchant',
         },
         {

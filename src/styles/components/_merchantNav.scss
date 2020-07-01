@@ -1,0 +1,13 @@
+.merchant-nav {
+    grid-column-start: 1;
+    grid-column-end: -1;
+
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+        text-transform: uppercase;
+        align-self: center;
+    }
+}
