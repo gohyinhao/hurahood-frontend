@@ -1,29 +1,75 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Filters from '../../components/filters';
+import ListingToggle from '../../components/ListingToggle';
 import Button from '../../components/Button';
 import ProductListing from '../../components/product/ProductListing';
+import Paginator from '../../components/Paginator';
 import StoreIcon from '../../assets/fontawesome/solid/store-alt.svg';
+import ProductHelper from '../../utils/products';
 
 class MerchantDashboard extends Component {
     state = {
+        showAddProductModal: false,
         filters: {
             text: '',
-            categories: 'all',
+            category: 'all',
         },
+        paging: {
+            currentPage: 1,
+            listingsPerPage: '20',
+        },
+    };
+
+    onCategoryFilterChange = (category) => {
+        this.setState((prevState) => ({
+            filters: {
+                ...prevState.filters,
+                category,
+            },
+        }));
+    };
+
+    onListingToggleChange = (listingsPerPage) => {
+        this.setState((prevState) => ({
+            paging: {
+                ...prevState.paging,
+                listingsPerPage,
+            },
+        }));
+    };
+
+    onPaginatorChange = (currentPage) => {
+        this.setState((prevState) => ({
+            paging: {
+                ...prevState.paging,
+                currentPage,
+            },
+        }));
     };
 
     render() {
         const { user, products } = this.props;
-        const filteredProducts = products || [];
+        const filteredProducts = ProductHelper.filterProducts(products, this.state.filters) || [];
+        const pagedProducts = ProductHelper.limitProducts(filteredProducts, this.state.paging);
 
         return (
             <div className="merchant-dashboard">
                 {user.isMerchant ? (
                     <>
-                        <div>Filter placeholder</div>
+                        <div className="merchant-dashboard__filters">
+                            <Filters.Category.Dropdown
+                                onChange={this.onCategoryFilterChange}
+                                value={this.state.filters.category}
+                            />
+                            <ListingToggle
+                                onChange={this.onListingToggleChange}
+                                value={this.state.paging.listingsPerPage}
+                            />
+                        </div>
                         <div className="merchant-dashboard__products">
-                            {filteredProducts.map((product, index) => (
+                            {pagedProducts.map((product, index) => (
                                 <Link key={index} to="#" className="merchant-dashboard__product">
                                     <ProductListing
                                         title="test"
@@ -45,6 +91,11 @@ class MerchantDashboard extends Component {
                                 </div>
                             </Link>
                         </div>
+                        <Paginator
+                            onChange={this.onPaginatorChange}
+                            perPage={parseInt(this.state.paging.listingsPerPage, 10)}
+                            total={filteredProducts.length}
+                        />
                     </>
                 ) : (
                     <Button

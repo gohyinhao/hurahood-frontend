@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import Carousel from '../components/carousel/Carousel';
 import ListingToggle from '../components/ListingToggle';
-import CategoryFilter from '../components/filters/CategoryFilter';
+import Filters from '../components/filters';
 import List from '../components/List';
 import ProductThumbnail from '../components/product/ProductThumbnail';
 import Paginator from '../components/Paginator';
@@ -20,7 +20,6 @@ class ExplorePage extends Component {
         paging: {
             currentPage: 1,
             listingsPerPage: '20',
-            totalListings: 0,
         },
         filteredProducts: [],
         products: [],
@@ -65,10 +64,6 @@ class ExplorePage extends Component {
         const filteredProducts = await fetchProducts(this.state.filters);
         this.setState((prevState) => ({
             filteredProducts,
-            paging: {
-                ...prevState.paging,
-                totalListings: filteredProducts.length,
-            },
         }));
     };
 
@@ -116,7 +111,7 @@ class ExplorePage extends Component {
                 />
                 <div className="explore-page__border util-secondary-border"></div>
                 <div className="explore-page__filters">
-                    <CategoryFilter
+                    <Filters.Category.Checkbox
                         categories={this.state.filters.categories}
                         className="util-light-grey-border"
                         onChange={this.onCategoryFilterChange}

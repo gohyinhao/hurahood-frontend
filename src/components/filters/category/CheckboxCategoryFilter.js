@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Checkbox from '../input/Checkbox';
-import { capitalizeCategory } from '../../utils/categories';
+import Checkbox from '../../input/Checkbox';
+import { capitalizeCategory } from '../../../utils/categories';
 
 const categories = ['facial', 'massage', 'manicure', 'hair-treatment', 'hair-cut'];
 
-class CategoryFilter extends Component {
+class CheckboxCategoryFilter extends Component {
     onCheckboxChange = (isChecked, category) => {
         const { categories, onChange } = this.props;
 
@@ -18,12 +18,12 @@ class CategoryFilter extends Component {
 
     render() {
         const { className } = this.props;
-        const classNames = 'category-filter ' + (className ? className : '');
+        const classNames = 'checkbox-category-filter ' + (className ? className : '');
 
         return (
             <div className={classNames}>
                 <h3>Categories</h3>
-                <div className="category-filter__checkboxes">
+                <div className="checkbox-category-filter__checkboxes">
                     {categories.map((category) => (
                         <Checkbox
                             key={category}
@@ -39,14 +39,14 @@ class CategoryFilter extends Component {
     }
 }
 
-CategoryFilter.propTypes = {
+CheckboxCategoryFilter.propTypes = {
     categories: PropTypes.arrayOf(PropTypes.string).isRequired,
     className: PropTypes.string,
     onChange: PropTypes.func.isRequired,
 };
 
-CategoryFilter.defaultProps = {
+CheckboxCategoryFilter.defaultProps = {
     className: '',
 };
 
-export default CategoryFilter;
+export default CheckboxCategoryFilter;

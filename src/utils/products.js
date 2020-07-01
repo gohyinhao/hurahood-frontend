@@ -1,11 +1,19 @@
-const filterProducts = (products, filters) => {
-    return products.filter((product) => filters.categories.includes(product.category));
+const singleCategoryFilter = (product, category) => {
+    if (category === 'all') {
+        return true;
+    } else {
+        return product.category === category;
+    }
 };
 
-const limitProducts = (products, paging) => {
-    const { currentPage, listingsPerPage, totalListings } = paging;
+export const filterProducts = (products, filters) => {
+    return products.filter((product) => singleCategoryFilter(product, filters.category));
+};
 
-    if (totalListings <= listingsPerPage) {
+export const limitProducts = (products, paging) => {
+    const { currentPage, listingsPerPage } = paging;
+
+    if (products.length <= listingsPerPage) {
         return products;
     }
 
@@ -17,4 +25,4 @@ const limitProducts = (products, paging) => {
     });
 };
 
-export { filterProducts, limitProducts };
+export default { filterProducts, limitProducts };
