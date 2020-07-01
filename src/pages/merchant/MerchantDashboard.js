@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Button from '../../components/Button';
 
 class MerchantDashboard extends Component {
     render() {
@@ -7,7 +8,18 @@ class MerchantDashboard extends Component {
 
         return (
             <div className="merchant-dashboard">
-                {user.isMerchant ? <div>I am merchant</div> : <div>Not merchant</div>}
+                {user.isMerchant ? (
+                    <>
+                        <div>Filter placeholder</div>
+                        <div>Product placeholders</div>
+                    </>
+                ) : (
+                    <Button
+                        className="merchant-dashboard__button"
+                        text="Request to be a merchant"
+                        onClick={undefined}
+                    />
+                )}
             </div>
         );
     }

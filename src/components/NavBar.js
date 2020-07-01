@@ -6,7 +6,9 @@ import Dropdown from './Dropdown';
 import Icon from './Icon';
 import Modal from './Modal';
 import UserAPI from '../api/users';
+import ProductAPI from '../api/products';
 import UserActions from '../actions/users';
+import ProductActions from '../actions/products';
 import Helper from '../utils/helper';
 import Forms from '../forms';
 import CalendarIcon from '../assets/fontawesome/regular/calendar-alt.svg';
@@ -65,6 +67,11 @@ class NavBar extends Component {
         try {
             const user = await UserAPI.fetchUser();
             this.props.updateUser(user);
+
+            if (user.isMerchant) {
+                const products = await ProductAPI.fetchProducts({ merchant: user._id });
+                this.props.updateOwnedProducts(products);
+            }
         } catch (err) {
             // do nothing
         }
@@ -133,6 +140,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     updateUser: (user) => dispatch(UserActions.updateUser(user)),
+    updateOwnedProducts: (products) => dispatch(ProductActions.updateOwnedProducts(products)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

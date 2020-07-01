@@ -21,6 +21,7 @@ const initialState = {
         },
         images: [],
     },
+    ownedProducts: [],
     trendingList: [
         {
             brand: 'ABC Haircut',
@@ -111,6 +112,16 @@ const productsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 product: action.product,
+            };
+        case 'UPDATE_OWNED_PRODUCTS':
+            return {
+                ...state,
+                ownedProducts: action.products,
+            };
+        case 'CLEAR_OWNED_PRODUCTS':
+            return {
+                ...state,
+                ownedProducts: [],
             };
         default:
             return state;

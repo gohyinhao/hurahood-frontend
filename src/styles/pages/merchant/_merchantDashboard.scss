@@ -1,8 +1,18 @@
-merchant-dashboard {
+.merchant-dashboard {
     grid-column-start: 1;
     grid-column-end: -1;
 
     min-height: 50rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
+
+    padding-top: 2rem;
+
+    &__button {
+        margin-top: 3rem;
+        width: 25rem;
+        font-weight: 600;
+    }
 }
