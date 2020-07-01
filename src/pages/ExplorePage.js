@@ -53,6 +53,12 @@ class ExplorePage extends Component {
     }
 
     requestProducts = async () => {
+        if (this.state.filters.categories.length === 0) {
+            return this.setState({
+                filteredProducts: [],
+            });
+        }
+
         const filteredProducts = await fetchProducts(this.state.filters);
         this.setState((prevState) => ({
             filteredProducts,
