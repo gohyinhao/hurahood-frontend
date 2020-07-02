@@ -21,9 +21,18 @@ class Modal extends Component {
     };
 
     render() {
-        const { className, children, showModal, onClose } = this.props;
+        const {
+            className,
+            children,
+            isLightBackground,
+            showModal,
+            showCloseSign,
+            onClose,
+        } = this.props;
         const classNames =
-            `modal ${showModal ? '' : 'modal--hidden '}` + (className ? className : '');
+            `modal ${showModal ? '' : 'modal--hidden '} ${
+                isLightBackground ? 'modal--light-bg ' : ''
+            }` + (className ? className : '');
 
         return (
             <div
@@ -34,6 +43,11 @@ class Modal extends Component {
                 onClick={onClose}
             >
                 <div className="modal__container" onClick={(e) => e.stopPropagation()}>
+                    {showCloseSign && (
+                        <div className="modal__close-sign" onClick={onClose}>
+                            &#10005;
+                        </div>
+                    )}
                     {children}
                 </div>
             </div>
@@ -43,12 +57,16 @@ class Modal extends Component {
 
 Modal.propTypes = {
     className: PropTypes.string,
+    isLightBackground: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
+    showCloseSign: PropTypes.bool,
     showModal: PropTypes.bool.isRequired,
 };
 
 Modal.defaultProps = {
     className: '',
+    isLightBackground: false,
+    showCloseSign: false,
 };
 
 export default Modal;

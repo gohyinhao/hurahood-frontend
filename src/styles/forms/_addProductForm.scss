@@ -1,0 +1,73 @@
+.add-product-form {
+    width: 50vw;
+    height: auto;
+    padding: 1.5rem 3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__header {
+        margin: 0.5rem;
+    }
+
+    &__border {
+        align-self: stretch;
+    }
+
+    &__sub-header {
+        margin: 1rem;
+        font-size: $font-l;
+        font-weight: 400;
+    }
+
+    &__container {
+        display: flex;
+    }
+
+    &__sub-container {
+        width: 20vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__icon-wrapper {
+        border-radius: 50%;
+        padding: 2.5rem;
+        border: $secondary-border;
+        margin: 1rem 0;
+    }
+
+    &__icon {
+        width: 10rem;
+        height: 10rem;
+    }
+
+    &__title {
+        font-size: $font-s;
+        line-height: 1;
+        border-bottom: $secondary-border;
+    }
+    &__subtitle {
+        font-size: $font-xs;
+        text-align: center;
+        line-height: 1.2;
+        margin: 0.5rem 0;
+        height: 3.5rem;
+    }
+
+    &__button-wrapper {
+        display: flex;
+    }
+
+    &__select {
+        height: 3rem;
+        width: 16rem;
+        margin-right: 1rem;
+    }
+
+    &__button {
+        width: 8rem;
+    }
+}

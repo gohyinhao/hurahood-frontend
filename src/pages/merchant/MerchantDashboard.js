@@ -9,6 +9,8 @@ import Button from '../../components/Button';
 import ProductListing from '../../components/product/ProductListing';
 import Paginator from '../../components/Paginator';
 import Input from '../../components/input';
+import Modal from '../../components/Modal';
+import Forms from '../../forms';
 import StoreIcon from '../../assets/fontawesome/solid/store-alt.svg';
 import SearchIcon from '../../assets/images/search.svg';
 
@@ -68,6 +70,18 @@ class MerchantDashboard extends Component {
         }));
     };
 
+    openModal = () => {
+        this.setState({
+            showAddProductModal: true,
+        });
+    };
+
+    onModalClose = () => {
+        this.setState({
+            showAddProductModal: false,
+        });
+    };
+
     render() {
         const { user, products } = this.props;
         const filteredProducts = ProductHelper.filterProducts(products, this.state.filters) || [];
@@ -104,7 +118,10 @@ class MerchantDashboard extends Component {
                                     />
                                 </Link>
                             ))}
-                            <Link to="#" className="merchant-dashboard__new-product">
+                            <div
+                                className="merchant-dashboard__new-product"
+                                onClick={this.openModal}
+                            >
                                 <div className="merchant-dashboard__new-product-image-wrapper">
                                     <img
                                         src={StoreIcon}
@@ -115,13 +132,21 @@ class MerchantDashboard extends Component {
                                 <div className="merchant-dashboard__new-product-text">
                                     + Add new listing
                                 </div>
-                            </Link>
+                            </div>
                         </div>
                         <Paginator
                             onChange={this.onPaginatorChange}
                             perPage={parseInt(this.state.paging.listingsPerPage, 10)}
                             total={filteredProducts.length}
                         />
+                        <Modal
+                            showModal={this.state.showAddProductModal}
+                            isLightBackground={true}
+                            onClose={this.onModalClose}
+                            showCloseSign={true}
+                        >
+                            <Forms.AddProductForm products={products} />
+                        </Modal>
                     </>
                 ) : (
                     <Button
