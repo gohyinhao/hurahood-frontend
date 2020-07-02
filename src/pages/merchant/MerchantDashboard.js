@@ -32,6 +32,15 @@ class MerchantDashboard extends Component {
         // }
     }
 
+    onTextFilterChange = (text) => {
+        this.setState((prevState) => ({
+            filters: {
+                ...prevState.filters,
+                text,
+            },
+        }));
+    };
+
     onCategoryFilterChange = (category) => {
         this.setState((prevState) => ({
             filters: {
@@ -75,7 +84,10 @@ class MerchantDashboard extends Component {
                             />
                             <Input.Textbox
                                 className="merchant-dashboard__location-filter"
+                                onChange={this.onTextFilterChange}
                                 iconAfter={SearchIcon}
+                                placeholder="Filter by location"
+                                value={this.state.filters.text}
                             />
                             <ListingToggle
                                 onChange={this.onListingToggleChange}

@@ -6,8 +6,16 @@ const singleCategoryFilter = (product, category) => {
     }
 };
 
+const textLocationFilter = (product, text) => {
+    return product.address.street.includes(text);
+};
+
 export const filterProducts = (products, filters) => {
-    return products.filter((product) => singleCategoryFilter(product, filters.category));
+    return products.filter(
+        (product) =>
+            singleCategoryFilter(product, filters.category) &&
+            textLocationFilter(product, filters.text),
+    );
 };
 
 export const limitProducts = (products, paging) => {
