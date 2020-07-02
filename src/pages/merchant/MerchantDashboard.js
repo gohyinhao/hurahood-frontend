@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Helper from '../../utils/helper';
+import ProductHelper from '../../utils/products';
 import Filters from '../../components/filters';
 import ListingToggle from '../../components/ListingToggle';
 import Button from '../../components/Button';
 import ProductListing from '../../components/product/ProductListing';
 import Paginator from '../../components/Paginator';
+import Input from '../../components/input';
 import StoreIcon from '../../assets/fontawesome/solid/store-alt.svg';
-import ProductHelper from '../../utils/products';
+import SearchIcon from '../../assets/images/search.svg';
 
 class MerchantDashboard extends Component {
     state = {
@@ -24,9 +26,10 @@ class MerchantDashboard extends Component {
     };
 
     componentDidMount() {
-        if (Helper.isEmptyObject(this.props.user)) {
-            this.props.history.push('/unauthorized');
-        }
+        // TODO: redirect if not logged in
+        // if (Helper.isEmptyObject(this.props.user)) {
+        //     this.props.history.push('/unauthorized');
+        // }
     }
 
     onCategoryFilterChange = (category) => {
@@ -69,6 +72,10 @@ class MerchantDashboard extends Component {
                             <Filters.Category.Dropdown
                                 onChange={this.onCategoryFilterChange}
                                 value={this.state.filters.category}
+                            />
+                            <Input.Textbox
+                                className="merchant-dashboard__location-filter"
+                                iconAfter={SearchIcon}
                             />
                             <ListingToggle
                                 onChange={this.onListingToggleChange}

@@ -1,0 +1,35 @@
+.textbox {
+    &__text-wrapper {
+        border-bottom: 1px solid $color-primary;
+        display: flex;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:focus-within {
+            border-bottom: 1px solid $color-tertiary;
+        }
+
+        &--error {
+            &:focus-within {
+                border-bottom: 1px solid $color-red;
+            }
+        }
+    }
+
+    & &__input {
+        border: none;
+    }
+
+    &__icon {
+        width: 2rem;
+        height: auto;
+    }
+
+    &__error {
+        color: $color-red;
+        font-style: italic;
+        font-size: $font-xxs;
+    }
+}
