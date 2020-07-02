@@ -23,6 +23,7 @@ const AppRouter = () => (
                     <MerchantRouter />
                 </Route>
 
+                <Route path="/unauthorized" component={Pages.UnauthorizedPage} />
                 <Route path="*" component={Pages.ErrorPage} />
             </Switch>
         </div>

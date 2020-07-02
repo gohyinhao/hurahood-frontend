@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Helper from '../../utils/helper';
 import Filters from '../../components/filters';
 import ListingToggle from '../../components/ListingToggle';
 import Button from '../../components/Button';
@@ -21,6 +22,12 @@ class MerchantDashboard extends Component {
             listingsPerPage: '20',
         },
     };
+
+    componentDidMount() {
+        if (Helper.isEmptyObject(this.props.user)) {
+            this.props.history.push('/unauthorized');
+        }
+    }
 
     onCategoryFilterChange = (category) => {
         this.setState((prevState) => ({
@@ -72,7 +79,7 @@ class MerchantDashboard extends Component {
                             {pagedProducts.map((product, index) => (
                                 <Link key={index} to="#" className="merchant-dashboard__product">
                                     <ProductListing
-                                        title="test"
+                                        title={user.merchant.name}
                                         category={product.category}
                                         location={product.address.street}
                                     />

@@ -4,6 +4,7 @@ import HomePage from './HomePage';
 import ProductPage from './ProductPage';
 import Auth from './auth';
 import Merchant from './merchant';
+import UnauthorizedPage from './UnauthorizedPage';
 
 export default {
     Auth,
@@ -12,4 +13,5 @@ export default {
     ExplorePage,
     HomePage,
     ProductPage,
+    UnauthorizedPage,
 };
