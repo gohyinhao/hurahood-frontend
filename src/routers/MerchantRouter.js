@@ -11,6 +11,7 @@ const AppRouter = () => {
             <MerchantNav />
             <Switch>
                 <Route exact path={path} component={Pages.Merchant.MerchantDashboardPage} />
+                <Route exact path={`${path}/edit/:id`} component={Pages.Merchant.EditProductPage} />
                 <Route path="*" component={Pages.ErrorPage} />
             </Switch>
         </>

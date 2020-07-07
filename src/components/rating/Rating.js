@@ -41,17 +41,13 @@ const Rating = ({
 
     return (
         <div className={classNames}>
-            <div className="rating__wrapper">
-                {showRatingValue && <span className={valueClassNames}>{rating}</span>}
-                <div className={starWrapperClassNames}>
-                    {array.map((type, index) => (
-                        <Star key={index} className="rating__star" type={type} />
-                    ))}
-                </div>
-                {showNumOfRatings && (
-                    <span className="rating__num-of-ratings">({numOfRatings})</span>
-                )}
+            {showRatingValue && <span className={valueClassNames}>{rating}</span>}
+            <div className={starWrapperClassNames}>
+                {array.map((type, index) => (
+                    <Star key={index} className="rating__star" type={type} />
+                ))}
             </div>
+            {showNumOfRatings && <span className="rating__num-of-ratings">({numOfRatings})</span>}
         </div>
     );
 };

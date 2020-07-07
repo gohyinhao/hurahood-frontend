@@ -110,7 +110,11 @@ class MerchantDashboard extends Component {
                         </div>
                         <div className="merchant-dashboard__products">
                             {pagedProducts.map((product, index) => (
-                                <Link key={index} to="#" className="merchant-dashboard__product">
+                                <Link
+                                    key={index}
+                                    to={`/user/merchant/edit/${product._id}`}
+                                    className="merchant-dashboard__product"
+                                >
                                     <ProductListing
                                         title={user.merchant.name}
                                         category={product.category}

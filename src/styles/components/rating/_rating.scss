@@ -1,22 +1,22 @@
 .rating {
-    &__wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &__value {
         color: $color-grey-dark-2;
         font-size: $font-l;
         font-weight: 300;
-        margin: 0 1rem;
+        margin-right: 1rem;
         text-shadow: 1px 1px 1px $color-grey-light-3;
+        line-height: 1;
     }
 
     &__star-wrapper {
         display: flex;
         align-items: center;
         width: 8.7rem;
+        padding-bottom: 0.25rem;
 
         &--left {
             justify-content: flex-start;
@@ -39,6 +39,7 @@
 
     &__num-of-ratings {
         font-size: 1.4rem;
-        margin: 0 0.5rem;
+        margin-left: 0.5rem;
+        line-height: 1;
     }
 }

@@ -20,6 +20,7 @@
 @import 'components/filters/dropdownCategoryFilter';
 @import 'components/footer';
 @import 'components/form';
+@import 'components/input/currencyInput';
 @import 'components/input/checkbox';
 @import 'components/input/textbox';
 @import 'components/input/textInput';
@@ -55,6 +56,7 @@
 
 @import 'pages/auth/emailVerificationPage';
 
+@import 'pages/merchant/editProductPage';
 @import 'pages/merchant/merchantDashboard';
 
 @import 'pages/errorPage';
