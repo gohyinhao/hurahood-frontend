@@ -17,7 +17,7 @@ const Textbox = ({
 }) => {
     const classNames = 'textbox ' + (className ? className : '');
     const textWrapperClassNames =
-        `textbox__text-wrapper textbox__text-wrapper--${background}` +
+        `textbox__text-wrapper textbox__text-wrapper--${background} ` +
         (error ? 'textbox__text-wrapper--error' : '');
     const iconAfterClassNames = 'textbox__icon ' + (iconAfterClassName ? iconAfterClassName : '');
     const iconBeforeClassNames =

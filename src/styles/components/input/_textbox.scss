@@ -16,9 +16,7 @@
         }
 
         &--error {
-            &:focus-within {
-                border-bottom: 1px solid $color-red;
-            }
+            border-bottom: 1px solid $color-red;
         }
     }
 

@@ -151,6 +151,7 @@
     &__text-wrapper {
         display: flex;
         justify-content: space-between;
+        margin-right: 1.6rem;
     }
 
     &__new-button {
@@ -257,5 +258,12 @@
         width: 50rem;
         text-align: center;
         text-transform: uppercase;
+    }
+
+    &__error-message {
+        color: $color-red;
+        font-style: italic;
+        font-size: $font-xxs;
+        margin: 0 1.5rem;
     }
 }

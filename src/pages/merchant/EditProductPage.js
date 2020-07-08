@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import cloneDeep from 'lodash/cloneDeep';
 import UserAPI from '../../api/users';
 import ProductAPI from '../../api/products';
 import UserActions from '../../actions/users';
@@ -19,6 +20,7 @@ import PinterestIcon from '../../assets/social-media/pinterest-filled.svg';
 class EditProductPage extends Component {
     state = {
         product: {
+            _id: '',
             address: {
                 building: '',
                 street: '',
@@ -46,6 +48,9 @@ class EditProductPage extends Component {
             },
             services: [],
         },
+        uneditedProduct: {
+            services: [],
+        },
         socialMedia: {
             facebook: '',
             twitter: '',
@@ -61,6 +66,10 @@ class EditProductPage extends Component {
                 instagram: false,
                 pinterest: false,
             },
+        },
+        errors: {
+            location: '',
+            services: [],
         },
     };
 
@@ -83,22 +92,35 @@ class EditProductPage extends Component {
             }
 
             const servicesEditStatus = [];
-            product.services.forEach((service) => servicesEditStatus.push(false));
+            const servicesErrors = [];
+            product.services.forEach((service) => {
+                servicesEditStatus.push(false);
+                servicesErrors.push({
+                    name: '',
+                    description: '',
+                    info: new Array(service.info.length),
+                    price: '',
+                    staff: new Array(service.staff.length),
+                });
+            });
 
             this.setState((prevState) => ({
                 product,
+                uneditedProduct: cloneDeep(product),
                 socialMedia: user.merchant.socialMedia,
                 isEditing: {
                     ...prevState.isEditing,
                     services: servicesEditStatus,
+                },
+                errors: {
+                    ...prevState.errors,
+                    services: servicesErrors,
                 },
             }));
         } catch (err) {
             this.props.history.push('/unauthorized');
         }
     }
-
-    onProductSave = async () => {};
 
     onLocationTypeChange = (locationType) => {
         this.setState((prevState) => ({
@@ -109,18 +131,242 @@ class EditProductPage extends Component {
         }));
     };
 
+    onLocationSave = async () => {
+        const { product } = this.state;
+        try {
+            await ProductAPI.updateProduct(product._id, {
+                address: product.address,
+                locationType: product.locationType,
+            });
+            this.setState((prevState) => ({
+                isEditing: { ...prevState.isEditing, location: false },
+                errors: {
+                    ...prevState.errors,
+                    location: '',
+                },
+            }));
+        } catch (err) {
+            this.setState((prevState) => ({
+                errors: {
+                    ...prevState.errors,
+                    location: err.error,
+                },
+            }));
+        }
+    };
+
     onCategoryChange = async (category) => {
+        const { product } = this.state;
+        try {
+            const updatedProduct = await ProductAPI.updateProduct(product._id, { category });
+            this.setState({
+                product: updatedProduct,
+            });
+        } catch (err) {
+            // TODO: possibly implement error message for category?
+        }
+    };
+
+    onServiceSave = async (index) => {
+        const {
+            uneditedProduct,
+            product: { _id, services },
+            errors: { services: serviceErrors },
+            isEditing,
+        } = this.state;
+
+        try {
+            let uneditedServices = cloneDeep(uneditedProduct.services);
+            uneditedServices[index] = services[index];
+            await ProductAPI.updateProduct(_id, { services: uneditedServices });
+
+            isEditing.services[index] = false;
+            serviceErrors[index] = {
+                name: '',
+                description: '',
+                info: new Array(services[index].info.length),
+                price: '',
+                staff: new Array(services[index].staff.length),
+            };
+            this.setState((prevState) => ({
+                uneditedProduct: {
+                    ...prevState.uneditedProduct,
+                    services: uneditedServices,
+                },
+                isEditing: {
+                    ...prevState.isEditing,
+                    services: isEditing.services,
+                },
+                errors: {
+                    ...prevState.errors,
+                    services: serviceErrors,
+                },
+            }));
+        } catch (err) {
+            console.log(err);
+            let errors = serviceErrors[index];
+
+            if (services[index].name.length === 0) {
+                errors.name = 'Name cannot be blank';
+            } else {
+                errors.name = '';
+            }
+
+            if (services[index].description.length === 0) {
+                errors.description = 'Description cannot be blank';
+            } else {
+                errors.description = '';
+            }
+
+            services[index].info.forEach((info, infoIndex) => {
+                if (info.length === 0) {
+                    errors.info[infoIndex] = 'Info cannot be blank';
+                } else {
+                    errors.info[infoIndex] = '';
+                }
+            });
+
+            if (services[index].price === 0 || services[index].price === undefined) {
+                errors.price = 'Price cannot be zero';
+            } else {
+                errors.price = '';
+            }
+
+            services[index].staff.forEach((staff, staffIndex) => {
+                if (staff.length === 0) {
+                    errors.staff[staffIndex] = 'Staff name cannot be blank';
+                } else {
+                    errors.staff[staffIndex] = '';
+                }
+            });
+
+            serviceErrors[index] = errors;
+            this.setState((prevState) => ({
+                errors: {
+                    ...prevState.errors,
+                    services: serviceErrors,
+                },
+            }));
+        }
+    };
+
+    onServiceDelete = async (index) => {
+        const {
+            product: { services, _id },
+            uneditedProduct: { services: uneditedServices },
+            errors,
+            isEditing,
+        } = this.state;
+
+        try {
+            if (index < uneditedServices.length) {
+                // old service being deleted
+                uneditedServices.splice(index, 1);
+                await ProductAPI.updateProduct(_id, { services: uneditedServices });
+            }
+            services.splice(index, 1);
+            isEditing.services.splice(index, 1);
+            errors.services.splice(index, 1);
+
+            this.setState((prevState) => ({
+                uneditedProduct: {
+                    ...prevState.uneditedProduct,
+                    services: uneditedServices,
+                },
+                product: {
+                    ...prevState.product,
+                    services,
+                },
+                isEditing,
+                errors,
+            }));
+        } catch (err) {
+            // do nothing
+            console.err(err);
+        }
+    };
+
+    onServiceInfoDelete = (serviceIndex, infoIndex) => {
+        const {
+            product: { services },
+            errors,
+        } = this.state;
+        services[serviceIndex].info.splice(infoIndex, 1);
+        errors.services[serviceIndex].info.splice(infoIndex, 1);
         this.setState((prevState) => ({
             product: {
                 ...prevState.product,
-                category,
+                services,
+            },
+            errors: {
+                ...prevState.errors,
+                services: errors.services,
             },
         }));
-        // TODO: update backend. call updateproduct
+    };
+
+    onServiceStaffDelete = (serviceIndex, staffIndex) => {
+        const {
+            product: { services },
+            errors,
+        } = this.state;
+        services[serviceIndex].staff.splice(staffIndex, 1);
+        errors.services[serviceIndex].staff.splice(staffIndex, 1);
+        this.setState((prevState) => ({
+            product: {
+                ...prevState.product,
+                services,
+            },
+            errors: {
+                ...prevState.errors,
+                services: errors.services,
+            },
+        }));
+    };
+
+    addNewService = () => {
+        const newService = {
+            name: '',
+            description: '',
+            price: 0,
+            info: [],
+            isPriceFixed: true,
+            maxPrice: undefined,
+            staff: [],
+        };
+
+        const {
+            product: { services },
+            isEditing: { services: areServicesEditing },
+            errors: { services: serviceErrors },
+        } = this.state;
+        services.push(newService);
+        areServicesEditing.push(true);
+        serviceErrors.push({
+            name: '',
+            description: '',
+            info: [],
+            price: '',
+            staff: [],
+        });
+        this.setState((prevState) => ({
+            product: {
+                ...prevState.product,
+                services,
+            },
+            isEditing: {
+                ...prevState.isEditing,
+                services: areServicesEditing,
+            },
+            errors: {
+                ...prevState.errors,
+                services: serviceErrors,
+            },
+        }));
     };
 
     render() {
-        const { product, isEditing, socialMedia } = this.state;
+        const { product, isEditing, socialMedia, errors, uneditedProduct } = this.state;
         const { merchant } = this.props;
 
         return (
@@ -153,7 +399,7 @@ class EditProductPage extends Component {
                     </div>
                     <ExpandableText
                         className="edit-product-page__merchant-description"
-                        text={merchant ? merchant.description : ''}
+                        text={merchant ? merchant.description : 'No merchant description'}
                     />
                 </section>
                 <section className="edit-product-page__section">
@@ -161,12 +407,7 @@ class EditProductPage extends Component {
                         <div className="edit-product-page__edit-buttons-wrapper">
                             <Button
                                 className="edit-product-page__edit-button"
-                                onClick={async () => {
-                                    await this.onProductSave();
-                                    this.setState((prevState) => ({
-                                        isEditing: { ...prevState.isEditing, location: false },
-                                    }));
-                                }}
+                                onClick={this.onLocationSave}
                                 text="Save"
                                 textColor="tertiary"
                                 backgroundColor="black"
@@ -232,6 +473,7 @@ class EditProductPage extends Component {
                             <Input.Textbox
                                 background="grey"
                                 className="edit-product-page__textbox"
+                                error={errors.location}
                                 onChange={(street) =>
                                     this.setState((prevState) => ({
                                         product: {
@@ -282,6 +524,7 @@ class EditProductPage extends Component {
                             <Input.Textbox
                                 background="grey"
                                 className="edit-product-page__textbox"
+                                error={errors.location}
                                 onChange={(zip) =>
                                     this.setState((prevState) => ({
                                         product: {
@@ -329,25 +572,14 @@ class EditProductPage extends Component {
                                 <div className="edit-product-page__service-edit-buttons-wrapper">
                                     <Button
                                         className="edit-product-page__edit-button"
-                                        onClick={async () => {
-                                            await this.onProductSave();
-                                            isEditing.services[index] = false;
-                                            this.setState((prevState) => ({
-                                                isEditing: {
-                                                    ...prevState.isEditing,
-                                                    services: isEditing.services,
-                                                },
-                                            }));
-                                        }}
+                                        onClick={this.onServiceSave.bind(undefined, index)}
                                         text="Save"
                                         textColor="tertiary"
                                         backgroundColor="black"
                                     />
                                     <Button
                                         className="edit-product-page__edit-button"
-                                        onClick={async () => {
-                                            // DELETE PRODUCT
-                                        }}
+                                        onClick={this.onServiceDelete.bind(undefined, index)}
                                         text="Delete"
                                     />
                                 </div>
@@ -372,6 +604,7 @@ class EditProductPage extends Component {
                                 <Input.Textbox
                                     background="grey"
                                     className="edit-product-page__textbox"
+                                    error={errors.services[index].name}
                                     onChange={(name) => {
                                         product.services[index].name = name;
                                         this.setState((prevState) => ({
@@ -396,6 +629,7 @@ class EditProductPage extends Component {
                                 <Input.Textbox
                                     background="grey"
                                     className="edit-product-page__textbox"
+                                    error={errors.services[index].description}
                                     onChange={(description) => {
                                         product.services[index].description = description;
                                         this.setState((prevState) => ({
@@ -419,21 +653,33 @@ class EditProductPage extends Component {
                                         Service Information {String.fromCharCode(infoIndex + 65)}:
                                     </span>
                                     {isEditing.services[index] ? (
-                                        <Input.Textbox
-                                            background="grey"
-                                            className="edit-product-page__textbox"
-                                            onChange={(text) => {
-                                                product.services[index].info[infoIndex] = text;
-                                                this.setState((prevState) => ({
-                                                    product: {
-                                                        ...prevState.product,
-                                                        services: product.services,
-                                                    },
-                                                }));
-                                            }}
-                                            placeholder="Service Name, e.g. Thai Massage"
-                                            value={info}
-                                        />
+                                        <span className="edit-product-page__text-wrapper">
+                                            <Input.Textbox
+                                                background="grey"
+                                                className="edit-product-page__textbox"
+                                                error={errors.services[index].info[infoIndex]}
+                                                onChange={(text) => {
+                                                    product.services[index].info[infoIndex] = text;
+                                                    this.setState((prevState) => ({
+                                                        product: {
+                                                            ...prevState.product,
+                                                            services: product.services,
+                                                        },
+                                                    }));
+                                                }}
+                                                placeholder="Service Name, e.g. Thai Massage"
+                                                value={info}
+                                            />
+                                            <Button
+                                                className="edit-product-page__edit-button"
+                                                onClick={this.onServiceInfoDelete.bind(
+                                                    undefined,
+                                                    index,
+                                                    infoIndex,
+                                                )}
+                                                text="Delete"
+                                            />
+                                        </span>
                                     ) : (
                                         <span className="edit-product-page__field-text">
                                             {info}
@@ -447,7 +693,14 @@ class EditProductPage extends Component {
                                     <Button
                                         className="edit-product-page__new-button"
                                         text="Add More Info"
-                                        onClick={() => {}}
+                                        onClick={() => {
+                                            product.services[index].info.push('');
+                                            errors.services[index].info.push('');
+                                            this.setState({
+                                                product,
+                                                errors,
+                                            });
+                                        }}
                                     />
                                 </>
                             )}
@@ -482,7 +735,7 @@ class EditProductPage extends Component {
                             )}
                             <span>{/* Just to occupy grid square */}</span>
                             {isEditing.services[index] ? (
-                                <>
+                                <span>
                                     {service.isPriceFixed ? (
                                         <Input.CurrencyInput
                                             className="edit-product-page__price-textbox"
@@ -499,36 +752,43 @@ class EditProductPage extends Component {
                                         />
                                     ) : (
                                         <span className="edit-product-page__price-wrapper">
-                                            <Input.CurrencyInput
-                                                className="edit-product-page__price-textbox"
-                                                onChange={(price) => {
-                                                    product.services[index].price = price;
-                                                    this.setState((prevState) => ({
-                                                        product: {
-                                                            ...prevState.product,
-                                                            services: product.services,
-                                                        },
-                                                    }));
-                                                }}
-                                                value={service.price}
-                                            />{' '}
-                                            &#8212;{' '}
-                                            <Input.CurrencyInput
-                                                className="edit-product-page__price-textbox"
-                                                onChange={(price) => {
-                                                    product.services[index].maxPrice = price;
-                                                    this.setState((prevState) => ({
-                                                        product: {
-                                                            ...prevState.product,
-                                                            services: product.services,
-                                                        },
-                                                    }));
-                                                }}
-                                                value={service.maxPrice ? service.maxPrice : 0}
-                                            />
+                                            <div>
+                                                <Input.CurrencyInput
+                                                    className="edit-product-page__price-textbox"
+                                                    onChange={(price) => {
+                                                        product.services[index].price = price;
+                                                        this.setState((prevState) => ({
+                                                            product: {
+                                                                ...prevState.product,
+                                                                services: product.services,
+                                                            },
+                                                        }));
+                                                    }}
+                                                    value={service.price}
+                                                />{' '}
+                                                &#8212;{' '}
+                                                <Input.CurrencyInput
+                                                    className="edit-product-page__price-textbox"
+                                                    onChange={(price) => {
+                                                        product.services[index].maxPrice = price;
+                                                        this.setState((prevState) => ({
+                                                            product: {
+                                                                ...prevState.product,
+                                                                services: product.services,
+                                                            },
+                                                        }));
+                                                    }}
+                                                    value={service.maxPrice ? service.maxPrice : 0}
+                                                />
+                                            </div>
                                         </span>
                                     )}
-                                </>
+                                    {errors.services[index].price && (
+                                        <span className="edit-product-page__error-message">
+                                            {errors.services[index].price}
+                                        </span>
+                                    )}
+                                </span>
                             ) : (
                                 <span className="edit-product-page__field-text">
                                     {`${Helper.toCurrencyFormat(service.price / 100)}${
@@ -541,62 +801,74 @@ class EditProductPage extends Component {
                                 </span>
                             )}
                             <span className="edit-product-page__field-name">Service Staff:</span>
-                            {service.staff.length === 0 ? (
+
+                            {service.staff.map((staff, staffIndex) => (
+                                <React.Fragment key={staffIndex}>
+                                    {isEditing.services[index] ? (
+                                        <span className="edit-product-page__text-wrapper">
+                                            <Input.Textbox
+                                                background="grey"
+                                                className="edit-product-page__textbox"
+                                                error={errors.services[index].staff[staffIndex]}
+                                                onChange={(staff) => {
+                                                    product.services[index].staff[
+                                                        staffIndex
+                                                    ] = staff;
+                                                    this.setState((prevState) => ({
+                                                        product: {
+                                                            ...prevState.product,
+                                                            services: product.services,
+                                                        },
+                                                    }));
+                                                }}
+                                                placeholder="Staff Name"
+                                                value={staff}
+                                            />
+                                            <Button
+                                                className="edit-product-page__edit-button"
+                                                onClick={this.onServiceStaffDelete.bind(
+                                                    undefined,
+                                                    index,
+                                                    staffIndex,
+                                                )}
+                                                text="Delete"
+                                            />
+                                        </span>
+                                    ) : (
+                                        <span className="edit-product-page__field-text">
+                                            {staff}
+                                        </span>
+                                    )}
+                                    <span>{/* Just to occupy grid square */}</span>
+                                </React.Fragment>
+                            ))}
+                            {isEditing.services[index] ? (
                                 <Button
                                     className="edit-product-page__new-button"
                                     text="Add More Staff"
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                        product.services[index].staff.push('');
+                                        errors.services[index].staff.push('');
+                                        this.setState({
+                                            product,
+                                            errors,
+                                        });
+                                    }}
                                 />
                             ) : (
-                                <>
-                                    {service.staff.map((staff, staffIndex) => (
-                                        <React.Fragment key={staffIndex}>
-                                            {isEditing.services[index] ? (
-                                                <span className="edit-product-page__text-wrapper">
-                                                    <Input.Textbox
-                                                        background="grey"
-                                                        className="edit-product-page__textbox"
-                                                        onChange={(staff) => {
-                                                            product.services[index].staff[
-                                                                staffIndex
-                                                            ] = staff;
-                                                            this.setState((prevState) => ({
-                                                                product: {
-                                                                    ...prevState.product,
-                                                                    services: product.services,
-                                                                },
-                                                            }));
-                                                        }}
-                                                        placeholder="Staff Name"
-                                                        value={staff}
-                                                    />
-                                                    <Button
-                                                        className="edit-product-page__edit-button"
-                                                        onClick={() => {}}
-                                                        text="Delete"
-                                                    />
-                                                </span>
-                                            ) : (
-                                                <span className="edit-product-page__field-text">
-                                                    {staff}
-                                                </span>
-                                            )}
-                                            <span>{/* Just to occupy grid square */}</span>
-                                        </React.Fragment>
-                                    ))}
-                                    <Button
-                                        className="edit-product-page__new-button"
-                                        text="Add More Staff"
-                                        onClick={() => {}}
-                                    />
-                                </>
+                                product.services[index].staff.length === 0 && (
+                                    <span className="edit-product-page__field-text edit-product-page__field-text--empty">
+                                        No staff added
+                                    </span>
+                                )
                             )}
                         </div>
                     ))}
                     <Button
                         className="edit-product-page__new-service-button"
+                        disabled={product.services.length !== uneditedProduct.services.length}
                         text="Add new service"
-                        onClick={() => {}}
+                        onClick={this.addNewService}
                     />
                 </section>
                 <section className="edit-product-page__section">
