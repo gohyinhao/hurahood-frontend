@@ -11,6 +11,10 @@ import Rating from '../../components/rating/Rating';
 import ExpandableText from '../../components/ExpandableText';
 import DefaultImage from '../../assets/images/no-image-available.svg';
 import EditIcon from '../../assets/fontawesome/regular/edit.svg';
+import InstagramIcon from '../../assets/social-media/instagram-filled.svg';
+import FacebookIcon from '../../assets/social-media/facebook-filled.svg';
+import TwitterIcon from '../../assets/social-media/twitter-filled.svg';
+import PinterestIcon from '../../assets/social-media/pinterest-filled.svg';
 
 class EditProductPage extends Component {
     state = {
@@ -42,9 +46,21 @@ class EditProductPage extends Component {
             },
             services: [],
         },
+        socialMedia: {
+            facebook: '',
+            twitter: '',
+            instagram: '',
+            pinterest: '',
+        },
         isEditing: {
             location: false,
             services: [],
+            socialMedia: {
+                facebook: false,
+                twitter: false,
+                instagram: false,
+                pinterest: false,
+            },
         },
     };
 
@@ -71,6 +87,7 @@ class EditProductPage extends Component {
 
             this.setState((prevState) => ({
                 product,
+                socialMedia: user.merchant.socialMedia,
                 isEditing: {
                     ...prevState.isEditing,
                     services: servicesEditStatus,
@@ -103,7 +120,7 @@ class EditProductPage extends Component {
     };
 
     render() {
-        const { product, isEditing } = this.state;
+        const { product, isEditing, socialMedia } = this.state;
         const { merchant } = this.props;
 
         return (
@@ -188,6 +205,7 @@ class EditProductPage extends Component {
                         <span className="edit-product-page__field-name">Building:</span>
                         {isEditing.location ? (
                             <Input.Textbox
+                                background="grey"
                                 className="edit-product-page__textbox"
                                 onChange={(building) =>
                                     this.setState((prevState) => ({
@@ -206,12 +224,13 @@ class EditProductPage extends Component {
                             </span>
                         ) : (
                             <span className="edit-product-page__field-text edit-product-page__field-text--empty">
-                                No entry
+                                Not initialized
                             </span>
                         )}
                         <span className="edit-product-page__field-name">Street:</span>
                         {isEditing.location ? (
                             <Input.Textbox
+                                background="grey"
                                 className="edit-product-page__textbox"
                                 onChange={(street) =>
                                     this.setState((prevState) => ({
@@ -230,12 +249,13 @@ class EditProductPage extends Component {
                             </span>
                         ) : (
                             <span className="edit-product-page__field-text edit-product-page__field-text--empty">
-                                No entry
+                                Not initialized
                             </span>
                         )}
                         <span className="edit-product-page__field-name">Unit:</span>
                         {isEditing.location ? (
                             <Input.Textbox
+                                background="grey"
                                 className="edit-product-page__textbox"
                                 onChange={(unit) =>
                                     this.setState((prevState) => ({
@@ -254,12 +274,13 @@ class EditProductPage extends Component {
                             </span>
                         ) : (
                             <span className="edit-product-page__field-text edit-product-page__field-text--empty">
-                                No entry
+                                Not initialized
                             </span>
                         )}
                         <span className="edit-product-page__field-name">Postal Code:</span>
                         {isEditing.location ? (
                             <Input.Textbox
+                                background="grey"
                                 className="edit-product-page__textbox"
                                 onChange={(zip) =>
                                     this.setState((prevState) => ({
@@ -278,7 +299,7 @@ class EditProductPage extends Component {
                             </span>
                         ) : (
                             <span className="edit-product-page__field-text edit-product-page__field-text--empty">
-                                No entry
+                                Not initialized
                             </span>
                         )}
                     </div>
@@ -305,7 +326,7 @@ class EditProductPage extends Component {
                     {product.services.map((service, index) => (
                         <div className="edit-product-page__service" key={index}>
                             {isEditing.services[index] ? (
-                                <div className="edit-product-page__edit-buttons-wrapper">
+                                <div className="edit-product-page__service-edit-buttons-wrapper">
                                     <Button
                                         className="edit-product-page__edit-button"
                                         onClick={async () => {
@@ -349,6 +370,7 @@ class EditProductPage extends Component {
                             <span className="edit-product-page__field-name">Service Name:</span>
                             {isEditing.services[index] ? (
                                 <Input.Textbox
+                                    background="grey"
                                     className="edit-product-page__textbox"
                                     onChange={(name) => {
                                         product.services[index].name = name;
@@ -372,6 +394,7 @@ class EditProductPage extends Component {
                             </span>
                             {isEditing.services[index] ? (
                                 <Input.Textbox
+                                    background="grey"
                                     className="edit-product-page__textbox"
                                     onChange={(description) => {
                                         product.services[index].description = description;
@@ -397,6 +420,7 @@ class EditProductPage extends Component {
                                     </span>
                                     {isEditing.services[index] ? (
                                         <Input.Textbox
+                                            background="grey"
                                             className="edit-product-page__textbox"
                                             onChange={(text) => {
                                                 product.services[index].info[infoIndex] = text;
@@ -530,6 +554,7 @@ class EditProductPage extends Component {
                                             {isEditing.services[index] ? (
                                                 <span className="edit-product-page__text-wrapper">
                                                     <Input.Textbox
+                                                        background="grey"
                                                         className="edit-product-page__textbox"
                                                         onChange={(staff) => {
                                                             product.services[index].staff[
@@ -576,10 +601,326 @@ class EditProductPage extends Component {
                 </section>
                 <section className="edit-product-page__section">
                     <h3 className="edit-product-page__section-header">Service Media</h3>
+                    <div className="edit-product-page__section-content">
+                        <span className="edit-product-page__field-name">Listing Pictures</span>
+                        <div className="edit-product-page__image-gallery">
+                            {product.images.map((image, index) => (
+                                <div className="edit-product-page__image-wrapper" key={index}>
+                                    <img
+                                        src={image.link}
+                                        alt="Product Image"
+                                        className="edit-product-page__image"
+                                    />
+                                    <button
+                                        className="edit-product-page__delete-image-button"
+                                        onClick={() => this.onImageDelete(image.key)}
+                                    >
+                                        &#8211;
+                                    </button>
+                                </div>
+                            ))}
+                            <button
+                                className="edit-product-page__add-image-button"
+                                onClick={this.onShowImageModal}
+                            >
+                                Add Image
+                            </button>
+                        </div>
+                    </div>
                 </section>
                 <section className="edit-product-page__section">
                     <h3 className="edit-product-page__section-header">Connected Social Accounts</h3>
+                    <div className="edit-product-page__social-media-section">
+                        <div className="edit-product-page__social-media-wrapper">
+                            <img
+                                src={FacebookIcon}
+                                alt="Facebook Icon"
+                                className="edit-product-page__social-media-icon"
+                            />
+                            {isEditing.socialMedia.facebook ? (
+                                <>
+                                    <Input.Textbox
+                                        className="edit-product-page__textbox"
+                                        onChange={(text) => {
+                                            this.setState((prevState) => ({
+                                                socialMedia: {
+                                                    ...prevState.socialMedia,
+                                                    facebook: text,
+                                                },
+                                            }));
+                                        }}
+                                        placeholder="www.facebook.com/yourAccountLink"
+                                        value={socialMedia.facebook}
+                                    />
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={async () => {
+                                            // save social media
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        facebook: false,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Save"
+                                        textColor="tertiary"
+                                        backgroundColor="black"
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    {socialMedia.facebook ? (
+                                        <span className="edit-product-page__field-text">
+                                            {socialMedia.facebook}
+                                        </span>
+                                    ) : (
+                                        <span className="edit-product-page__field-text edit-product-page__field-text--empty">
+                                            Not initialized
+                                        </span>
+                                    )}
+
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={() => {
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        facebook: true,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Edit"
+                                    />
+                                </>
+                            )}
+                        </div>
+                        <div className="edit-product-page__social-media-wrapper">
+                            <img
+                                src={TwitterIcon}
+                                alt="Twitter Icon"
+                                className="edit-product-page__social-media-icon"
+                            />
+                            {isEditing.socialMedia.twitter ? (
+                                <>
+                                    <Input.Textbox
+                                        className="edit-product-page__textbox"
+                                        onChange={(text) => {
+                                            this.setState((prevState) => ({
+                                                socialMedia: {
+                                                    ...prevState.socialMedia,
+                                                    twitter: text,
+                                                },
+                                            }));
+                                        }}
+                                        placeholder="www.twitter.com/yourAccountLink"
+                                        value={socialMedia.twitter}
+                                    />
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={async () => {
+                                            // save social media
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        twitter: false,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Save"
+                                        textColor="tertiary"
+                                        backgroundColor="black"
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    {socialMedia.twitter ? (
+                                        <span className="edit-product-page__field-text">
+                                            {socialMedia.twitter}
+                                        </span>
+                                    ) : (
+                                        <span className="edit-product-page__field-text edit-product-page__field-text--empty">
+                                            Not initialized
+                                        </span>
+                                    )}
+
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={() => {
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        twitter: true,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Edit"
+                                    />
+                                </>
+                            )}
+                        </div>
+                        <div className="edit-product-page__social-media-wrapper">
+                            <img
+                                src={InstagramIcon}
+                                alt="Instagram Icon"
+                                className="edit-product-page__social-media-icon"
+                            />
+                            {isEditing.socialMedia.instagram ? (
+                                <>
+                                    <Input.Textbox
+                                        className="edit-product-page__textbox"
+                                        onChange={(text) => {
+                                            this.setState((prevState) => ({
+                                                socialMedia: {
+                                                    ...prevState.socialMedia,
+                                                    instagram: text,
+                                                },
+                                            }));
+                                        }}
+                                        placeholder="www.instagram.com/yourAccountLink"
+                                        value={socialMedia.instagram}
+                                    />
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={async () => {
+                                            // save social media
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        instagram: false,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Save"
+                                        textColor="tertiary"
+                                        backgroundColor="black"
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    {socialMedia.instagram ? (
+                                        <span className="edit-product-page__field-text">
+                                            {socialMedia.instagram}
+                                        </span>
+                                    ) : (
+                                        <span className="edit-product-page__field-text edit-product-page__field-text--empty">
+                                            Not initialized
+                                        </span>
+                                    )}
+
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={() => {
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        instagram: true,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Edit"
+                                    />
+                                </>
+                            )}
+                        </div>
+                        <div className="edit-product-page__social-media-wrapper">
+                            <img
+                                src={PinterestIcon}
+                                alt="Pinterest Icon"
+                                className="edit-product-page__social-media-icon"
+                            />
+                            {isEditing.socialMedia.pinterest ? (
+                                <>
+                                    <Input.Textbox
+                                        className="edit-product-page__textbox"
+                                        onChange={(text) => {
+                                            this.setState((prevState) => ({
+                                                socialMedia: {
+                                                    ...prevState.socialMedia,
+                                                    pinterest: text,
+                                                },
+                                            }));
+                                        }}
+                                        placeholder="www.pinterest.com/yourAccountLink"
+                                        value={socialMedia.pinterest}
+                                    />
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={async () => {
+                                            // save social media
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        pinterest: false,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Save"
+                                        textColor="tertiary"
+                                        backgroundColor="black"
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    {socialMedia.pinterest ? (
+                                        <span className="edit-product-page__field-text">
+                                            {socialMedia.pinterest}
+                                        </span>
+                                    ) : (
+                                        <span className="edit-product-page__field-text edit-product-page__field-text--empty">
+                                            Not initialized
+                                        </span>
+                                    )}
+
+                                    <Button
+                                        className="edit-product-page__edit-button"
+                                        onClick={() => {
+                                            this.setState((prevState) => ({
+                                                isEditing: {
+                                                    ...prevState.isEditing,
+                                                    socialMedia: {
+                                                        ...prevState.isEditing.socialMedia,
+                                                        pinterest: true,
+                                                    },
+                                                },
+                                            }));
+                                        }}
+                                        text="Edit"
+                                    />
+                                </>
+                            )}
+                        </div>
+                    </div>
                 </section>
+                {/* TODO: Link to preview page */}
+                <ButtonLink
+                    className="edit-product-page__preview-button"
+                    to="#"
+                    backgroundColor="black"
+                    textColor="tertiary"
+                    text="Preview Listing!"
+                />
             </div>
         );
     }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import TextInput from './TextInput';
 
 const Textbox = ({
+    background,
     className,
     error,
     onChange,
@@ -16,7 +17,8 @@ const Textbox = ({
 }) => {
     const classNames = 'textbox ' + (className ? className : '');
     const textWrapperClassNames =
-        'textbox__text-wrapper ' + (error ? 'textbox__text-wrapper--error' : '');
+        `textbox__text-wrapper textbox__text-wrapper--${background}` +
+        (error ? 'textbox__text-wrapper--error' : '');
     const iconAfterClassNames = 'textbox__icon ' + (iconAfterClassName ? iconAfterClassName : '');
     const iconBeforeClassNames =
         'textbox__icon ' + (iconBeforeClassName ? iconBeforeClassName : '');
@@ -26,7 +28,7 @@ const Textbox = ({
             <div className={textWrapperClassNames}>
                 {iconBefore && <img className={iconBeforeClassNames} src={iconBefore} />}
                 <TextInput
-                    className="textbox__input"
+                    className={`textbox__input textbox__input--${background}`}
                     onChange={onChange}
                     placeholder={placeholder}
                     type={type}
@@ -40,6 +42,7 @@ const Textbox = ({
 };
 
 Textbox.propTypes = {
+    background: PropTypes.oneOf(['white', 'grey']),
     className: PropTypes.string,
     error: PropTypes.string,
     iconAfter: PropTypes.string,
@@ -53,6 +56,7 @@ Textbox.propTypes = {
 };
 
 Textbox.defaultProps = {
+    background: 'white',
     className: '',
     error: '',
     iconAfter: '',

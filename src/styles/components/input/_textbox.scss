@@ -3,6 +3,10 @@
         border-bottom: 1px solid $color-primary;
         display: flex;
 
+        &--grey {
+            background: $color-grey-light-3;
+        }
+
         &:focus {
             outline: none;
         }
@@ -19,8 +23,11 @@
     }
 
     & &__input {
-        background: $color-grey-light-3;
         border: none;
+
+        &--grey {
+            background: $color-grey-light-3;
+        }
     }
 
     &__icon {
