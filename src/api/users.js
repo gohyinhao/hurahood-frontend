@@ -1,7 +1,12 @@
-import { fetchData, postData } from './common';
+import { fetchData, updateData, postData } from './common';
 
 export const fetchUser = async () => {
     const user = await fetchData('/users/me');
+    return user;
+};
+
+export const updateUser = async (updates) => {
+    const user = await updateData('/users/me', updates);
     return user;
 };
 
@@ -37,6 +42,7 @@ export const verifyEmail = async (token) => {
 
 export default {
     fetchUser,
+    updateUser,
     signUpUser,
     signOutUser,
     loginUser,

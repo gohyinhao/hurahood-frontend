@@ -70,6 +70,12 @@ class EditProductPage extends Component {
         errors: {
             location: '',
             services: [],
+            socialMedia: {
+                facebook: '',
+                twitter: '',
+                instagram: '',
+                pinterest: '',
+            },
         },
     };
 
@@ -363,6 +369,182 @@ class EditProductPage extends Component {
                 services: serviceErrors,
             },
         }));
+    };
+
+    onFacebookSave = async () => {
+        const { merchant, updateMerchant } = this.props;
+        const { socialMedia } = this.state;
+
+        try {
+            const updatedMerchant = {
+                ...merchant,
+                socialMedia: {
+                    ...merchant.socialMedia,
+                    facebook: socialMedia.facebook,
+                },
+            };
+            const user = await UserAPI.updateUser({ merchant: updatedMerchant });
+            updateMerchant(updatedMerchant);
+
+            this.setState((prevState) => ({
+                isEditing: {
+                    ...prevState.isEditing,
+                    socialMedia: {
+                        ...prevState.isEditing.socialMedia,
+                        facebook: false,
+                    },
+                },
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        facebook: '',
+                    },
+                },
+            }));
+        } catch (err) {
+            this.setState((prevState) => ({
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        facebook: 'Not a valid URL link',
+                    },
+                },
+            }));
+        }
+    };
+
+    onTwitterSave = async () => {
+        const { merchant, updateMerchant } = this.props;
+        const { socialMedia } = this.state;
+
+        try {
+            const updatedMerchant = {
+                ...merchant,
+                socialMedia: {
+                    ...merchant.socialMedia,
+                    twitter: socialMedia.twitter,
+                },
+            };
+            const user = await UserAPI.updateUser({ merchant: updatedMerchant });
+            updateMerchant(updatedMerchant);
+
+            this.setState((prevState) => ({
+                isEditing: {
+                    ...prevState.isEditing,
+                    socialMedia: {
+                        ...prevState.isEditing.socialMedia,
+                        twitter: false,
+                    },
+                },
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        twitter: '',
+                    },
+                },
+            }));
+        } catch (err) {
+            this.setState((prevState) => ({
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        twitter: 'Not a valid URL link',
+                    },
+                },
+            }));
+        }
+    };
+
+    onInstagramSave = async () => {
+        const { merchant, updateMerchant } = this.props;
+        const { socialMedia } = this.state;
+
+        try {
+            const updatedMerchant = {
+                ...merchant,
+                socialMedia: {
+                    ...merchant.socialMedia,
+                    instagram: socialMedia.instagram,
+                },
+            };
+            const user = await UserAPI.updateUser({ merchant: updatedMerchant });
+            updateMerchant(updatedMerchant);
+
+            this.setState((prevState) => ({
+                isEditing: {
+                    ...prevState.isEditing,
+                    socialMedia: {
+                        ...prevState.isEditing.socialMedia,
+                        instagram: false,
+                    },
+                },
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        instagram: '',
+                    },
+                },
+            }));
+        } catch (err) {
+            this.setState((prevState) => ({
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        instagram: 'Not a valid URL link',
+                    },
+                },
+            }));
+        }
+    };
+
+    onPinterestSave = async () => {
+        const { merchant, updateMerchant } = this.props;
+        const { socialMedia } = this.state;
+
+        try {
+            const updatedMerchant = {
+                ...merchant,
+                socialMedia: {
+                    ...merchant.socialMedia,
+                    pinterest: socialMedia.pinterest,
+                },
+            };
+            const user = await UserAPI.updateUser({ merchant: updatedMerchant });
+            updateMerchant(updatedMerchant);
+
+            this.setState((prevState) => ({
+                isEditing: {
+                    ...prevState.isEditing,
+                    socialMedia: {
+                        ...prevState.isEditing.socialMedia,
+                        pinterest: false,
+                    },
+                },
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        pinterest: '',
+                    },
+                },
+            }));
+        } catch (err) {
+            this.setState((prevState) => ({
+                errors: {
+                    ...prevState.errors,
+                    socialMedia: {
+                        ...prevState.errors.socialMedia,
+                        pinterest: 'Not a valid URL link',
+                    },
+                },
+            }));
+        }
     };
 
     render() {
@@ -913,6 +1095,7 @@ class EditProductPage extends Component {
                                 <>
                                     <Input.Textbox
                                         className="edit-product-page__textbox"
+                                        error={errors.socialMedia.facebook}
                                         onChange={(text) => {
                                             this.setState((prevState) => ({
                                                 socialMedia: {
@@ -926,18 +1109,7 @@ class EditProductPage extends Component {
                                     />
                                     <Button
                                         className="edit-product-page__edit-button"
-                                        onClick={async () => {
-                                            // save social media
-                                            this.setState((prevState) => ({
-                                                isEditing: {
-                                                    ...prevState.isEditing,
-                                                    socialMedia: {
-                                                        ...prevState.isEditing.socialMedia,
-                                                        facebook: false,
-                                                    },
-                                                },
-                                            }));
-                                        }}
+                                        onClick={this.onFacebookSave}
                                         text="Save"
                                         textColor="tertiary"
                                         backgroundColor="black"
@@ -983,6 +1155,7 @@ class EditProductPage extends Component {
                                 <>
                                     <Input.Textbox
                                         className="edit-product-page__textbox"
+                                        error={errors.socialMedia.twitter}
                                         onChange={(text) => {
                                             this.setState((prevState) => ({
                                                 socialMedia: {
@@ -996,18 +1169,7 @@ class EditProductPage extends Component {
                                     />
                                     <Button
                                         className="edit-product-page__edit-button"
-                                        onClick={async () => {
-                                            // save social media
-                                            this.setState((prevState) => ({
-                                                isEditing: {
-                                                    ...prevState.isEditing,
-                                                    socialMedia: {
-                                                        ...prevState.isEditing.socialMedia,
-                                                        twitter: false,
-                                                    },
-                                                },
-                                            }));
-                                        }}
+                                        onClick={this.onTwitterSave}
                                         text="Save"
                                         textColor="tertiary"
                                         backgroundColor="black"
@@ -1053,6 +1215,7 @@ class EditProductPage extends Component {
                                 <>
                                     <Input.Textbox
                                         className="edit-product-page__textbox"
+                                        error={errors.socialMedia.instagram}
                                         onChange={(text) => {
                                             this.setState((prevState) => ({
                                                 socialMedia: {
@@ -1066,18 +1229,7 @@ class EditProductPage extends Component {
                                     />
                                     <Button
                                         className="edit-product-page__edit-button"
-                                        onClick={async () => {
-                                            // save social media
-                                            this.setState((prevState) => ({
-                                                isEditing: {
-                                                    ...prevState.isEditing,
-                                                    socialMedia: {
-                                                        ...prevState.isEditing.socialMedia,
-                                                        instagram: false,
-                                                    },
-                                                },
-                                            }));
-                                        }}
+                                        onClick={this.onInstagramSave}
                                         text="Save"
                                         textColor="tertiary"
                                         backgroundColor="black"
@@ -1123,6 +1275,7 @@ class EditProductPage extends Component {
                                 <>
                                     <Input.Textbox
                                         className="edit-product-page__textbox"
+                                        error={errors.socialMedia.pinterest}
                                         onChange={(text) => {
                                             this.setState((prevState) => ({
                                                 socialMedia: {
@@ -1136,18 +1289,7 @@ class EditProductPage extends Component {
                                     />
                                     <Button
                                         className="edit-product-page__edit-button"
-                                        onClick={async () => {
-                                            // save social media
-                                            this.setState((prevState) => ({
-                                                isEditing: {
-                                                    ...prevState.isEditing,
-                                                    socialMedia: {
-                                                        ...prevState.isEditing.socialMedia,
-                                                        pinterest: false,
-                                                    },
-                                                },
-                                            }));
-                                        }}
+                                        onClick={this.onPinterestSave}
                                         text="Save"
                                         textColor="tertiary"
                                         backgroundColor="black"
@@ -1204,6 +1346,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     updateUser: (user) => dispatch(UserActions.updateUser(user)),
+    updateMerchant: (merchant) => dispatch(UserActions.updateMerchant(merchant)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProductPage);

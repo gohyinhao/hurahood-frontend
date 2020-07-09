@@ -3,4 +3,9 @@ export const updateUser = (user) => ({
     user,
 });
 
-export default { updateUser };
+export const updateMerchant = (merchant) => ({
+    type: 'UPDATE_MERCHANT',
+    merchant,
+});
+
+export default { updateUser, updateMerchant };
