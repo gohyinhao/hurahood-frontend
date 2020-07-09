@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Helper from '../../utils/helper';
+import UserAPI from '../../api/users';
+import ProductAPI from '../../api/products';
+import UserActions from '../../actions/users';
+import ProductActions from '../../actions/products';
 import ProductHelper from '../../utils/products';
 import Filters from '../../components/filters';
 import ListingToggle from '../../components/ListingToggle';
@@ -27,11 +30,20 @@ class MerchantDashboard extends Component {
         },
     };
 
-    componentDidMount() {
-        // TODO: redirect if not logged in
-        // if (Helper.isEmptyObject(this.props.user)) {
-        //     this.props.history.push('/unauthorized');
-        // }
+    async componentDidMount() {
+        try {
+            const user = await UserAPI.fetchUser();
+            this.props.updateUser(user);
+
+            if (!user.isMerchant) {
+                this.props.history.push('/unauthorized');
+            }
+
+            const products = await ProductAPI.fetchProducts({ merchant: user._id });
+            this.props.updateOwnedProducts(products);
+        } catch (err) {
+            this.props.history.push('/unauthorized');
+        }
     }
 
     onTextFilterChange = (text) => {
@@ -156,7 +168,7 @@ class MerchantDashboard extends Component {
                     <Button
                         className="merchant-dashboard__button"
                         text="Request to be a merchant"
-                        onClick={undefined}
+                        onClick={() => {}}
                     />
                 )}
             </div>
@@ -169,6 +181,9 @@ const mapStateToProps = (state) => ({
     user: state.user,
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+    updateUser: (user) => dispatch(UserActions.updateUser(user)),
+    updateOwnedProducts: (products) => dispatch(ProductActions.updateOwnedProducts(products)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MerchantDashboard);
