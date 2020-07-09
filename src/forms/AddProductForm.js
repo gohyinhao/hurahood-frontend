@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
 import Helper from '../utils/helper';
@@ -7,25 +6,6 @@ import FileIcon from '../assets/fontawesome/regular/file-alt.svg';
 import CopyIcon from '../assets/fontawesome/regular/copy.svg';
 
 class AddProductForm extends Component {
-    state = {
-        selectedProduct: '',
-    };
-
-    onCreateProduct = () => {
-        // TODO: create new product and redirect
-    };
-
-    onCopyProduct = () => {
-        // TODO: copy product and redirect
-        // TODO: remember to dispatch to redux store the updated products
-    };
-
-    onDropdownChange = (value) => {
-        this.setState({
-            selectedProduct: value,
-        });
-    };
-
     render() {
         const { className, products } = this.props;
         const classNames = 'add-product-form ' + (className ? className : '');
@@ -53,7 +33,7 @@ class AddProductForm extends Component {
                         <Button
                             className="add-product-form__button"
                             backgroundColor="black"
-                            onClick={this.onCreateProduct}
+                            onClick={this.props.onNewProduct}
                             text="Create"
                             textColor="tertiary"
                         />
@@ -73,22 +53,24 @@ class AddProductForm extends Component {
                         <div className="add-product-form__button-wrapper">
                             <select
                                 className="add-product-form__select"
-                                onChange={(e) => this.onDropdownChange(e.target.value)}
-                                value={this.state.selectedProduct}
+                                onChange={(e) => this.props.onDropdownChange(e.target.value)}
+                                value={this.props.dropdownValue}
                             >
                                 <option value="" defaultValue>
                                     Select Listing
                                 </option>
                                 {products.map((product, index) => (
-                                    <option value="product._id" key={index}>
-                                        {Helper.capitalizeWords(product.address.street)}
+                                    <option value={product._id} key={index}>
+                                        {product.address.street
+                                            ? Helper.capitalizeWords(product.address.street)
+                                            : 'Undefined'}
                                     </option>
                                 ))}
                             </select>
                             <Button
                                 className="add-product-form__button"
                                 backgroundColor="black"
-                                onClick={this.onCopyProduct}
+                                onClick={this.props.onCopyProduct}
                                 text="Create"
                                 textColor="tertiary"
                             />
@@ -102,6 +84,10 @@ class AddProductForm extends Component {
 
 AddProductForm.propTypes = {
     className: PropTypes.string,
+    dropdownValue: PropTypes.string.isRequired,
+    onCopyProduct: PropTypes.func.isRequired,
+    onDropdownChange: PropTypes.func.isRequired,
+    onNewProduct: PropTypes.func.isRequired,
     products: PropTypes.array.isRequired,
 };
 
@@ -109,4 +95,4 @@ AddProductForm.defaultProps = {
     className: '',
 };
 
-export default withRouter(AddProductForm);
+export default AddProductForm;

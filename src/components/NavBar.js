@@ -54,7 +54,7 @@ class NavBar extends Component {
             text: 'Contact Us',
         },
         {
-            link: '/user/merchant',
+            link: '/merchant',
             text: 'Merchant',
         },
         {

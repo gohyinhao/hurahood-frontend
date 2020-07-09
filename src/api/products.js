@@ -1,4 +1,4 @@
-import { fetchData, updateData } from './common';
+import { fetchData, updateData, postData } from './common';
 
 export const fetchProducts = async (filters) => {
     const products = await fetchData('/products', filters);
@@ -15,4 +15,9 @@ export const updateProduct = async (id, updates) => {
     return product;
 };
 
-export default { fetchProduct, fetchProducts, updateProduct };
+export const createNewProduct = async (newProduct) => {
+    const product = await postData('/products', newProduct);
+    return product;
+};
+
+export default { fetchProduct, fetchProducts, updateProduct, createNewProduct };

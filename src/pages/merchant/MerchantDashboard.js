@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import cloneDeep from 'lodash/cloneDeep';
 import UserAPI from '../../api/users';
 import ProductAPI from '../../api/products';
 import UserActions from '../../actions/users';
@@ -28,6 +29,7 @@ class MerchantDashboard extends Component {
             currentPage: 1,
             listingsPerPage: '20',
         },
+        copyProductId: '',
     };
 
     async componentDidMount() {
@@ -94,6 +96,47 @@ class MerchantDashboard extends Component {
         });
     };
 
+    onCopyProductDropdownChange = (value) => {
+        this.setState({
+            copyProductId: value,
+        });
+    };
+
+    onNewProduct = async () => {
+        try {
+            const newProduct = {
+                merchant: this.props.user._id,
+            };
+            const product = await ProductAPI.createNewProduct(newProduct);
+            const newProducts = this.props.products.concat([product]);
+            this.props.updateOwnedProducts(newProducts);
+            this.props.history.push(`/merchant/edit/${product._id}`);
+        } catch (err) {
+            // do nothing
+        }
+    };
+
+    onCopyProduct = async () => {
+        const filteredResult = this.props.products.filter(
+            (product) => product._id === this.state.copyProductId,
+        );
+
+        try {
+            if (filteredResult.length !== 1) {
+                throw new Error('Something went wrong');
+            }
+
+            const newProduct = cloneDeep(filteredResult[0]);
+            delete newProduct._id;
+            const product = await ProductAPI.createNewProduct(newProduct);
+            const newProducts = this.props.products.concat([product]);
+            this.props.updateOwnedProducts(newProducts);
+            this.props.history.push(`/merchant/edit/${product._id}`);
+        } catch (err) {
+            // do nothing
+        }
+    };
+
     render() {
         const { user, products } = this.props;
         const filteredProducts = ProductHelper.filterProducts(products, this.state.filters) || [];
@@ -124,7 +167,7 @@ class MerchantDashboard extends Component {
                             {pagedProducts.map((product, index) => (
                                 <Link
                                     key={index}
-                                    to={`/user/merchant/edit/${product._id}`}
+                                    to={`/merchant/edit/${product._id}`}
                                     className="merchant-dashboard__product"
                                 >
                                     <ProductListing
@@ -161,7 +204,13 @@ class MerchantDashboard extends Component {
                             onClose={this.onModalClose}
                             showCloseSign={true}
                         >
-                            <Forms.AddProductForm products={products} />
+                            <Forms.AddProductForm
+                                products={products}
+                                dropdownValue={this.state.copyProductId}
+                                onDropdownChange={this.onCopyProductDropdownChange}
+                                onNewProduct={this.onNewProduct}
+                                onCopyProduct={this.onCopyProduct}
+                            />
                         </Modal>
                     </>
                 ) : (

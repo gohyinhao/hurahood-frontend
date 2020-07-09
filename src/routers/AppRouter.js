@@ -19,7 +19,7 @@ const AppRouter = () => (
                 <Route exact path="/explore" component={Pages.ExplorePage} />
                 <Route exact path="/product/:id" component={Pages.ProductPage} />
 
-                <Route path="/user/merchant">
+                <Route path="/merchant">
                     <MerchantRouter />
                 </Route>
 
