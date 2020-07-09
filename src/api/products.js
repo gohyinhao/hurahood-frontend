@@ -5,6 +5,11 @@ export const fetchProducts = async (filters) => {
     return products;
 };
 
+export const fetchMerchantProducts = async (filters) => {
+    const products = await fetchData('/products/merchant', filters);
+    return products;
+};
+
 export const fetchProduct = async (id) => {
     const product = await fetchData(`/products/${id}`);
     return product;
@@ -20,4 +25,10 @@ export const createNewProduct = async (newProduct) => {
     return product;
 };
 
-export default { fetchProduct, fetchProducts, updateProduct, createNewProduct };
+export default {
+    fetchProduct,
+    fetchProducts,
+    fetchMerchantProducts,
+    updateProduct,
+    createNewProduct,
+};

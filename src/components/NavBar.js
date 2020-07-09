@@ -69,7 +69,7 @@ class NavBar extends Component {
             this.props.updateUser(user);
 
             if (user.isMerchant) {
-                const products = await ProductAPI.fetchProducts({ merchant: user._id });
+                const products = await ProductAPI.fetchMerchantProducts();
                 this.props.updateOwnedProducts(products);
             }
         } catch (err) {

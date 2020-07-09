@@ -41,7 +41,7 @@ class MerchantDashboard extends Component {
                 this.props.history.push('/unauthorized');
             }
 
-            const products = await ProductAPI.fetchProducts({ merchant: user._id });
+            const products = await ProductAPI.fetchMerchantProducts();
             this.props.updateOwnedProducts(products);
         } catch (err) {
             this.props.history.push('/unauthorized');
